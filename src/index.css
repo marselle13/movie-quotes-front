@@ -2,14 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'helvetic';
+    src: url("./fonts/Helvetica Neue Medium Extended.otf") format('truetype');
+}
+
 * {
     box-sizing: border-box;
 }
 
 html {
-    font-family: 'bg-arial', sans-serif;
-    background: #eaeaea;
-}
+    font-family: 'helvetic', sans-serif;
+    background: linear-gradient(187.16deg, #181623 0.07%, #191725 51.65%, #0D0B14 98.75%);}
 
 body {
     margin: 0;
