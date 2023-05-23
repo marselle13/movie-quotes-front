@@ -1,7 +1,7 @@
 <template>
-  <header class="flex justify-between items-center py-4 px-16" :class="[headerBackground]">
+  <header class="flex justify-between items-center py-4 md:px-16 px-4" :class="[headerBackground]">
     <p class="text-[#DDCCAA] uppercase">{{ t('movie_quotes') }}</p>
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-10">
       <base-dropdown>
         <template #dropdownButton>
           <div class="flex gap-2.5 items-center">
@@ -18,8 +18,12 @@
           </li>
         </template>
       </base-dropdown>
-      <base-button class="w-32 py-2">{{ t('sign_up') }}</base-button>
-      <base-button class="w-32 py-2" mode="flat">{{ t('log_in') }}</base-button>
+      <div class="flex flex-row-reverse md:flex-row items-center gap-2 md:gap-4">
+        <base-button class="py-1 md:w-32 md:py-2" :class="locale === 'en' ? 'w-20 ' : 'w-22'">{{
+          t('sign_up')
+        }}</base-button>
+        <base-button class="w-20 py-1 md:w-32 md:py-2" mode="flat">{{ t('log_in') }}</base-button>
+      </div>
     </div>
   </header>
 </template>

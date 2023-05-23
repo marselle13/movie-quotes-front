@@ -1,6 +1,6 @@
 <template>
   <div v-if="dropdown" class="backdrop" @click="close"></div>
-  <div class="relative">
+  <div class="relative hidden md:block">
     <button class="w-full" type="button" @click="dropdownButton">
       <slot name="dropdownButton"></slot>
     </button>

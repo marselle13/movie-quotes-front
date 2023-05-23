@@ -1,6 +1,8 @@
 <template>
   <footer class="footer-container py-2.5 px-8">
-    <h4 class="text-[#DDCCAA]">© 2022 movie quotes. All rights reserved.</h4>
+    <h4 class="text-[#DDCCAA] text-[8px] md:text-base">
+      © 2022 movie quotes. All rights reserved.
+    </h4>
   </footer>
 </template>
 <style scoped>

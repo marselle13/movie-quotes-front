@@ -1,5 +1,8 @@
 <template>
-  <button class="text-white rounded font-medium" :class="[buttonStyle, buttonAnimation]">
+  <button
+    class="text-white rounded font-medium text-sm md:text-base"
+    :class="[buttonStyle, buttonAnimation]"
+  >
     <slot></slot>
   </button>
 </template>

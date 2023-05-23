@@ -1,13 +1,15 @@
 <template>
   <TheHeader :background="false" />
-  <section class="grid text-center content-center justify-items-center py-64 space-y-6">
+  <section
+    class="w-[300px] mx-auto md:w-full md:mx-0 md:grid text-center md:content-center md:justify-items-center pt-32 pb-24 md:py-64 space-y-6"
+  >
     <h1
-      class="text-6xl leading-[90px] text-[#DDCCAA]"
-      :class="locale === 'en' ? 'w-[800px]' : 'w-[1100px]'"
+      class="text-2xl md:text-6xl md:leading-[90px] text-[#DDCCAA]"
+      :class="locale === 'en' ? 'max-w-[800px]' : 'max-w-[1100px]'"
     >
       {{ t('title') }}
     </h1>
-    <base-button class="w-32 py-2" :animation="true">{{ t('get_started') }}</base-button>
+    <base-button class="w-28 md:w-32 py-2" :animation="true">{{ t('get_started') }}</base-button>
   </section>
   <quotes-container :image="interstellarImage">
     <template #quote>You have to leave something behind to go forward</template>
