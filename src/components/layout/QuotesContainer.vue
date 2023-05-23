@@ -1,7 +1,7 @@
 <template>
   <section :class="backdrop">
     <div class="relative -z-10" v-if="image">
-      <img :src="image" alt="image" />
+      <img :src="image" alt="image" class="w-full" />
       <div class="absolute top-0 left-40 w-[1000px] grid grid-cols-12 content-center h-full gap-4">
         <div class="border-t-2 border-white my-10"></div>
         <div class="col-span-11">

@@ -13,8 +13,8 @@ const props = defineProps({
 
 const buttonStyle = computed(() => {
   return props.mode === 'flat'
-    ? 'bg-transparent border border-white hover:opacity-80'
-    : 'bg-[#E31221] hover:bg-[#CC0E10]'
+    ? 'bg-transparent border border-white hover:opacity-80 '
+    : 'bg-[#E31221] hover:bg-[#CC0E10] focus:bg-[#B80D0F] disabled:bg-[#EC4C57]'
 })
 
 const buttonAnimation = computed(() => {

@@ -24,8 +24,8 @@
     <template #quote>Death Is Just Another Path, One That We All Must Take.</template>
     <template #movie>The Lord of the Rings,2001 </template>
   </quotes-container>
+  <TheFooter />
 </template>
-
 <script setup>
 import TheHeader from '@/components/layout/TheHeader.vue'
 import interstellarImage from '@/assets/interstellar.png'
@@ -34,6 +34,7 @@ import lotrImage from '@/assets/lotr.png'
 import QuotesContainer from '@/components/layout/QuotesContainer.vue'
 
 import { useI18n } from 'vue-i18n'
+import TheFooter from '@/components/layout/TheFooter.vue'
 
 const { t, locale } = useI18n()
 </script>
