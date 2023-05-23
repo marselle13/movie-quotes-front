@@ -4,7 +4,7 @@
     class="w-[300px] mx-auto md:w-full md:mx-0 md:grid text-center md:content-center md:justify-items-center pt-32 pb-24 md:py-64 space-y-6"
   >
     <h1
-      class="text-2xl md:text-6xl md:leading-[90px] text-[#DDCCAA]"
+      class="text-2xl md:text-6xl md:leading-[90px] text-[#DDCCAA] font-bold"
       :class="locale === 'en' ? 'max-w-[800px]' : 'max-w-[1100px]'"
     >
       {{ t('title') }}

@@ -1,16 +1,16 @@
 <template>
   <section :class="backdrop">
     <div class="relative -z-10 w-full" v-if="image">
-      <img :src="image" alt="image" class="w-full o" />
+      <img :src="image" alt="image" class="w-full" />
       <div
-        class="md:pl-32 pl-6 absolute top-0 xl:w-[1100px] md:w-[700px] w-[320px] grid grid-cols-12 content-center h-full gap-4"
+        class="z-40 md:pl-32 pl-6 absolute top-0 xl:w-[1100px] md:w-[700px] w-[320px] grid grid-cols-12 content-center h-full gap-4"
       >
         <div class="border-t-2 border-white my-4 md:my-10"></div>
         <div class="col-span-11">
-          <h2 class="flex text-white text-xl md:text-5xl md:leading-[75px]">
+          <h2 class="flex text-white text-xl md:text-5xl md:leading-[75px] font-bold">
             “<slot name="quote"></slot>”
           </h2>
-          <p class="text-[#D9D9D9] text-base md:text-3xl"><slot name="movie"></slot></p>
+          <p class="text-[#D9D9D9] text-base md:text-3xl font-bold"><slot name="movie"></slot></p>
         </div>
       </div>
     </div>
