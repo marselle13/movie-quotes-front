@@ -3,8 +3,13 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'helvetic';
+    font-family: 'helvetic-en';
     src: url("./fonts/Helvetica Neue Medium Extended.otf") format('truetype');
+}
+
+@font-face {
+    font-family: 'helvectic-ge';
+    src: url("./fonts/Helvetica Neue LT GEO 65 Medium.ttf") format('truetype');
 }
 
 * {
@@ -12,8 +17,12 @@
 }
 
 html {
-    font-family: 'helvetic', sans-serif;
+    font-family: 'helvetic-en', sans-serif;
     background: linear-gradient(187.16deg, #181623 0.07%, #191725 51.65%, #0D0B14 98.75%);}
+
+html[lang="ge"]{
+    font-family: 'helvetic-ka', sans-serif;
+}
 
 body {
     margin: 0;
