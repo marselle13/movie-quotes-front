@@ -1,6 +1,6 @@
 <template>
   <div v-if="dropdown" class="backdrop" @click="close"></div>
-  <div class="relative hidden md:block">
+  <div class="relative" :class="{ 'hidden md:block': hidden }">
     <button class="w-full" type="button" @click="dropdownButton">
       <slot name="dropdownButton"></slot>
     </button>
@@ -14,6 +14,7 @@
   </div>
 </template>
 <script setup>
+defineProps({ hidden: { type: Boolean, required: false } })
 import { ref } from 'vue'
 const dropdown = ref(false)
 

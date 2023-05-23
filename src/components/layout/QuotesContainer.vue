@@ -1,7 +1,7 @@
 <template>
   <section :class="backdrop">
     <div class="relative -z-10 w-full" v-if="image">
-      <img :src="image" alt="image" class="md:w-full" />
+      <img :src="image" alt="image" class="w-full o" />
       <div
         class="md:pl-32 pl-6 absolute top-0 xl:w-[1100px] md:w-[700px] w-[320px] grid grid-cols-12 content-center h-full gap-4"
       >

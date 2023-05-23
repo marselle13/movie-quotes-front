@@ -2,7 +2,7 @@
   <header class="flex justify-between items-center py-4 md:px-16 px-4" :class="[headerBackground]">
     <p class="text-[#DDCCAA] uppercase">{{ t('movie_quotes') }}</p>
     <div class="flex items-center gap-10">
-      <base-dropdown>
+      <base-dropdown :hidden="true">
         <template #dropdownButton>
           <div class="flex gap-2.5 items-center">
             <p class="text-white">{{ showLanguage }}</p>
