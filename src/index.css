@@ -6,14 +6,14 @@
 
 @font-face {
     font-family: 'helvetic-en';
-    src: url("./fonts/Helvetica Neue Medium Extended.ttf") format('truetype');
+    src: url("../public/fonts/Helvetica Neue Medium Extended.ttf") format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face{
     font-family: 'helvetic-ge';
-    src: url("./fonts/Helvetica Neue LT GEO 65 Medium.ttf");
+    src: url("../public/fonts/Helvetica Neue LT GEO 65 Medium.ttf");
     font-weight: normal;
     font-style: normal;
 
@@ -21,7 +21,7 @@
 
 @font-face {
     font-family: 'helvetic-ge';
-    src: url("./fonts/Helvetica Neue LT GEO 75 Bold.ttf");
+    src: url("../public/fonts/Helvetica Neue LT GEO 75 Bold.ttf");
     font-weight: 700;
     font-style: normal;
 }
