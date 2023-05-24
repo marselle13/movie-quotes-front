@@ -1,5 +1,9 @@
 <template>
-  <div v-if="dropdown" class="backdrop" @click="close"></div>
+  <div
+    v-if="dropdown"
+    class="fixed top-0 left-0 w-full h-full bg-transparent z-10"
+    @click="close"
+  ></div>
   <div class="relative" :class="{ 'hidden md:block': hidden }">
     <button class="w-full" type="button" @click="dropdownButton">
       <slot name="dropdownButton"></slot>
@@ -25,14 +29,3 @@ function close() {
   dropdown.value = false
 }
 </script>
-<style scoped>
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100%;
-  background-color: transparent;
-  z-index: 10;
-}
-</style>
