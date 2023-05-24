@@ -35,6 +35,7 @@
 import LanguageDropdown from '@/components/icons/LanguageDropdown.vue'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { setLocale } from '@vee-validate/i18n'
 
 const { t, locale } = useI18n({ useScope: 'global' })
 
@@ -54,5 +55,6 @@ function changeLanguage(value) {
   localStorage.setItem('locale', value)
   locale.value = value
   document.documentElement.lang = value
+  setLocale(value)
 }
 </script>

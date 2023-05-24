@@ -2,8 +2,11 @@ import './index.css'
 
 import { createApp } from 'vue'
 import { createI18n } from 'vue-i18n'
+import { setLocale } from '@vee-validate/i18n'
 import App from './App.vue'
 import router from './router'
+import './config/vee-validate/rules'
+import './config/vee-validate/messages'
 
 import BaseDropdown from '@/components/ui/form/BaseDropdown.vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
@@ -19,6 +22,8 @@ const i18n = createI18n({
     ka: Georgian,
   },
 })
+
+setLocale(localStorage.getItem('locale'))
 
 const app = createApp(App)
 

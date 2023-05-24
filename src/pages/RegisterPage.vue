@@ -2,22 +2,34 @@
   <auth-card>
     <template #title> Create an account </template>
     <template #info> Start your journey!</template>
-    <form class="w-[450px] mt-5 space-y-4">
+    <Form @submit="onSubmit" class="w-[450px] mt-5 space-y-4">
       <base-input
         id="name"
         label="name"
         placeholder="At least 3 & max.15 lower case characters"
+        rules="required|min:3|max:15|alpha_num"
       ></base-input>
-      <base-input id="email" label="email" placeholder="Enter your email"></base-input>
       <base-input
+        type="email"
+        id="email"
+        label="email"
+        placeholder="Enter your email"
+        rules="required|email"
+      ></base-input>
+      <base-input
+        type="password"
         id="password"
         label="password"
         placeholder="At least 8 & max.15 lower case characters"
+        rules="required|min:8|max:15|alpha_num"
+        ref="password"
       ></base-input>
       <base-input
-        id="confirm-password"
+        type="password"
+        id="confirmation"
         label="confirm password"
         placeholder="Confirm password"
+        rules="required|confirmed:@password"
       ></base-input>
       <div class="pt-4 space-y-4 text-center">
         <base-button class="w-full py-2">Get started</base-button>
@@ -32,7 +44,7 @@
           >
         </p>
       </div>
-    </form>
+    </Form>
   </auth-card>
 </template>
 <script setup>
@@ -40,4 +52,9 @@ import AuthCard from '@/components/ui/AuthCard.vue'
 import BaseInput from '@/components/ui/form/BaseInput.vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
+import { Form } from 'vee-validate'
+
+function onSubmit() {
+  console.log('click')
+}
 </script>
