@@ -1,5 +1,6 @@
 <template>
   <TheHeader :background="false" />
+  <router-view></router-view>
   <section
     class="w-[300px] mx-auto md:w-full md:mx-0 md:grid text-center md:content-center md:justify-items-center pt-32 pb-24 md:py-64 space-y-6"
   >
@@ -34,9 +35,9 @@ import interstellarImage from '@/assets/interstellar.png'
 import tanenbaumImage from '@/assets/tanenbaum.png'
 import lotrImage from '@/assets/lotr.png'
 import QuotesContainer from '@/components/layout/QuotesContainer.vue'
+import TheFooter from '@/components/layout/TheFooter.vue'
 
 import { useI18n } from 'vue-i18n'
-import TheFooter from '@/components/layout/TheFooter.vue'
 
 const { t, locale } = useI18n()
 </script>

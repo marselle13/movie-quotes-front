@@ -5,10 +5,11 @@ import { createI18n } from 'vue-i18n'
 import App from './App.vue'
 import router from './router'
 
-import BaseDropdown from '@/components/ui/BaseDropdown.vue'
-import BaseButton from '@/components/ui/BaseButton.vue'
+import BaseDropdown from '@/components/ui/form/BaseDropdown.vue'
+import BaseButton from '@/components/ui/form/BaseButton.vue'
 import English from '@/locales/en.json'
 import Georgian from '@/locales/ka.json'
+import AuthCard from '@/components/ui/AuthCard.vue'
 
 const i18n = createI18n({
   legacy: false,
@@ -26,5 +27,6 @@ app.use(i18n)
 
 app.component('base-dropdown', BaseDropdown)
 app.component('base-button', BaseButton)
+app.component('auth-card', AuthCard)
 
 app.mount('#app')
