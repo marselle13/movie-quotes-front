@@ -32,7 +32,7 @@
   </header>
 </template>
 <script setup>
-import LanguageDropdown from '@/components/icons/LanguageDropdown.vue'
+import LanguageDropdown from '@/components/icons/LanguageDropdownIcon.vue'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { setLocale } from '@vee-validate/i18n'

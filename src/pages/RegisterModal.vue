@@ -17,7 +17,6 @@
         rules="required|email"
       ></base-input>
       <base-input
-        type="password"
         id="password"
         label="password"
         placeholder="At least 8 & max.15 lower case characters"
@@ -25,7 +24,6 @@
         ref="password"
       ></base-input>
       <base-input
-        type="password"
         id="confirmation"
         label="confirm password"
         placeholder="Confirm password"

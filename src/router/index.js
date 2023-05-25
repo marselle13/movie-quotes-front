@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LandingPage from '@/pages/LandingPage.vue'
-import RegisterPage from '@/pages/RegisterPage.vue'
+import RegisterPage from '@/pages/RegisterModal.vue'
 
 const router = createRouter({
   history: createWebHistory(),
