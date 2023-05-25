@@ -51,8 +51,11 @@ import BaseInput from '@/components/ui/form/BaseInput.vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { Form } from 'vee-validate'
+import { useUserStore } from '@/stores/userStore'
 
-function onSubmit() {
-  console.log('click')
+const userStore = useUserStore()
+
+function onSubmit(values) {
+  userStore.registerUser(values)
 }
 </script>
