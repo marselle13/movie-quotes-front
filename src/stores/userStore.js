@@ -25,7 +25,7 @@ export const useUserStore = defineStore('UserStore', {
           password_confirmation: confirmation,
         })
       } catch (error) {
-        console.error(error) // Handle any error that occurs
+        console.error(error)
       }
     },
   },
