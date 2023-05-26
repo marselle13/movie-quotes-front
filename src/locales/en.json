@@ -5,5 +5,16 @@
   "title": "Find any quote in millions of movie lines",
   "get_started" : "Get started",
   "english": "English",
-  "georgian" : "Georgian"
+  "georgian" : "Georgian",
+  "create_account": "Create an account",
+  "start_journey": "Start your journey!",
+  "name": "name",
+  "enter_name": "Enter Your name",
+  "email": "email",
+  "enter_email": "Enter Your email",
+  "password": "password",
+  "enter_password": "Enter Your password",
+  "confirm_password": "confirm password",
+  "sign_up_google": "Sign up with Google",
+  "have_account": "Already have an account"
 }
