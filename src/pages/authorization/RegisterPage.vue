@@ -55,13 +55,16 @@ import { Form } from 'vee-validate'
 import { useUserStore } from '@/stores/userStore'
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
 const userStore = useUserStore()
+const router = useRouter()
 const isMobile = ref(false)
 
 function onSubmit(values) {
   userStore.registerUser(values)
+  router.push({ name: 'thank-you' })
 }
 function signUpWithGoogle() {
   userStore.registerUserWithGoogle()
