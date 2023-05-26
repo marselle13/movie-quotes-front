@@ -2,11 +2,11 @@
   <auth-card>
     <template #title> Create an account </template>
     <template #info> Start your journey!</template>
-    <Form @submit="onSubmit" class="w-[450px] mt-5 space-y-4">
+    <Form @submit="onSubmit" class="md:w-[450px] mt-5 space-y-4">
       <base-input
         id="name"
         label="name"
-        placeholder="At least 3 & max.15 lower case characters"
+        :placeholder="isMobile ? 'Enter your name' : 'At least 3 & max.15 lower case characters'"
         rules="required|min:3|max:15|alpha_num"
       ></base-input>
       <base-input
@@ -19,7 +19,7 @@
       <base-input
         id="password"
         label="password"
-        placeholder="At least 8 & max.15 lower case characters"
+        :placeholder="isMobile ? 'password' : 'At least 8 & max.15 lower case characters'"
         rules="required|min:8|max:15|alpha_num"
         ref="password"
       ></base-input>
@@ -31,7 +31,7 @@
       ></base-input>
       <div class="pt-4 space-y-4 text-center">
         <base-button class="w-full py-2">Get started</base-button>
-        <base-button mode="flat" class="w-full py-2">
+        <base-button type="button" @click="signUpWithGoogle" mode="flat" class="w-full py-2">
           <div class="flex items-center justify-center gap-2">
             <google-icon /> Sign up with Google
           </div>
@@ -52,10 +52,24 @@ import BaseButton from '@/components/ui/form/BaseButton.vue'
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { Form } from 'vee-validate'
 import { useUserStore } from '@/stores/userStore'
+import { onMounted, ref } from 'vue'
 
 const userStore = useUserStore()
+const isMobile = ref(false)
 
 function onSubmit(values) {
   userStore.registerUser(values)
 }
+function signUpWithGoogle() {
+  userStore.registerUserWithGoogle()
+}
+
+function deviceSize() {
+  isMobile.value = window.innerWidth <= 768
+}
+
+onMounted(() => {
+  deviceSize()
+  window.addEventListener('resize', deviceSize)
+})
 </script>

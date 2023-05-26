@@ -28,5 +28,13 @@ export const useUserStore = defineStore('UserStore', {
         console.error(error)
       }
     },
+    async registerUserWithGoogle() {
+      try {
+        const response = await api.get('auth/google')
+        window.location.href = response.data.redirect_url
+      } catch (error) {
+        console.error(error)
+      }
+    },
   },
 })
