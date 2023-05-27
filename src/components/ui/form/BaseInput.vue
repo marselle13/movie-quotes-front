@@ -3,10 +3,10 @@
     <label for="name" class="text-white capitalize"
       >{{ label }}<span class="text-[#E31221]" v-if="label">*</span></label
     >
-    <div class="relative">
-      <Field :name="id" :rules="rules" v-slot="{ field, meta }">
+    <Field :name="id" :rules="rules" v-slot="{ field, meta }">
+      <div class="relative">
         <input
-          :type="type"
+          :type="type === 'password' && isPasswordVisible ? 'text' : type"
           :id="id"
           v-bind="field"
           v-model="inputValue"
@@ -18,14 +18,18 @@
           }"
         />
         <div class="absolute right-3 top-3">
-          <valid-icon v-if="meta.valid && meta.dirty" />
-          <invalid-icon v-else-if="!meta.valid && meta.dirty" />
+          <valid-icon v-if="meta.valid && meta.dirty && type !== 'password'" />
+          <invalid-icon v-else-if="!meta.valid && meta.dirty && type !== 'password'" />
+          <password-icon v-else-if="type === 'password'" class="mt-0.5" @click="showPassword" />
         </div>
-      </Field>
-    </div>
-    <div class="relative">
-      <ErrorMessage :name="id" class="absolute text-[11px] -top-1 text-[#DC3545]"></ErrorMessage>
-    </div>
+      </div>
+      <div class="relative">
+        <ErrorMessage :name="id" class="absolute text-[11px] -top-1 text-[#DC3545]"></ErrorMessage>
+        <p class="absolute text-[11px] -top-1 text-[#DC3545]" v-if="error && meta.valid">
+          {{ error }}
+        </p>
+      </div>
+    </Field>
   </div>
 </template>
 <script setup>
@@ -33,8 +37,10 @@ import { Field, ErrorMessage } from 'vee-validate'
 import ValidIcon from '@/components/icons/ValidIcon.vue'
 import InvalidIcon from '@/components/icons/InvalidIcon.vue'
 import { ref } from 'vue'
+import PasswordIcon from '@/components/icons/PasswordIcon.vue'
 
 const inputValue = ref('')
+const isPasswordVisible = ref(false)
 
 defineProps({
   id: { type: String, required: true },
@@ -42,5 +48,10 @@ defineProps({
   placeholder: { type: String, required: false },
   type: { type: String, required: false, default: 'text' },
   rules: { type: String, required: true },
+  error: { type: String, required: false },
 })
+
+function showPassword() {
+  isPasswordVisible.value = !isPasswordVisible.value
+}
 </script>
