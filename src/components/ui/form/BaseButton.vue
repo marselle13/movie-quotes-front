@@ -26,9 +26,8 @@ const props = defineProps({
     default: false,
   },
   to: {
-    type: String,
+    type: Object,
     required: false,
-    default: '/',
   },
 })
 

@@ -21,7 +21,7 @@
       <div class="flex flex-row-reverse md:flex-row items-center gap-2 md:gap-4">
         <base-button
           :link="true"
-          to="/register"
+          :to="{ name: 'register' }"
           class="py-1 md:w-32 md:py-2"
           :class="locale === 'en' ? 'w-20 ' : 'w-22'"
           >{{ t('sign_up') }}</base-button
