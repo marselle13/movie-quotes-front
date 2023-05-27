@@ -16,5 +16,7 @@
   "enter_password": "შეიყვანე პაროლი",
   "confirm_password": "გაიმეორე პაროლი",
   "sign_up_google": "რეგისტრაცია გუგლით",
-  "have_account": "უკვე გაქვს პროფილი?"
+  "have_account": "უკვე გაქვს პროფილი?",
+  "already_taken" : "ასეთი ელ-ფოსტა უკვე რეგისტრირებულია"
+
 }

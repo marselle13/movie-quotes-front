@@ -15,8 +15,10 @@
         :label="t('email')"
         :placeholder="t('enter_email')"
         rules="required|email"
+        :error="errorMessage"
       ></base-input>
       <base-input
+        type="password"
         id="password"
         :label="t('password')"
         :placeholder="t('enter_password')"
@@ -24,6 +26,7 @@
         ref="password"
       ></base-input>
       <base-input
+        type="password"
         id="confirmation"
         :label="t('confirm_password')"
         :placeholder="t('confirm_password')"
@@ -61,10 +64,26 @@ const { t } = useI18n()
 const userStore = useUserStore()
 const router = useRouter()
 const isMobile = ref(false)
+const error = ref(false)
+const errorMessage = ref('')
 
-function onSubmit(values) {
-  userStore.registerUser(values)
-  router.push({ name: 'thank-you' })
+async function onSubmit(values) {
+  try {
+    error.value = false
+    await userStore.registerUser(values)
+  } catch (err) {
+    if (err.response.data.errors) {
+      errorMessage.value = t('already_taken')
+      setTimeout(() => {
+        errorMessage.value = ''
+      }, 4000)
+    }
+    error.value = true
+    console.error(err.message)
+  }
+  if (!error.value) {
+    await router.push({ name: 'thank-you' })
+  }
 }
 function signUpWithGoogle() {
   userStore.registerUserWithGoogle()

@@ -16,5 +16,6 @@
   "enter_password": "Enter Your password",
   "confirm_password": "confirm password",
   "sign_up_google": "Sign up with Google",
-  "have_account": "Already have an account"
+  "have_account": "Already have an account",
+  "already_taken" : "The email has already been taken"
 }

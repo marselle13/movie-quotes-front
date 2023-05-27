@@ -10,23 +10,17 @@ export const useUserStore = defineStore('UserStore', {
     },
   }),
   getters: {
-    userData(state) {
-      return state.user
-    },
+    userData: (state) => state.user,
   },
   actions: {
     async registerUser(values) {
       const { name, email, password, confirmation } = values
-      try {
-        await api.post('register', {
-          name,
-          email,
-          password,
-          password_confirmation: confirmation,
-        })
-      } catch (error) {
-        console.error(error)
-      }
+      await api.post('register', {
+        name,
+        email,
+        password,
+        password_confirmation: confirmation,
+      })
     },
     async registerUserWithGoogle() {
       try {
