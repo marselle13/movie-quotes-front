@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LandingPage from '@/pages/LandingPage.vue'
 import RegisterPage from '@/pages/authorization/RegisterPage.vue'
-import ThankYouPage from '@/pages/authorization/ThankYouPage.vue'
+import SuccessRegistrationPage from '@/pages/authorization/SuccessRegistrationPage.vue'
+import SuccessVerifyPage from '@/pages/authorization/SuccessVerifyPage.vue'
+import LoginPage from '@/pages/authorization/LoginPage.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -12,7 +14,13 @@ const router = createRouter({
       component: LandingPage,
       children: [
         { name: 'register', path: '/register', component: RegisterPage },
-        { name: 'thank-you', path: '/thank-you', component: ThankYouPage },
+        { name: 'login', path: '/login', component: LoginPage },
+        {
+          name: 'success-registration',
+          path: '/success-registration',
+          component: SuccessRegistrationPage,
+        },
+        { name: 'success-verified', path: '/success-verify', component: SuccessVerifyPage },
       ],
     },
   ],

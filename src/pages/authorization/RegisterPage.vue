@@ -56,14 +56,13 @@ import BaseButton from '@/components/ui/form/BaseButton.vue'
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { Form } from 'vee-validate'
 import { useUserStore } from '@/stores/userStore'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
 const userStore = useUserStore()
 const router = useRouter()
-const isMobile = ref(false)
 const error = ref(false)
 const errorMessage = ref('')
 
@@ -82,19 +81,10 @@ async function onSubmit(values) {
     console.error(err.message)
   }
   if (!error.value) {
-    await router.push({ name: 'thank-you' })
+    await router.push({ name: 'success-registration' })
   }
 }
 function signUpWithGoogle() {
   userStore.registerUserWithGoogle()
 }
-
-function deviceSize() {
-  isMobile.value = window.innerWidth <= 768
-}
-
-onMounted(() => {
-  deviceSize()
-  window.addEventListener('resize', deviceSize)
-})
 </script>
