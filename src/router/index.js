@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LandingPage from '@/pages/LandingPage.vue'
 import RegisterPage from '@/pages/authorization/RegisterPage.vue'
-import SuccessRegistrationPage from '@/pages/authorization/SuccessRegistrationPage.vue'
-import SuccessVerifyPage from '@/pages/authorization/SuccessVerifyPage.vue'
+import SuccessRegistrationPage from '@/pages/notification/SuccessRegistrationPage.vue'
+import SuccessVerifyPage from '@/pages/notification/SuccessVerifyPage.vue'
 import LoginPage from '@/pages/authorization/LoginPage.vue'
+import ResendLinkPage from '@/pages/notification/ResendLinkPage.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -21,6 +22,7 @@ const router = createRouter({
           component: SuccessRegistrationPage,
         },
         { name: 'success-verified', path: '/success-verify', component: SuccessVerifyPage },
+        { name: 'resend-link', path: '/resend-link/:uuid', component: ResendLinkPage },
       ],
     },
   ],

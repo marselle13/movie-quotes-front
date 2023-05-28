@@ -30,5 +30,8 @@ export const useUserStore = defineStore('UserStore', {
         console.error(error)
       }
     },
+    async resendLink(uuid) {
+      await api.post('resend-link', { uuid })
+    },
   },
 })
