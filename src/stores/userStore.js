@@ -22,16 +22,23 @@ export const useUserStore = defineStore('UserStore', {
         password_confirmation: confirmation,
       })
     },
-    async registerUserWithGoogle() {
+    async authorizationWithGoogle() {
       try {
-        const response = await api.get('auth/google')
+        const response = await api.get('auth/google/redirect')
         window.location.href = response.data.redirect_url
       } catch (error) {
         console.error(error)
       }
     },
-    async resendLink(uuid) {
-      await api.post('resend-link', { uuid })
+    async callbackFromGoogle(code) {
+      await api.get('auth/google/callback', {
+        params: {
+          code,
+        },
+      })
     },
+  },
+  async resendLink(uuid) {
+    await api.post('resend-link', { uuid })
   },
 })

@@ -21,7 +21,7 @@ const router = createRouter({
           path: '/success-registration',
           component: SuccessRegistrationPage,
         },
-        { name: 'success-verified', path: '/success-verify', component: SuccessVerifyPage },
+        { name: 'success-verified', path: '/success-verified', component: SuccessVerifyPage },
         { name: 'resend-link', path: '/resend-link/:uuid', component: ResendLinkPage },
       ],
     },
