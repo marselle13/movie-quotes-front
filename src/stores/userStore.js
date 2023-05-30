@@ -22,6 +22,16 @@ export const useUserStore = defineStore('UserStore', {
         password_confirmation: confirmation,
       })
     },
+    async verifyEmail(query) {
+      const { uuid, hash, expires } = query
+      await api.get(`email/confirmation`, {
+        params: {
+          uuid,
+          hash,
+          expires,
+        },
+      })
+    },
     async authorizationWithGoogle() {
       try {
         const response = await api.get('auth/google/redirect')
@@ -37,8 +47,8 @@ export const useUserStore = defineStore('UserStore', {
         },
       })
     },
-  },
-  async resendLink(uuid) {
-    await api.post('resend-link', { uuid })
+    async resendLink(uuid) {
+      await api.post('resend-link', { uuid })
+    },
   },
 })

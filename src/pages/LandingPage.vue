@@ -38,6 +38,50 @@ import QuotesContainer from '@/components/layout/QuotesContainer.vue'
 import TheFooter from '@/components/layout/TheFooter.vue'
 
 import { useI18n } from 'vue-i18n'
+import { onBeforeMount, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/userStore'
 
 const { t, locale } = useI18n()
+const route = useRoute()
+const router = useRouter()
+const error = ref(false)
+const userStore = useUserStore()
+
+onBeforeMount(async () => {
+  if (route.query.code) {
+    error.value = false
+    const code = route.query.code
+    try {
+      await userStore.callbackFromGoogle(code)
+    } catch (err) {
+      error.value = true
+      console.error(err)
+    }
+    if (error.value) {
+      await router.push({ name: 'landing' })
+    } else {
+      await router.push({ name: 'success-verified' })
+    }
+  }
+  if (route.query.hash) {
+    error.value = false
+    try {
+      await userStore.verifyEmail(route.query)
+    } catch (err) {
+      error.value = true
+      console.error(err)
+    }
+    if (error.value) {
+      await router.push({
+        name: 'resend-link',
+        params: {
+          uuid: route.query.uuid,
+        },
+      })
+    } else {
+      await router.push({ name: 'success-verified' })
+    }
+  }
+})
 </script>

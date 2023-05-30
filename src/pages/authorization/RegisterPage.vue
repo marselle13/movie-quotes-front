@@ -56,13 +56,12 @@ import BaseButton from '@/components/ui/form/BaseButton.vue'
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { Form } from 'vee-validate'
 import { useUserStore } from '@/stores/userStore'
-import { onBeforeMount, ref } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
 const userStore = useUserStore()
-const route = useRoute()
 const router = useRouter()
 const error = ref(false)
 const errorMessage = ref('')
@@ -79,7 +78,7 @@ async function onSubmit(values) {
       }, 4000)
     }
     error.value = true
-    console.error(err.message)
+    console.error(err)
   }
   if (!error.value) {
     await router.push({ name: 'success-registration' })
@@ -88,22 +87,4 @@ async function onSubmit(values) {
 async function signUpWithGoogle() {
   await userStore.authorizationWithGoogle()
 }
-
-onBeforeMount(async () => {
-  if (route.query.code) {
-    error.value = false
-    const code = route.query.code
-    try {
-      await userStore.callbackFromGoogle(code)
-    } catch (err) {
-      error.value = true
-      console.error(err)
-    }
-    if (error.value) {
-      await router.push({ name: 'landing' })
-    } else {
-      await router.push({ name: 'success-verified' })
-    }
-  }
-})
 </script>
