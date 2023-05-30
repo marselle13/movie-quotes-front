@@ -9,7 +9,7 @@
         :class="{ wrapper: wrapper }"
       >
         <div class="text-center space-y-4 flex flex-col items-center">
-          <slot name="icon" v-if="iconSlot"></slot>
+          <slot name="icon"></slot>
           <h3 class="text-2xl md:text-3xl text-white text-center"><slot name="title"></slot></h3>
           <p class="text-[#6C757D]" v-if="infoSlot"><slot name="info"></slot></p>
         </div>
@@ -25,7 +25,6 @@ defineProps({ wrapper: { type: Boolean, required: false, default: false } })
 const slots = useSlots()
 
 const infoSlot = computed(() => slots.info)
-const iconSlot = computed(() => slots.icon)
 </script>
 <style scoped>
 @media (max-width: 767px) {

@@ -71,7 +71,7 @@ async function onSubmit(values) {
     error.value = false
     await userStore.registerUser(values)
   } catch (err) {
-    if (err.response.data.errors) {
+    if (err.response.data.errors?.email) {
       errorMessage.value = t('already_taken')
       setTimeout(() => {
         errorMessage.value = ''

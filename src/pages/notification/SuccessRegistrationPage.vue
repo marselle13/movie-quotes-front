@@ -16,7 +16,7 @@
 </template>
 <script setup>
 import AuthCard from '@/components/ui/AuthCard.vue'
-import SandCheck from '@/components/icons/SandCheck.vue'
+import SandCheck from '@/components/icons/SendCheck.vue'
 
 const redirectToEmail = 'https://mail.google.com/'
 </script>
