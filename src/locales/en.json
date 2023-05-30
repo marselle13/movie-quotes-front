@@ -17,5 +17,13 @@
   "confirm_password": "confirm password",
   "sign_up_google": "Sign up with Google",
   "have_account": "Already have an account",
-  "already_taken" : "The email has already been taken"
+  "already_taken" : "The email has already been taken",
+  "check_email": "Please check your email and follow the instructions to activate your account.",
+  "go_email": "Go to my email",
+  "thank_you": "Thank You!",
+  "activated": "Your account has been activated.",
+  "main_page": "Go to my news feed",
+  "link_expired": "Link expired!",
+  "expired_info": "Login link has expired, because you haven’t used it",
+  "another_link": "Request another link"
 }
