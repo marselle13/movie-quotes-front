@@ -31,7 +31,6 @@ async function resendLinkButton() {
     await userStore.resendLink(route.params.uuid)
   } catch (err) {
     error.value = true
-    console.error(err)
   }
   if (!error.value) {
     await router.push({ name: 'success-registration' })

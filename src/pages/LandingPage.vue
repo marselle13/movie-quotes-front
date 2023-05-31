@@ -56,7 +56,6 @@ onBeforeMount(async () => {
       await userStore.callbackFromGoogle(code)
     } catch (err) {
       error.value = true
-      console.error(err)
     }
     if (error.value) {
       await router.push({ name: 'landing' })
