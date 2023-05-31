@@ -33,12 +33,8 @@ export const useUserStore = defineStore('UserStore', {
       })
     },
     async authorizationWithGoogle() {
-      try {
-        const response = await api.get('auth/google/redirect')
-        window.location.href = response.data.redirect_url
-      } catch (error) {
-        console.error(error)
-      }
+      const response = await api.get('auth/google/redirect')
+      window.location.href = response.data.redirect_url
     },
     async callbackFromGoogle(code) {
       await api.get('auth/google/callback', {

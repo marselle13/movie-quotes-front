@@ -15,7 +15,7 @@
         :label="t('email')"
         :placeholder="t('enter_email')"
         rules="required|email"
-        :error="errorMessage"
+        :error="error ? t('already_taken') : ''"
       ></base-input>
       <base-input
         type="password"
@@ -64,7 +64,6 @@ const { t } = useI18n()
 const userStore = useUserStore()
 const router = useRouter()
 const error = ref(false)
-const errorMessage = ref('')
 
 async function onSubmit(values) {
   try {
@@ -72,13 +71,11 @@ async function onSubmit(values) {
     await userStore.registerUser(values)
   } catch (err) {
     if (err.response.data.errors?.email) {
-      errorMessage.value = t('already_taken')
+      error.value = true
       setTimeout(() => {
-        errorMessage.value = ''
+        error.value = false
       }, 4000)
     }
-    error.value = true
-    console.error(err)
   }
   if (!error.value) {
     await router.push({ name: 'success-registration' })

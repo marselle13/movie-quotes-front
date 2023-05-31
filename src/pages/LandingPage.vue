@@ -70,7 +70,6 @@ onBeforeMount(async () => {
       await userStore.verifyEmail(route.query)
     } catch (err) {
       error.value = true
-      console.error(err)
     }
     if (error.value) {
       await router.push({
