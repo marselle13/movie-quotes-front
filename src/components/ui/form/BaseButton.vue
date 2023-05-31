@@ -2,9 +2,17 @@
   <button
     class="text-white rounded font-medium text-sm md:text-base"
     :class="[buttonStyle, buttonAnimation]"
+    v-if="!link"
   >
     <slot></slot>
   </button>
+  <router-link
+    class="text-white rounded font-medium text-sm md:text-base text-center"
+    v-else
+    :to="to"
+    :class="[buttonStyle, buttonAnimation]"
+    ><slot></slot
+  ></router-link>
 </template>
 <script setup>
 import { computed } from 'vue'
@@ -12,6 +20,15 @@ import { computed } from 'vue'
 const props = defineProps({
   mode: { type: String, required: false },
   animation: { type: Boolean, required: false, default: false },
+  link: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  to: {
+    type: Object,
+    required: false,
+  },
 })
 
 const buttonStyle = computed(() => {

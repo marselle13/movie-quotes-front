@@ -19,18 +19,23 @@
         </template>
       </base-dropdown>
       <div class="flex flex-row-reverse md:flex-row items-center gap-2 md:gap-4">
-        <base-button class="py-1 md:w-32 md:py-2" :class="locale === 'en' ? 'w-20 ' : 'w-22'">{{
-          t('sign_up')
-        }}</base-button>
+        <base-button
+          :link="true"
+          :to="{ name: 'register' }"
+          class="py-1 md:w-32 md:py-2"
+          :class="locale === 'en' ? 'w-20 ' : 'w-22'"
+          >{{ t('sign_up') }}</base-button
+        >
         <base-button class="w-20 py-1 md:w-32 md:py-2" mode="flat">{{ t('log_in') }}</base-button>
       </div>
     </div>
   </header>
 </template>
 <script setup>
-import LanguageDropdown from '@/components/icons/LanguageDropdown.vue'
+import LanguageDropdown from '@/components/icons/LanguageDropdownIcon.vue'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { setLocale } from '@vee-validate/i18n'
 
 const { t, locale } = useI18n({ useScope: 'global' })
 
@@ -50,5 +55,6 @@ function changeLanguage(value) {
   localStorage.setItem('locale', value)
   locale.value = value
   document.documentElement.lang = value
+  setLocale(value)
 }
 </script>
