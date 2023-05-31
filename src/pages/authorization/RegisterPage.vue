@@ -15,7 +15,7 @@
         :label="t('email')"
         :placeholder="t('enter_email')"
         rules="required|email"
-        :error="error ? t('already_taken') : ''"
+        :error="error"
       ></base-input>
       <base-input
         type="password"
@@ -63,22 +63,22 @@ import { useRouter } from 'vue-router'
 const { t } = useI18n()
 const userStore = useUserStore()
 const router = useRouter()
-const error = ref(false)
+const error = ref('')
 
 async function onSubmit(values) {
   try {
-    error.value = false
-    await userStore.registerUser(values)
+    error.value = ''
+    const response = await userStore.registerUser(values)
+    if (response === 201) {
+      await router.push({ name: 'success-registration' })
+    }
   } catch (err) {
     if (err.response.data.errors?.email) {
-      error.value = true
+      error.value = t('already_taken')
       setTimeout(() => {
-        error.value = false
+        error.value = ''
       }, 4000)
     }
-  }
-  if (!error.value) {
-    await router.push({ name: 'success-registration' })
   }
 }
 async function signUpWithGoogle() {

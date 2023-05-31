@@ -15,12 +15,13 @@ export const useUserStore = defineStore('UserStore', {
   actions: {
     async registerUser(values) {
       const { name, email, password, confirmation } = values
-      await api.post('register', {
+      const response = await api.post('register', {
         name,
         email,
         password,
         password_confirmation: confirmation,
       })
+      return response.status
     },
     async verifyEmail(query) {
       const { uuid, hash, expires } = query
