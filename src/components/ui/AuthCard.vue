@@ -5,7 +5,7 @@
     >
       <div class="grid justify-items-center h-auto px-8">
         <div
-          class="md:bg-[#222030] md:rounded-lg fixed z-10 px-8 md:px-28 py-16 md:py-12 top-20 md:top-32 h-full w-full md:h-auto md:w-auto overflow-y-auto"
+          class="md:bg-[#222030] md:rounded-lg fixed z-10 px-8 md:px-28 md:py-12 top-20 md:top-26 h-full w-full md:h-auto md:w-auto overflow-y-auto"
           :class="wrapperStyle"
         >
           <div class="text-center space-y-4 flex flex-col items-center">
