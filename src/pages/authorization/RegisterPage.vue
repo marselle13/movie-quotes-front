@@ -16,6 +16,7 @@
         :placeholder="t('enter_email')"
         rules="required|email"
         :error="error"
+        @update-prop="updateError"
       ></base-input>
       <base-input
         type="password"
@@ -41,7 +42,7 @@
         </base-button>
         <p class="text-[#6C757D]">
           {{ t('have_account')
-          }}<router-link class="ml-1 text-[#0D6EFD] underline" to="#">{{
+          }}<router-link class="ml-1 text-[#0D6EFD] underline" :to="{ name: 'login' }">{{
             t('log_in')
           }}</router-link>
         </p>
@@ -51,8 +52,6 @@
 </template>
 <script setup>
 import AuthCard from '@/components/ui/AuthCard.vue'
-import BaseInput from '@/components/ui/form/BaseInput.vue'
-import BaseButton from '@/components/ui/form/BaseButton.vue'
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { Form } from 'vee-validate'
 import { useUserStore } from '@/stores/userStore'
@@ -75,13 +74,13 @@ async function onSubmit(values) {
   } catch (err) {
     if (err.response.data.errors?.email) {
       error.value = t('already_taken')
-      setTimeout(() => {
-        error.value = ''
-      }, 4000)
     }
   }
 }
 async function signUpWithGoogle() {
   await userStore.authorizationWithGoogle()
+}
+function updateError() {
+  error.value = ''
 }
 </script>
