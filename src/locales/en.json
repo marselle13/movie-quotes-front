@@ -1,6 +1,7 @@
 {
   "sign_up" : "Sign up",
   "log_in" : "Log in",
+  "sign_in": "Sign in",
   "movie_quotes" : "Movie Quotes",
   "title": "Find any quote in millions of movie lines",
   "get_started" : "Get started",
@@ -25,5 +26,11 @@
   "main_page": "Go to my news feed",
   "link_expired": "Link expired!",
   "expired_info": "Login link has expired, because you haven’t used it",
-  "another_link": "Request another link"
+  "another_link": "Request another link",
+  "log_in_account": "Log in to your account",
+  "log_in_info": "Welcome back! Please enter your details.",
+  "remember_me": "Remember me",
+  "forget_password": "Forget Password?",
+  "no_account" : "Don't have an account yet?",
+  "wrong_credentials": "Your provided credentials is not correct"
 }
