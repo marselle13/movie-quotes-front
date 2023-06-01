@@ -79,6 +79,9 @@ async function onSubmit(values) {
     await router.push({ name: 'landing' })
   }
 }
+async function signInWithGoogle() {
+  await userStore.authorizationWithGoogle()
+}
 function updateError() {
   error.value = ''
 }

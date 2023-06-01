@@ -50,18 +50,10 @@ const userStore = useUserStore()
 
 onBeforeMount(async () => {
   if (route.query.code) {
-    error.value = false
     const code = route.query.code
-    try {
-      await userStore.registerUser({ code })
-    } catch (err) {
-      error.value = true
-    }
-    if (error.value) {
-      await router.push({ name: 'landing' })
-    } else {
-      await router.push({ name: 'success-verified' })
-    }
+    const response = await userStore.loginUser({ code: code })
+    console.log(response)
+    await router.push({ name: 'landing' })
   }
   if (route.query.hash) {
     error.value = false
