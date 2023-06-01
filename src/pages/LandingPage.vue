@@ -53,7 +53,7 @@ onBeforeMount(async () => {
     error.value = false
     const code = route.query.code
     try {
-      await userStore.callbackFromGoogle(code)
+      await userStore.registerUser({ code })
     } catch (err) {
       error.value = true
     }

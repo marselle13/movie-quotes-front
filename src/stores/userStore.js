@@ -14,35 +14,27 @@ export const useUserStore = defineStore('UserStore', {
   },
   actions: {
     async registerUser(values) {
-      const { name, email, password, confirmation } = values
-      const response = await api.post('api/register', {
-        name,
-        email,
-        password,
-        password_confirmation: confirmation,
-      })
-      return response.status
-    },
-    async verifyEmail(query) {
-      const { uuid, hash, expires } = query
-      await api.get(`api/email/confirmation`, {
-        params: {
-          uuid,
-          hash,
-          expires,
-        },
-      })
+      const { name, email, password, confirmation, code } = values
+      if (email) {
+        const response = await api.post('api/register', {
+          name,
+          email,
+          password,
+          password_confirmation: confirmation,
+        })
+        return response.status
+      }
+      if (code) {
+        return await api.get('api/auth/google/register', { params: { code } })
+      }
     },
     async authorizationWithGoogle() {
       const response = await api.get('api/auth/google/redirect')
       window.location.href = response.data.redirect_url
     },
-    async callbackFromGoogle(code) {
-      await api.get('api/auth/google/callback', {
-        params: {
-          code,
-        },
-      })
+    async verifyEmail(query) {
+      const { uuid, hash, expires } = query
+      await api.get(`api/email/confirmation`, { params: { uuid, hash, expires } })
     },
     async resendLink(uuid) {
       await api.post('api/resend-link', { uuid })

@@ -1,7 +1,7 @@
 <template>
   <auth-card>
-    <template #title> Log in to your account</template>
-    <template #info> Welcome back! Please enter your details.</template>
+    <template #title>{{ t('log_in_account') }}</template>
+    <template #info> {{ t('log_in_info') }}</template>
     <Form @submit="onSubmit" class="md:w-[450px] mt-5 space-y-4">
       <base-input
         id="username_email"
@@ -28,25 +28,26 @@
             class="accent-[#E31221]"
             :value="true"
           />
-          <label for="remember" class="text-white">Remember me</label>
+          <label for="remember" class="text-white">{{ t('remember_me') }}</label>
         </div>
         <div>
-          <router-link class="ml-1 text-[#0D6EFD] underline" to="#"> Forget Password </router-link>
+          <router-link class="ml-1 text-[#0D6EFD] underline" to="#">
+            {{ t('forget_password') }}
+          </router-link>
         </div>
       </div>
       <div class="space-y-4 text-center">
-        <base-button class="w-full py-2">Sign in</base-button>
-        <base-button type="button" mode="flat" class="w-full py-2">
+        <base-button class="w-full py-2">{{ t('sign_in') }}</base-button>
+        <base-button type="button" mode="flat" class="w-full py-2" @click="signInWithGoogle">
           <div class="flex items-center justify-center gap-2">
-            <GoogleIcon /> Sign in with Google
+            <GoogleIcon /> {{ t('sign_in_google') }}
           </div>
         </base-button>
         <p class="text-[#6C757D]">
-          Already have an account?<router-link
-            class="ml-1 text-[#0D6EFD] underline"
-            :to="{ name: 'register' }"
-            >Sign up</router-link
-          >
+          {{ t('no_account')
+          }}<router-link class="ml-1 text-[#0D6EFD] underline" :to="{ name: 'register' }">{{
+            t('sign_up')
+          }}</router-link>
         </p>
       </div>
     </Form>
