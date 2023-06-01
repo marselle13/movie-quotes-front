@@ -8,6 +8,7 @@ configure({
     en: {
       ...en,
       names: {
+        username_email: 'Name or Email',
         name: 'Name',
         email: 'Email',
         password: 'Password',
@@ -21,6 +22,7 @@ configure({
     ka: {
       ...ka,
       names: {
+        username_email: 'სახელი ან ელ-ფოსტა',
         name: 'სახელი',
         email: 'ელ-ფოსტა',
         password: 'პაროლი',
