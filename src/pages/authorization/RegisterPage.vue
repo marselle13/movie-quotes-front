@@ -7,7 +7,9 @@
         id="name"
         :label="t('name')"
         :placeholder="t('enter_name')"
+        :error="error.name"
         rules="required|min:3|max:15|alpha_num"
+        @update-prop="updateError"
       ></base-input>
       <base-input
         type="email"
@@ -15,7 +17,7 @@
         :label="t('email')"
         :placeholder="t('enter_email')"
         rules="required|email"
-        :error="error"
+        :error="error.email"
         @update-prop="updateError"
       ></base-input>
       <base-input
@@ -55,25 +57,31 @@ import AuthCard from '@/components/ui/AuthCard.vue'
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { Form } from 'vee-validate'
 import { useUserStore } from '@/stores/userStore'
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
 const userStore = useUserStore()
 const router = useRouter()
-const error = ref('')
+const error = reactive({
+  email: '',
+  name: '',
+})
 
 async function onSubmit(values) {
   try {
     error.value = ''
     const response = await userStore.registerUser(values)
     if (response === 201) {
-      await router.push({ name: 'success-registration' })
+      await router.push({ name: 'success-message', params: { message: 'registration' } })
     }
   } catch (err) {
     if (err.response.data.errors?.email) {
-      error.value = t('already_taken')
+      error.email = t('already_taken_email')
+    }
+    if (err.response.data.errors?.name) {
+      error.name = t('already_taken_name')
     }
   }
 }
@@ -81,6 +89,7 @@ async function signUpWithGoogle() {
   await userStore.authorizationWithGoogle()
 }
 function updateError() {
-  error.value = ''
+  error.email = ''
+  error.name = ''
 }
 </script>
