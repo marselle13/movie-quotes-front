@@ -26,7 +26,13 @@
           :class="locale === 'en' ? 'w-20 ' : 'w-22'"
           >{{ t('sign_up') }}</base-button
         >
-        <base-button class="w-20 py-1 md:w-32 md:py-2" mode="flat">{{ t('log_in') }}</base-button>
+        <base-button
+          :link="true"
+          :to="{ name: 'login' }"
+          class="w-20 py-1 md:w-32 md:py-2"
+          mode="flat"
+          >{{ t('log_in') }}</base-button
+        >
       </div>
     </div>
   </header>

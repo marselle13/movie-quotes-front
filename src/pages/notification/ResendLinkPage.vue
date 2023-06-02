@@ -1,10 +1,8 @@
 <template>
-  <auth-card :wrapper="true">
+  <auth-card :wrapper="true" notification>
     <template #icon><ExpiredIcon /></template>
     <template #title> {{ t('link_expired') }}</template>
-    <div
-      class="flex flex-col justify-center items-center md:w-[385px] text-white text-center mt-8 space-y-10"
-    >
+    <div class="flex flex-col justify-center items-center text-white text-center mt-8 space-y-10">
       <p>{{ t('expired_info') }}</p>
       <BaseButton class="w-full py-2" @click="resendLinkButton">{{ t('another_link') }}</BaseButton>
     </div>

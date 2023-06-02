@@ -2,7 +2,7 @@
   <auth-card>
     <template #title> {{ t('create_account') }} </template>
     <template #info> {{ t('start_journey') }}</template>
-    <Form @submit="onSubmit" class="md:w-[450px] mt-5 space-y-4">
+    <Form @submit="onSubmit" class="mt-5 space-y-4">
       <base-input
         id="name"
         :label="t('name')"

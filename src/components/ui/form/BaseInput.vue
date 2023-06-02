@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="relative">
-        <ErrorMessage :name="id" class="absolute text-[11px] -top-1 text-[#DC3545]"></ErrorMessage>
+        <ErrorMessage :name="id" class="absolute text-[9px] -top-1 text-[#DC3545]"></ErrorMessage>
         <p
           class="absolute text-[11px] -top-1 text-[#DC3545]"
           v-if="error && meta.valid && typeof error === 'string'"

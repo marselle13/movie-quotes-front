@@ -2,7 +2,7 @@
   <auth-card>
     <template #title>{{ t('log_in_account') }}</template>
     <template #info> {{ t('log_in_info') }}</template>
-    <Form @submit="onSubmit" class="md:w-[450px] mt-5 space-y-4">
+    <Form @submit="onSubmit" class="mt-5 space-y-4">
       <base-input
         id="username_email"
         :label="t('email')"
@@ -31,7 +31,7 @@
           <label for="remember" class="text-white">{{ t('remember_me') }}</label>
         </div>
         <div>
-          <router-link class="ml-1 text-[#0D6EFD] underline" to="#">
+          <router-link class="ml-1 text-[#0D6EFD] underline" :to="{ name: 'forget-password' }">
             {{ t('forget_password') }}
           </router-link>
         </div>

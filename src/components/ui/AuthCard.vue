@@ -5,10 +5,12 @@
     >
       <div class="grid justify-items-center h-auto px-8">
         <div
-          class="md:bg-[#222030] md:rounded-lg fixed z-10 px-8 md:px-28 md:py-12 top-20 md:top-26 h-full w-full md:h-auto md:w-auto overflow-y-auto"
+          class="md:bg-[#222030] md:rounded-lg fixed z-10 px-8 md:px-28 md:py-12 top-20 md:top-26 h-full w-full md:h-auto overflow-y-auto"
           :class="{
             'wrapper relative pt-20 pb-24 px-2 before:absolute before:w-full before:h-full before:top-0  before:left-0 before:opacity-30 before:backdrop-blur-xl before:rotate-180 rounded-lg before:-z-10':
               wrapper,
+            'md:w-[600px]': notification,
+            'md:w-[650px]': !notification,
           }"
         >
           <div class="text-center space-y-4 flex flex-col items-center">
@@ -23,7 +25,10 @@
   </section>
 </template>
 <script setup>
-defineProps({ wrapper: { type: Boolean, required: false, default: false } })
+defineProps({
+  wrapper: { type: Boolean, required: false, default: false },
+  notification: { type: Boolean, required: false, default: false },
+})
 </script>
 <style scoped>
 @media (max-width: 767px) {
