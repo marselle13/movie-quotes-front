@@ -9,6 +9,7 @@
         :placeholder="t('enter_email')"
         rules="required|min:3"
         :error="!!error"
+        @update-prop="updateError"
       ></base-input>
       <base-input
         type="password"
@@ -28,10 +29,15 @@
             class="accent-[#E31221]"
             :value="true"
           />
-          <label for="remember" class="text-white">{{ t('remember_me') }}</label>
+          <label for="remember" class="text-white text-sm md:text-base">{{
+            t('remember_me')
+          }}</label>
         </div>
         <div>
-          <router-link class="ml-1 text-[#0D6EFD] underline" :to="{ name: 'forget-password' }">
+          <router-link
+            class="ml-1 text-[#0D6EFD] underline text-sm md:text-base"
+            :to="{ name: 'forget-password' }"
+          >
             {{ t('forget_password') }}
           </router-link>
         </div>

@@ -51,8 +51,7 @@ const userStore = useUserStore()
 onBeforeMount(async () => {
   if (route.query.code) {
     const code = route.query.code
-    const response = await userStore.loginUser({ code: code })
-    console.log(response)
+    await userStore.loginUser({ code: code })
     await router.push({ name: 'landing' })
   }
   if (route.query.hash) {
@@ -70,7 +69,7 @@ onBeforeMount(async () => {
         },
       })
     } else {
-      await router.push({ name: 'success-verified' })
+      await router.push({ name: 'success-message', params: { message: 'verify' } })
     }
   }
 })
