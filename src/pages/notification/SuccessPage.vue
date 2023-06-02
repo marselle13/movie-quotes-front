@@ -90,7 +90,7 @@ function setValues(values) {
 onBeforeMount(() => {
   const message = successMessage()
   if (!message) {
-    router.push({ name: 'landing' })
+    router.replace('/not-found')
   }
 })
 </script>
