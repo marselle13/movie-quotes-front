@@ -2,33 +2,39 @@
   <section>
     <div
       class="fixed top-0 left-0 h-full w-full bg-[#222030] md:bg-transparent md:backdrop-blur-sm background"
-    >
-      <div class="grid justify-items-center h-auto px-8">
-        <div
-          class="md:bg-[#222030] md:rounded-lg fixed z-10 px-8 md:px-28 md:py-12 top-20 md:top-26 h-full w-full md:h-auto overflow-y-auto"
-          :class="{
-            'wrapper relative pt-20 pb-24 px-2 before:absolute before:w-full before:h-full before:top-0  before:left-0 before:opacity-30 before:backdrop-blur-xl before:rotate-180 rounded-lg before:-z-10':
-              wrapper,
-            'md:w-[600px]': notification,
-            'md:w-[650px]': !notification,
-          }"
-        >
-          <div class="text-center space-y-4 flex flex-col items-center">
-            <slot name="icon"></slot>
-            <h3 class="text-2xl md:text-3xl text-white text-center"><slot name="title"></slot></h3>
-            <p class="text-[#6C757D]"><slot name="info"></slot></p>
-          </div>
-          <slot></slot>
+      @click="closeModal"
+    ></div>
+    <div class="grid justify-items-center h-auto px-8">
+      <div
+        class="md:bg-[#222030] fixed md:rounded-lg z-10 px-8 md:px-28 md:py-12 md:top-26 w-full md:h-auto overflow-hidden"
+        :class="{
+          'wrapper pt-20 pb-24 px-2 w-[90%] before:absolute before:w-full before:h-full before:top-0  before:left-0 before:opacity-30 before:backdrop-blur-xl before:rotate-180 rounded-lg before:-z-10':
+            wrapper,
+          'md:w-[600px]': notification,
+          'md:w-[650px]': !notification,
+        }"
+      >
+        <div class="text-center space-y-4 flex flex-col items-center">
+          <slot name="icon"></slot>
+          <h3 class="text-2xl md:text-3xl text-white text-center"><slot name="title"></slot></h3>
+          <p class="text-[#6C757D]"><slot name="info"></slot></p>
         </div>
+        <slot></slot>
       </div>
     </div>
   </section>
 </template>
 <script setup>
+import { useRouter } from 'vue-router'
+
 defineProps({
   wrapper: { type: Boolean, required: false, default: false },
   notification: { type: Boolean, required: false, default: false },
 })
+const router = useRouter()
+function closeModal() {
+  router.replace({ name: 'landing' })
+}
 </script>
 <style scoped>
 @media (max-width: 767px) {

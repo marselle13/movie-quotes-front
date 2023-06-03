@@ -33,7 +33,7 @@
   "log_in_info": "Welcome back! Please enter your details.",
   "remember_me": "Remember me",
   "forget_password": "Forget Password?",
-  "no_account" : "Don't have an account yet?",
+  "no_account" : "Don't have account yet?",
   "wrong_credentials": "Your provided credentials is not correct",
   "recover_title" : "Check your email",
   "recover_info" : "We have sent a password recover instructions to your email",
