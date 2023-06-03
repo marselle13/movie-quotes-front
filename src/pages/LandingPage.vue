@@ -49,12 +49,13 @@ const error = ref(false)
 const userStore = useUserStore()
 
 onBeforeMount(async () => {
-  if (route.query.code) {
+  const { code, hash, uuid } = route.query
+  if (code) {
     const code = route.query.code
     await userStore.loginUser({ code: code })
     await router.push({ name: 'landing' })
   }
-  if (route.query.hash) {
+  if (uuid && hash && route.name === 'landing') {
     error.value = false
     try {
       await userStore.verifyEmail(route.query)
