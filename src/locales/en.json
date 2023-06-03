@@ -17,6 +17,7 @@
   "enter_password": "Enter Your password",
   "confirm_password": "confirm password",
   "sign_up_google": "Sign up with Google",
+  "sign_in_google": "Sign in with Google",
   "have_account": "Already have an account?",
   "already_taken_email" : "The email has already been taken",
   "already_taken_name" : "The name has already been taken",
@@ -46,5 +47,5 @@
   "back_login" : "Back to log in",
   "create_password": "Create new password",
   "create_info" : "Your new password must be different from previous used passwords",
-  "reset-password": "Reset Password"
+  "reset_password": "Reset Password"
 }

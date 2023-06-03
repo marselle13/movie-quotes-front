@@ -31,7 +31,7 @@ async function resendLinkButton() {
     error.value = true
   }
   if (!error.value) {
-    await router.push({ name: 'success-registration' })
+    await router.push({ name: 'success-message', params: { message: 'registration' } })
   }
 }
 </script>

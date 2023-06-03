@@ -10,6 +10,7 @@
         :placeholder="t('enter_password')"
         rules="required|min:8|max:15|alpha_num"
         ref="password"
+        :error="!!errorMessage"
         @update-prop="updateError"
       ></base-input>
       <base-input
