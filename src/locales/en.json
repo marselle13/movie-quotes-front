@@ -17,7 +17,7 @@
   "enter_password": "Enter Your password",
   "confirm_password": "confirm password",
   "sign_up_google": "Sign up with Google",
-  "have_account": "Already have an account",
+  "have_account": "Already have an account?",
   "already_taken_email" : "The email has already been taken",
   "already_taken_name" : "The name has already been taken",
   "check_email": "Please check your email and follow the instructions to activate your account.",
@@ -37,5 +37,14 @@
   "recover_title" : "Check your email",
   "recover_info" : "We have sent a password recover instructions to your email",
   "update_title":  "Success!",
-  "update_info": "Your Password changed successfully"
+  "update_info": "Your Password changed successfully",
+  "not_verified": "The selected email is not verified",
+  "email_invalid": "The selected email is invalid.",
+  "same_password": "The new password cannot be the same as the current password.",
+  "forget_info": "Enter the email and we’ll send an email with instructions to reset your password",
+  "send_instructions": "Send Instructions",
+  "back_login" : "Back to log in",
+  "create_password": "Create new password",
+  "create_info" : "Your new password must be different from previous used passwords",
+  "reset-password": "Reset Password"
 }

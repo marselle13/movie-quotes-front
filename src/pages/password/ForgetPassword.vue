@@ -1,9 +1,9 @@
 <template>
   <auth-card>
-    <template #title>Forgot password?</template>
+    <template #title>{{ t('forget_password') }}</template>
     <template #info>
-      Enter the email and we’ll send an email with instructions to reset your password</template
-    >
+      {{ t('forget_info') }}
+    </template>
     <Form @submit="onSubmit" class="mt-5 space-y-4">
       <base-input
         type="email"
@@ -14,10 +14,11 @@
         :error="error"
         @update-prop="updateError"
       ></base-input>
-      <base-button class="w-full py-2">Send instructions</base-button>
+      <base-button class="w-full py-2">{{ t('send_instructions') }}</base-button>
       <div class="flex justify-center">
-        <router-link :to="{ name: 'login' }" class="text-[#6C757D] inline-flex items-center gap-3"
-          ><BackIcon />Back to log in</router-link
+        <router-link :to="{ name: 'login' }" class="text-[#6C757D] inline-flex items-center gap-3">
+          <BackIcon />
+          {{ t('back_login') }}</router-link
         >
       </div>
     </Form>

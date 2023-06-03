@@ -1,7 +1,7 @@
 <template>
   <auth-card>
-    <template #title>Create new password</template>
-    <template #info> Your new password must be different from previous used passwords</template>
+    <template #title>{{ t('create_password') }}</template>
+    <template #info> {{ t('create_info') }}</template>
     <Form @submit="onSubmit" class="mt-5 space-y-4">
       <base-input
         type="password"
@@ -21,10 +21,10 @@
         :error="errorMessage"
         @update-prop="updateError"
       ></base-input>
-      <base-button class="w-full py-2">Reset Password</base-button>
+      <base-button class="w-full py-2">{{ t('reset_password') }}</base-button>
       <div class="flex justify-center pt-6">
         <router-link :to="{ name: 'login' }" class="text-[#6C757D] inline-flex items-center gap-3"
-          ><BackIcon />Back to log in</router-link
+          ><BackIcon />{{ t('back_login') }}</router-link
         >
       </div>
     </Form>
