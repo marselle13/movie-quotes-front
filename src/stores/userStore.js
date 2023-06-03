@@ -45,5 +45,23 @@ export const useUserStore = defineStore('UserStore', {
       const response = await api.get('api/user')
       return response.data
     },
+    async resetPassword(values) {
+      const { email } = values
+      await api.post('api/reset-password', { email })
+    },
+    async checkResetPasswordUrl(query) {
+      const { uuid, hash } = query
+      return await api.get('api/update-password', { params: { uuid, hash } })
+    },
+    async updatePassword(values, query) {
+      const { uuid, hash } = query
+      const { password, confirmation } = values
+      await api.patch('api/update-password', {
+        password,
+        password_confirmation: confirmation,
+        uuid,
+        hash,
+      })
+    },
   },
 })
