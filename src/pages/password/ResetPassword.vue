@@ -62,8 +62,8 @@ function updateError() {
 }
 
 onBeforeMount(async () => {
-  const { uuid, hash } = route.query
-  if (uuid && hash) {
+  const { uuid, token } = route.query
+  if (uuid && token) {
     try {
       await passwordService.checkResetPasswordUrl(route.query)
     } catch (err) {

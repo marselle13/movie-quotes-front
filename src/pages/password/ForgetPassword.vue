@@ -44,7 +44,7 @@ async function onSubmit(values) {
   } catch (err) {
     if (err.response.data.errors.email[0] === 'not verified') {
       error.value = t('not_verified')
-    } else {
+    } else if (err.response.data.errors.email[0] === 'no email') {
       error.value = t('email_invalid')
     }
   }

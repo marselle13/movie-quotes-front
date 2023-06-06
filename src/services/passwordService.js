@@ -5,17 +5,17 @@ export const usePasswordService = () => {
     return await api.post('api/reset-password', { email })
   }
   async function checkResetPasswordUrl(query) {
-    const { uuid, hash } = query
-    return await api.get('api/update-password', { params: { uuid, hash } })
+    const { uuid, token } = query
+    return await api.get('api/update-password', { params: { uuid, token } })
   }
   async function updatePassword(values, query) {
-    const { uuid, hash } = query
+    const { uuid, token } = query
     const { password, confirmation } = values
     return await api.patch('api/update-password', {
       password,
       password_confirmation: confirmation,
       uuid,
-      hash,
+      token,
     })
   }
 
