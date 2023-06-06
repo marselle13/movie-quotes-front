@@ -38,40 +38,43 @@ import QuotesContainer from '@/components/layout/QuotesContainer.vue'
 import TheFooter from '@/components/layout/TheFooter.vue'
 
 import { useI18n } from 'vue-i18n'
-import { onBeforeMount, ref } from 'vue'
+import { onBeforeMount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useEmailService } from '@/services/emailService'
 import { useUserStore } from '@/stores/userStore'
 
 const { t, locale } = useI18n()
 const route = useRoute()
 const router = useRouter()
-const error = ref(false)
+const emailService = useEmailService()
 const userStore = useUserStore()
 
-onBeforeMount(async () => {
-  const { code, hash, uuid } = route.query
+onBeforeMount(() => {
+  registerWithGoogle()
+  verifyUser()
+})
+
+async function registerWithGoogle() {
+  const { code } = route.query
   if (code) {
     const code = route.query.code
-    await userStore.loginUser({ code: code })
+    await userStore.loginData({ code })
     await router.push({ name: 'landing' })
   }
+}
+async function verifyUser() {
+  const { hash, uuid } = route.query
   if (uuid && hash && route.name === 'landing') {
-    error.value = false
     try {
-      await userStore.verifyEmail(route.query)
-    } catch (err) {
-      error.value = true
-    }
-    if (error.value) {
-      await router.push({
-        name: 'resend-link',
-        params: {
-          uuid: route.query.uuid,
-        },
-      })
-    } else {
+      await emailService.verifyEmail(route.query)
       await router.push({ name: 'success-message', params: { message: 'verify' } })
+    } catch (err) {
+      if (err.response.status === 404 || err.response.status === 400) {
+        await router.push({ name: 'landing' })
+      } else if (err.response.status === 410) {
+        await router.push({ name: 'resend-link', params: { uuid: route.query.uuid } })
+      }
     }
   }
-})
+}
 </script>

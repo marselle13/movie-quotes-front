@@ -10,7 +10,7 @@
         :placeholder="t('enter_password')"
         rules="required|min:8|max:15|alpha_num"
         ref="password"
-        :error="!!errorMessage"
+        :error="!!error"
         @update-prop="updateError"
       ></base-input>
       <base-input
@@ -19,7 +19,7 @@
         :label="t('confirm_password')"
         :placeholder="t('confirm_password')"
         rules="required|confirmed:@password"
-        :error="errorMessage"
+        :error="error"
         @update-prop="updateError"
       ></base-input>
       <base-button class="w-full py-2">{{ t('reset_password') }}</base-button>
@@ -39,46 +39,36 @@ import BaseButton from '@/components/ui/form/BaseButton.vue'
 import BackIcon from '@/components/icons/BackIcon.vue'
 import { onBeforeMount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/userStore'
+import { usePasswordService } from '@/services/passwordService'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
-const userStore = useUserStore()
-const error = ref(true)
-const errorMessage = ref('')
+const passwordService = usePasswordService()
+const error = ref('')
 
 async function onSubmit(values) {
   try {
-    errorMessage.value = ''
-    error.value = false
-    await userStore.updatePassword(values, route.query)
+    await passwordService.updatePassword(values, route.query)
+    await router.push({ name: 'success-message', params: { message: 'update' } })
   } catch (err) {
     if (err.response.data.errors.password[0] === 'Same Password') {
-      errorMessage.value = t('same_password')
+      error.value = t('same_password')
     }
-    error.value = true
-  }
-  if (!errorMessage.value) {
-    await router.push({ name: 'success-message', params: { message: 'update' } })
   }
 }
 function updateError() {
-  errorMessage.value = ''
+  error.value = ''
 }
 
 onBeforeMount(async () => {
   const { uuid, hash } = route.query
   if (uuid && hash) {
     try {
-      error.value = false
-      await userStore.checkResetPasswordUrl(route.query)
+      await passwordService.checkResetPasswordUrl(route.query)
     } catch (err) {
-      error.value = true
+      await router.replace({ name: 'landing' })
     }
-  }
-  if (error.value) {
-    await router.replace({ name: 'landing' })
   }
 })
 </script>

@@ -56,13 +56,13 @@
 import AuthCard from '@/components/ui/AuthCard.vue'
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { Form } from 'vee-validate'
-import { useUserStore } from '@/stores/userStore'
 import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import { useAuthService } from '@/services/authService'
 
 const { t } = useI18n()
-const userStore = useUserStore()
+const authService = useAuthService()
 const router = useRouter()
 const error = reactive({
   email: '',
@@ -71,11 +71,8 @@ const error = reactive({
 
 async function onSubmit(values) {
   try {
-    error.value = ''
-    const response = await userStore.registerUser(values)
-    if (response === 201) {
-      await router.push({ name: 'success-message', params: { message: 'registration' } })
-    }
+    await authService.registerUser(values)
+    await router.push({ name: 'success-message', params: { message: 'registration' } })
   } catch (err) {
     if (err.response.data.errors?.email) {
       error.email = t('already_taken_email')
@@ -86,7 +83,8 @@ async function onSubmit(values) {
   }
 }
 async function signUpWithGoogle() {
-  await userStore.authorizationWithGoogle()
+  const response = await authService.authorizationWithGoogle()
+  window.location.href = response.data.redirect_url
 }
 function updateError() {
   error.email = ''

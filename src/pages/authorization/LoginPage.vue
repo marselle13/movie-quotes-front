@@ -66,27 +66,27 @@ import { Form, Field } from 'vee-validate'
 import { useUserStore } from '@/stores/userStore'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthService } from '@/services/authService'
 
 const { t } = useI18n()
 const userStore = useUserStore()
+const authService = useAuthService()
+
 const router = useRouter()
 const error = ref('')
 
 async function onSubmit(values) {
   try {
-    error.value = ''
-    await userStore.loginUser(values)
+    await userStore.loginData(values)
+    await router.push({ name: 'landing' })
   } catch (err) {
-    if (err.response.status) {
+    if (err.response.status === 401) {
       error.value = t('wrong_credentials')
     }
   }
-  if (!error.value) {
-    await router.push({ name: 'landing' })
-  }
 }
 async function signInWithGoogle() {
-  await userStore.authorizationWithGoogle()
+  await authService.authorizationWithGoogle()
 }
 function updateError() {
   error.value = ''

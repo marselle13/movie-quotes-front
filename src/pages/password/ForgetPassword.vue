@@ -26,34 +26,27 @@
 </template>
 <script setup>
 import AuthCard from '@/components/ui/AuthCard.vue'
+import BackIcon from '@/components/icons/BackIcon.vue'
 import { Form } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
-import BackIcon from '@/components/icons/BackIcon.vue'
-import { useUserStore } from '@/stores/userStore'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { usePasswordService } from '@/services/passwordService'
 
 const { t } = useI18n()
-const userStore = useUserStore()
+const passwordService = usePasswordService()
 const router = useRouter()
 const error = ref('')
 async function onSubmit(values) {
   try {
-    await userStore.resetPassword(values)
+    await passwordService.resetPassword(values)
+    await router.push({ name: 'success-message', params: { message: 'recover' } })
   } catch (err) {
     if (err.response.data.errors.email[0] === 'not verified') {
       error.value = t('not_verified')
     } else {
       error.value = t('email_invalid')
     }
-  }
-  if (!error.value) {
-    await router.push({
-      name: 'success-message',
-      params: {
-        message: 'recover',
-      },
-    })
   }
 }
 function updateError() {
