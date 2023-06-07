@@ -14,6 +14,7 @@ import BaseButton from '@/components/ui/form/BaseButton.vue'
 import English from '@/locales/en.json'
 import Georgian from '@/locales/ka.json'
 import AuthCard from '@/components/ui/AuthCard.vue'
+import BaseInput from '@/components/ui/form/BaseInput.vue'
 
 const i18n = createI18n({
   legacy: false,
@@ -35,6 +36,7 @@ app.use(pinia)
 
 app.component('base-dropdown', BaseDropdown)
 app.component('base-button', BaseButton)
+app.component('base-input', BaseInput)
 app.component('auth-card', AuthCard)
 
 app.mount('#app')

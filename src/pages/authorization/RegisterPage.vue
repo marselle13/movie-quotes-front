@@ -1,13 +1,15 @@
 <template>
-  <auth-card>
+  <auth-card class="-mt-12 md:mt-0">
     <template #title> {{ t('create_account') }} </template>
     <template #info> {{ t('start_journey') }}</template>
-    <Form @submit="onSubmit" class="md:w-[450px] mt-5 space-y-4">
+    <Form @submit="onSubmit" class="mt-5 space-y-4">
       <base-input
         id="name"
         :label="t('name')"
         :placeholder="t('enter_name')"
+        :error="error.name"
         rules="required|min:3|max:15|alpha_num"
+        @update-prop="updateError"
       ></base-input>
       <base-input
         type="email"
@@ -15,7 +17,8 @@
         :label="t('email')"
         :placeholder="t('enter_email')"
         rules="required|email"
-        :error="error"
+        :error="error.email"
+        @update-prop="updateError"
       ></base-input>
       <base-input
         type="password"
@@ -41,7 +44,7 @@
         </base-button>
         <p class="text-[#6C757D]">
           {{ t('have_account')
-          }}<router-link class="ml-1 text-[#0D6EFD] underline" to="#">{{
+          }}<router-link class="ml-1 text-[#0D6EFD] underline" :to="{ name: 'login' }">{{
             t('log_in')
           }}</router-link>
         </p>
@@ -51,37 +54,40 @@
 </template>
 <script setup>
 import AuthCard from '@/components/ui/AuthCard.vue'
-import BaseInput from '@/components/ui/form/BaseInput.vue'
-import BaseButton from '@/components/ui/form/BaseButton.vue'
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { Form } from 'vee-validate'
-import { useUserStore } from '@/stores/userStore'
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import { useAuthService } from '@/services/authService'
 
 const { t } = useI18n()
-const userStore = useUserStore()
+const authService = useAuthService()
 const router = useRouter()
-const error = ref('')
+const error = reactive({
+  email: '',
+  name: '',
+})
 
 async function onSubmit(values) {
   try {
-    error.value = ''
-    const response = await userStore.registerUser(values)
-    if (response === 201) {
-      await router.push({ name: 'success-registration' })
-    }
+    await authService.registerUser(values)
+    await router.push({ name: 'success-message', params: { message: 'registration' } })
   } catch (err) {
     if (err.response.data.errors?.email) {
-      error.value = t('already_taken')
-      setTimeout(() => {
-        error.value = ''
-      }, 4000)
+      error.email = t('already_taken_email')
+    }
+    if (err.response.data.errors?.name) {
+      error.name = t('already_taken_name')
     }
   }
 }
 async function signUpWithGoogle() {
-  await userStore.authorizationWithGoogle()
+  const response = await authService.authorizationWithGoogle()
+  window.location.href = response.data.redirect_url
+}
+function updateError() {
+  error.email = ''
+  error.name = ''
 }
 </script>
