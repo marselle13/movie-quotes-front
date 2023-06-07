@@ -11,7 +11,7 @@
         rules="required|min:8|max:15|alpha_num"
         ref="password"
         :error="!!error"
-        @update-prop="updateError"
+        @update-prop="error = ''"
       ></base-input>
       <base-input
         type="password"
@@ -20,7 +20,7 @@
         :placeholder="t('confirm_password')"
         rules="required|confirmed:@password"
         :error="error"
-        @update-prop="updateError"
+        @update-prop="error = ''"
       ></base-input>
       <base-button class="w-full py-2">{{ t('reset_password') }}</base-button>
       <div class="flex justify-center pt-6">
@@ -56,9 +56,6 @@ async function onSubmit(values) {
       error.value = t('same_password')
     }
   }
-}
-function updateError() {
-  error.value = ''
 }
 
 onBeforeMount(async () => {

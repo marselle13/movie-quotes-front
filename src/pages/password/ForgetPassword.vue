@@ -12,7 +12,7 @@
         :placeholder="t('enter_email')"
         rules="required|email"
         :error="error"
-        @update-prop="updateError"
+        @update-prop="error = ''"
       ></base-input>
       <base-button class="w-full py-2">{{ t('send_instructions') }}</base-button>
       <div class="flex justify-center">
@@ -49,7 +49,5 @@ async function onSubmit(values) {
     }
   }
 }
-function updateError() {
-  error.value = ''
-}
+function updateError() {}
 </script>

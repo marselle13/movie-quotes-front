@@ -9,7 +9,7 @@
         :placeholder="t('enter_email')"
         rules="required|min:3"
         :error="!!error"
-        @update-prop="updateError"
+        @update-prop="error = ''"
       ></base-input>
       <base-input
         type="password"
@@ -18,7 +18,7 @@
         :placeholder="t('enter_password')"
         rules="required"
         :error="error"
-        @update-prop="updateError"
+        @update-prop="error = ''"
       ></base-input>
       <div class="flex justify-between items-center">
         <div class="space-x-2">
@@ -87,8 +87,5 @@ async function onSubmit(values) {
 }
 async function signInWithGoogle() {
   await authService.authorizationWithGoogle()
-}
-function updateError() {
-  error.value = ''
 }
 </script>
