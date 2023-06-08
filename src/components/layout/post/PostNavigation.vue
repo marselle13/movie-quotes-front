@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="search"
-    class="fixed top-0 left-0 w-full h-full bg-transparent z-10"
+    class="fixed top-0 left-0 w-full h-full bg-transparent z-30"
     @click="search = false"
   ></div>
   <section class="inline-flex md:flex gap-4 flex-shrink-0 mx-4 lg:mx-0">
@@ -12,7 +12,7 @@
       <WriteQuoteIcon class="w-23" /> Write new quote
     </button>
     <div
-      class="hidden md:flex transition-all duration-1000 ease-out items-center bg-transparent gap-4 relative z-10"
+      class="hidden md:flex transition-all duration-1000 ease-out items-center bg-transparent gap-4 relative z-40"
       @click="search = true"
       :class="{ 'w-full': search, 'w-[200px]': !search }"
     >

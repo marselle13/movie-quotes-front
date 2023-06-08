@@ -59,7 +59,7 @@ async function registerWithGoogle() {
   if (code) {
     const code = route.query.code
     await userStore.login({ code })
-    await router.push({ name: 'landing' })
+    await router.push({ name: 'news-feed' })
   }
 }
 async function verifyUser() {

@@ -11,7 +11,7 @@
     <ul
       v-if="dropdown"
       @click="close"
-      class="bg-[#24222F] rounded-[10px] absolute py-2 text-sm text-white cursor-pointer -left-12 top-14"
+      class="z-10 bg-[#24222F] rounded-[10px] absolute py-2 text-sm text-white cursor-pointer -left-12 top-12"
     >
       <slot name="dropdown"></slot>
     </ul>
