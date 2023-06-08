@@ -7,6 +7,8 @@ import ForgetPassword from '@/pages/password/ForgetPassword.vue'
 import SuccessPage from '@/pages/notification/SuccessPage.vue'
 import NotFound from '@/pages/NotFound.vue'
 import ResetPassword from '@/pages/password/ResetPassword.vue'
+import NewsFeedPage from '@/pages/NewsFeedPage.vue'
+import ForbiddenPage from '@/pages/ForbiddenPage.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,6 +17,7 @@ const router = createRouter({
       name: 'landing',
       path: '/',
       component: LandingPage,
+      meta: { user: 'guest' },
       children: [
         { name: 'register', path: '/register', component: RegisterPage },
         { name: 'login', path: '/login', component: LoginPage },
@@ -24,6 +27,14 @@ const router = createRouter({
         { name: 'update-password', path: '/update-password/', component: ResetPassword },
       ],
     },
+    {
+      name: 'news-feed',
+      path: '/feed',
+      component: NewsFeedPage,
+      children: [{ name: 'edit-user', path: 'edit' }],
+      meta: { user: 'auth' },
+    },
+    { name: 'forbidden', path: '/forbidden', component: ForbiddenPage },
     { name: 'not-found', path: '/:notFound(.*)', component: NotFound },
   ],
 })
