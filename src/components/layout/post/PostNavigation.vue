@@ -4,7 +4,7 @@
     class="fixed top-0 left-0 w-full h-full bg-transparent z-10"
     @click="search = false"
   ></div>
-  <section class="flex gap-4 flex-shrink-0">
+  <section class="inline-flex md:flex gap-4 flex-shrink-0 mx-4 lg:mx-0">
     <button
       class="transition-all duration-500 ease-out rounded-lg bg-transparent md:bg-[#24222F] p-3 text-start text-white flex gap-4 whitespace-nowrap"
       :class="{ 'w-full': !search, 'w-[240px]': search }"

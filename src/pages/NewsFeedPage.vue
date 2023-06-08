@@ -1,7 +1,7 @@
 <template>
   <TheHeader @open-navigation="navigationHandler" />
   <MainContainer
-    width="max-w-[940px] mx-auto lg:mx-0"
+    width="md:max-w-[940px] md:mx-auto lg:mx-0"
     :navigation="navigation"
     @close-navigation="navigationHandler"
   >

@@ -15,7 +15,7 @@
           :class="{
             'border-[#198754]': !error && meta.valid && meta.dirty && rules,
             'border-[#DC3545]': error || (!meta.valid && meta.dirty && rules),
-            'py-3 px-7 placeholder-[#CED4DA] bg-[#24222F] bg-opacity-60 outline-none text-white rounded-lg':
+            'py-3 px-4 md:px-7 placeholder-[#CED4DA] bg-[#24222F] bg-opacity-60 outline-none text-white rounded-lg':
               dark,
             'pl-3 pr-10 py-2 text-[#212529] placeholder:text-[#6C757D] rounded  bg-[#CED4DA] border-2 outline-none focus:shadow-[0px_0px_0px_4px] focus:shadow-[#0d6efd3b] disabled:text-[#6C757D] disabled:text-opacity-30 disabled:bg-[#E9ECEF]':
               !dark,

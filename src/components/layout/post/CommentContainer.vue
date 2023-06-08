@@ -1,7 +1,9 @@
 <template>
-  <section class="flex flex-col text-white gap-3 mt-6 border-b pb-7 border-[#efefef4d] py-3">
+  <section
+    class="flex flex-col text-white gap-3 border-b pt-4 pb-6 md:pt-6 border-[#efefef4d] py-3"
+  >
     <div class="flex-shrink-0 row-span-2 flex items-center gap-4">
-      <img :src="ProfilePicture" alt="profile" class="w-12 h-12" />
+      <img :src="ProfilePicture" alt="profile" class="w-10 h-10 md:w-12 md:h-12" />
       <h5>Nini Baldadze</h5>
     </div>
     <div class="lg:pl-16">

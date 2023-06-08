@@ -1,5 +1,5 @@
 <template>
-  <section class="flex mt-8 mx-4 lg:mx-16">
+  <section class="flex mt-8 lg:mx-16">
     <aside
       v-show="navigation || isDesktop"
       class="p-11 lg:p-0 z-30 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent lg:static top-0 backdrop-blur-2xl lg:backdrop-blur-0"
