@@ -5,13 +5,13 @@
     @click="close"
   ></div>
   <div class="relative" :class="{ 'hidden md:block': hidden }">
-    <button class="w-full" type="button" @click="dropdownButton">
+    <button class="relative w-[60px]" type="button" @click="dropdownButton">
       <slot name="dropdownButton"></slot>
     </button>
     <ul
       v-if="dropdown"
       @click="close"
-      class="z-10 bg-[#24222F] rounded-[10px] absolute py-2 text-sm text-white cursor-pointer -left-12 top-8"
+      class="bg-[#24222F] rounded-[10px] absolute py-2 text-sm text-white cursor-pointer -left-12 top-14"
     >
       <slot name="dropdown"></slot>
     </ul>
