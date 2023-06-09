@@ -32,4 +32,3 @@ import { ref } from 'vue'
 
 const search = ref(false)
 </script>
-<style scoped></style>

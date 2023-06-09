@@ -24,7 +24,7 @@
         </router-link>
       </div>
     </aside>
-    <main :class="width" @click="navigationHandler">
+    <main :class="width" @click="emit('close-navigation', false)">
       <slot></slot>
     </main>
   </section>
@@ -38,15 +38,12 @@ defineProps({
   width: { type: String, required: false },
   navigation: { type: Boolean, required: false },
 })
+
 const emit = defineEmits(['close-navigation'])
 
 const isDesktop = ref(false)
 function checkWidth() {
   isDesktop.value = window.innerWidth >= 1024
-}
-
-function navigationHandler() {
-  emit('close-navigation', false)
 }
 
 onMounted(() => {

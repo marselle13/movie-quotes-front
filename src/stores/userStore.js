@@ -16,7 +16,7 @@ export const useUserStore = defineStore('UserStore', {
     async login(values) {
       const authService = useAuthService()
       await authService.loginUser(values)
-      return this.data()
+      await this.data()
     },
     async data() {
       try {

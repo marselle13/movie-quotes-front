@@ -2,7 +2,7 @@
   <header class="flex justify-between items-center py-4 lg:px-16 px-4" :class="[headerBackground]">
     <div class="flex items-center">
       <p class="text-[#DDCCAA] uppercase hidden lg:block">{{ t('movie_quotes') }}</p>
-      <BurgerIcon v-if="background" class="lg:hidden" @click="navigationHandler" />
+      <BurgerIcon v-if="background" class="lg:hidden" @click="emit('open-navigation', true)" />
     </div>
     <div class="flex items-center gap-4 md:gap-10">
       <div v-if="route.meta.user === 'auth'" class="flex items-center gap-5">
@@ -84,10 +84,6 @@ const headerBackground = computed(() =>
 const showLanguage = computed(() => {
   return locale.value === 'en' ? 'Eng' : 'Geo'
 })
-
-function navigationHandler() {
-  emit('open-navigation', true)
-}
 
 function changeLanguage(value) {
   localStorage.setItem('locale', value)
