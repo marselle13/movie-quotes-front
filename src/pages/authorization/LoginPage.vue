@@ -77,8 +77,8 @@ const error = ref('')
 
 async function onSubmit(values) {
   try {
-    await userStore.loginData(values)
-    await router.push({ name: 'landing' })
+    await userStore.login(values)
+    await router.push({ name: 'news-feed' })
   } catch (err) {
     if (err.response.status === 401) {
       error.value = t('wrong_credentials')
@@ -86,6 +86,7 @@ async function onSubmit(values) {
   }
 }
 async function signInWithGoogle() {
-  await authService.authorizationWithGoogle()
+  const response = await authService.authorizationWithGoogle()
+  window.location.href = response.data.redirect_url
 }
 </script>

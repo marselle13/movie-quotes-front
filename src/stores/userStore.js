@@ -6,18 +6,30 @@ export const useUserStore = defineStore('UserStore', {
       name: '',
       email: '',
     },
+    isAuth: null,
   }),
   getters: {
     userData: (state) => state.user,
+    authUser: (state) => state.isAuth,
   },
   actions: {
-    async loginData(values) {
+    async login(values) {
       const authService = useAuthService()
-      const response = await authService.loginUser(values)
-      const { name, email } = response.data
-      this.user = {
-        name,
-        email,
+      await authService.loginUser(values)
+      await this.data()
+    },
+    async data() {
+      try {
+        const authService = useAuthService()
+        const response = await authService.userData()
+        const { name, email } = response.data
+        this.user = {
+          name,
+          email,
+        }
+        this.isAuth = true
+      } catch (err) {
+        this.isAuth = false
       }
     },
   },

@@ -58,8 +58,8 @@ async function registerWithGoogle() {
   const { code } = route.query
   if (code) {
     const code = route.query.code
-    await userStore.loginData({ code })
-    await router.push({ name: 'landing' })
+    await userStore.login({ code })
+    await router.push({ name: 'news-feed' })
   }
 }
 async function verifyUser() {
