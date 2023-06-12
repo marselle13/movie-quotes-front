@@ -58,7 +58,7 @@ import { ref, watch } from 'vue'
 import PasswordIcon from '@/components/icons/PasswordIcon.vue'
 
 defineProps({
-  id: { type: String, required: false },
+  id: { type: String, required: true },
   label: { type: String, required: false },
   placeholder: { type: String, required: false },
   type: { type: String, required: false, default: 'text' },

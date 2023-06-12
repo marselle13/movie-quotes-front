@@ -13,7 +13,7 @@
             <Field name="new_avatar" v-slot="{ field, handleChange }">
               <div class="flex justify-center bg-[#D9D9D9] w-44 h-44 rounded-full overflow-hidden">
                 <img
-                  :src="avatarHandler.value || `${baseUrl}${userStore.userData.avatar}`"
+                  :src="avatarHandler.value || `${userStore.userData.avatar}`"
                   alt="avatar"
                   class="object-contain"
                 />
@@ -30,7 +30,7 @@
               </div>
             </Field>
           </div>
-          <div class="space-y-12 -mt-10">
+          <div class="space-y-12 lg:-mt-10">
             <div class="flex items-center gap-9">
               <base-input
                 id="name"
@@ -104,23 +104,64 @@
                 Edit
               </button>
             </div>
-            <div class="flex items-center gap-9" v-if="!google && passwordHandler.edit">
-              <base-input
-                id="new_password"
-                label="New password"
-                class="w-full"
-                placeholder="Enter new password"
-                type="password"
-              ></base-input>
+            <div
+              class="rounded border border-[#ced4da33] p-6 space-y-4"
+              v-if="!google && passwordHandler.edit"
+            >
+              <p class="text-white">Passwords should contain:</p>
+              <ul class="text-white list-disc px-4">
+                <li
+                  class="text-sm"
+                  :class="!passwordHandler.correctLength ? 'text-[#9C9A9A]' : 'text-green-500'"
+                >
+                  <span :class="!passwordHandler.correctLength ? 'text-[#9C9A9A]' : 'text-white'"
+                    >8 or more characters</span
+                  >
+                </li>
+                <li
+                  class="text-sm"
+                  :class="
+                    passwordHandler.correctLength && passwordHandler.correctCharacters
+                      ? 'text-green-500'
+                      : 'text-[#9C9A9A]'
+                  "
+                >
+                  <span
+                    :class="
+                      passwordHandler.correctLength && passwordHandler.correctCharacters
+                        ? 'text-white'
+                        : 'text-[#9C9A9A]'
+                    "
+                  >
+                    15 lowercase character</span
+                  >
+                </li>
+              </ul>
             </div>
-            <div class="flex items-center gap-9" v-if="!google && passwordHandler.edit">
-              <base-input
-                id="confirm_password"
-                label="Confirm new password"
-                class="w-full"
-                placeholder="Confirm new password"
-                type="password"
-              ></base-input>
+            <div v-if="!google && passwordHandler.edit" class="space-y-12">
+              <div class="flex items-center gap-9">
+                <base-input
+                  id="new_password"
+                  label="New password"
+                  class="w-full"
+                  placeholder="Enter new password"
+                  v-model="passwordHandler.value"
+                  :value="passwordHandler.value"
+                  type="password"
+                  rules="required|min:8|max:15|alpha_num"
+                  @input="updateModal"
+                ></base-input>
+              </div>
+              <div class="flex items-center gap-9">
+                <base-input
+                  id="confirm_password"
+                  label="Confirm new password"
+                  class="w-full"
+                  placeholder="Confirm new password"
+                  type="password"
+                  rules="required|confirmed:@new_password"
+                ></base-input>
+              </div>
             </div>
           </div>
         </div>
@@ -139,7 +180,7 @@
 import MainContainer from '@/components/layout/MainContainer.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
 import { reactive, ref } from 'vue'
-import { Form, Field } from 'vee-validate'
+import { Field, Form } from 'vee-validate'
 import MainCard from '@/components/ui/MainCard.vue'
 import { useUserStore } from '@/stores/userStore'
 import BaseInput from '@/components/ui/form/BaseInput.vue'
@@ -147,7 +188,6 @@ import BaseButton from '@/components/ui/form/BaseButton.vue'
 
 const navigation = ref(false)
 const userStore = useUserStore()
-const baseUrl = import.meta.env.VITE_BASE_URL
 const { google } = userStore.userData
 
 const avatarHandler = reactive({
@@ -169,20 +209,25 @@ const emailHandler = reactive({
 const passwordHandler = reactive({
   value: '',
   edit: false,
+  correctLength: false,
+  correctCharacters: false,
 })
 
 function navigationHandler(value) {
   navigation.value = value
 }
 
+function updateModal() {
+  const alphaNum = /^[a-z0-9]+$/
+  passwordHandler.correctLength = passwordHandler.value.length >= 8
+  passwordHandler.correctCharacters =
+    passwordHandler.value.length <= 15 && alphaNum.test(passwordHandler.value)
+}
+
 function uploadImage(event, handleChange) {
   const image = event.target.files[0]
-  const reader = new FileReader()
-  reader.readAsDataURL(image)
-  reader.onload = (e) => {
-    avatarHandler.value = e.target.result
-    handleChange(e.target.result)
-  }
+  avatarHandler.value = URL.createObjectURL(image)
+  handleChange(image)
   avatarHandler.edit = true
 }
 

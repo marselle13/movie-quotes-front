@@ -26,7 +26,7 @@ export const useUserStore = defineStore('UserStore', {
         const response = await authService.userData()
         const { name, email, avatar, google } = response.data
         this.user = {
-          avatar,
+          avatar: google ? avatar : `${import.meta.env.VITE_BASE_URL}${avatar}`,
           name,
           email,
           google: !!google,
@@ -43,7 +43,7 @@ export const useUserStore = defineStore('UserStore', {
       } else if (new_email) {
         this.user.email = new_email
       } else if (new_avatar) {
-        this.user.avatar = new_avatar
+        this.user.avatar = URL.createObjectURL(new_avatar)
       }
     },
   },

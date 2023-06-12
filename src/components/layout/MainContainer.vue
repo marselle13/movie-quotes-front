@@ -6,13 +6,13 @@
     >
       <div class="inline-flex items-center gap-6">
         <img
-          :src="`${baseUrl}${avatar}`"
+          :src="userStore.userData.avatar"
           alt="profile"
           class="rounded-full w-[60px] h-[60px]"
           :class="activeClass"
         />
         <div>
-          <h4 class="text-white">{{ name }}</h4>
+          <h4 class="text-white">{{ userStore.userData.name }}</h4>
           <router-link :to="{ name: 'profile' }" class="text-xs text-[#CED4DA]"
             >Edit your profile</router-link
           >
@@ -53,15 +53,13 @@ defineProps({
 const emit = defineEmits(['close-navigation'])
 const route = useRoute()
 const userStore = useUserStore()
-const baseUrl = import.meta.env.VITE_BASE_URL
-const { avatar, name } = userStore.user
 
 const isDesktop = ref(false)
 function checkWidth() {
   isDesktop.value = window.innerWidth >= 1024
 }
 const activeClass = computed(() => {
-  return route.name === 'profile' && ' border-2 border-[#E31221]'
+  return route.name === 'profile' && ' border-4 border-[#E31221]'
 })
 
 onMounted(() => {
