@@ -49,5 +49,4 @@ async function onSubmit(values) {
     }
   }
 }
-function updateError() {}
 </script>

@@ -1,0 +1,208 @@
+<template>
+  <TheHeader @open-navigation="navigationHandler" />
+  <MainContainer
+    width="max-w-[1000px] md:mx-auto lg:mx-0 w-full"
+    :navigation="navigation"
+    @close-navigation="navigationHandler"
+  >
+    <h2 class="text-white text-2xl hidden lg:block">My profile</h2>
+    <Form @submit="onSubmit" id="updateProfile">
+      <main-card class="mt-8 lg:mt-32 pt-6 pb-32 px-8 lg:px-12 w-full">
+        <div class="w-full max-w-[530px] mx-auto">
+          <div class="lg:relative lg:-top-32 space-y-2 flex flex-col items-center">
+            <Field name="new_avatar" v-slot="{ field, handleChange }">
+              <div class="flex justify-center bg-[#D9D9D9] w-44 h-44 rounded-full overflow-hidden">
+                <img
+                  :src="avatarHandler.value || `${baseUrl}${userStore.userData.avatar}`"
+                  alt="avatar"
+                  class="object-contain"
+                />
+              </div>
+              <div>
+                <input
+                  type="file"
+                  :id="field.name"
+                  class="sr-only"
+                  @input="uploadImage($event, handleChange)"
+                  accept="image/png, image/jpeg,image/jpg"
+                />
+                <label for="new_avatar" class="text-white cursor-pointer">Upload new photo</label>
+              </div>
+            </Field>
+          </div>
+          <div class="space-y-12 -mt-10">
+            <div class="flex items-center gap-9">
+              <base-input
+                id="name"
+                label="name"
+                class="w-full"
+                :placeholder="userStore.userData.name"
+                v-model="nameHandler.value"
+                :value="nameHandler.value"
+                :edit="nameHandler.edit"
+                disabled
+              ></base-input>
+              <button class="text-[#CED4DA] mt-7" type="button" @click="nameHandler.edit = true">
+                Edit
+              </button>
+            </div>
+            <div class="flex items-center gap-9" v-if="nameHandler.edit">
+              <base-input
+                id="new_name"
+                label="New Name"
+                class="w-full"
+                v-model="nameHandler.value"
+                :value="nameHandler.value"
+                rules="required|min:3|max:15|alpha_num"
+                placeholder="Enter new username"
+              ></base-input>
+            </div>
+            <div class="flex gap-9">
+              <base-input
+                id="email"
+                label="Email"
+                class="w-full"
+                :placeholder="userStore.userData.email"
+                v-model="emailHandler.value"
+                :value="emailHandler.value"
+                :edit="emailHandler.edit"
+                disabled
+              ></base-input>
+              <button
+                class="text-[#CED4DA] mt-7"
+                type="button"
+                v-if="!google"
+                @click="emailHandler.edit = true"
+              >
+                Edit
+              </button>
+            </div>
+            <div class="flex gap-9" v-if="emailHandler.edit">
+              <base-input
+                id="new_email"
+                label="New Email"
+                class="w-full"
+                v-model="emailHandler.value"
+                :value="emailHandler.value"
+                rules="required|email"
+                placeholder="Enter new Email"
+              ></base-input>
+            </div>
+            <div class="flex items-center gap-9" v-if="!google">
+              <base-input
+                id="password"
+                label="password"
+                class="w-full"
+                placeholder="••••••••••••"
+                disabled
+              ></base-input>
+              <button
+                class="text-[#CED4DA] mt-7"
+                type="button"
+                @click="passwordHandler.edit = true"
+              >
+                Edit
+              </button>
+            </div>
+            <div class="flex items-center gap-9" v-if="!google && passwordHandler.edit">
+              <base-input
+                id="new_password"
+                label="New password"
+                class="w-full"
+                placeholder="Enter new password"
+                type="password"
+              ></base-input>
+            </div>
+            <div class="flex items-center gap-9" v-if="!google && passwordHandler.edit">
+              <base-input
+                id="confirm_password"
+                label="Confirm new password"
+                class="w-full"
+                placeholder="Confirm new password"
+                type="password"
+              ></base-input>
+            </div>
+          </div>
+        </div>
+      </main-card>
+      <div
+        class="flex justify-end mt-16 gap-4 pb-10"
+        v-if="nameHandler.edit || emailHandler.edit || avatarHandler.edit || passwordHandler.edit"
+      >
+        <base-button mode="transparent" type="button" @click="reset">Cancel</base-button>
+        <base-button class="p-2">Save Changes</base-button>
+      </div>
+    </Form>
+  </MainContainer>
+</template>
+<script setup>
+import MainContainer from '@/components/layout/MainContainer.vue'
+import TheHeader from '@/components/layout/TheHeader.vue'
+import { reactive, ref } from 'vue'
+import { Form, Field } from 'vee-validate'
+import MainCard from '@/components/ui/MainCard.vue'
+import { useUserStore } from '@/stores/userStore'
+import BaseInput from '@/components/ui/form/BaseInput.vue'
+import BaseButton from '@/components/ui/form/BaseButton.vue'
+
+const navigation = ref(false)
+const userStore = useUserStore()
+const baseUrl = import.meta.env.VITE_BASE_URL
+const { google } = userStore.userData
+
+const avatarHandler = reactive({
+  oldValue: '',
+  value: '',
+  edit: false,
+})
+
+const nameHandler = reactive({
+  value: '',
+  edit: false,
+})
+
+const emailHandler = reactive({
+  value: '',
+  edit: false,
+})
+
+const passwordHandler = reactive({
+  value: '',
+  edit: false,
+})
+
+function navigationHandler(value) {
+  navigation.value = value
+}
+
+function uploadImage(event, handleChange) {
+  const image = event.target.files[0]
+  const reader = new FileReader()
+  reader.readAsDataURL(image)
+  reader.onload = (e) => {
+    avatarHandler.value = e.target.result
+    handleChange(e.target.result)
+  }
+  avatarHandler.edit = true
+}
+
+function onSubmit(values) {
+  userStore.updateProfile(values)
+  reset()
+}
+
+function reset() {
+  resetValues(nameHandler)
+  resetValues(emailHandler)
+  resetValues(avatarHandler)
+  resetValues(passwordHandler)
+
+  const form = document.querySelector('#updateProfile')
+  form.reset()
+}
+
+function resetValues(handler) {
+  handler.edit = false
+  handler.value = ''
+}
+</script>

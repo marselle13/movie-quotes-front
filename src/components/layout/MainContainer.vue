@@ -2,25 +2,34 @@
   <section class="flex mt-8 lg:mx-16">
     <aside
       v-show="navigation || isDesktop"
-      class="p-11 lg:p-0 z-30 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent lg:static top-0 backdrop-blur-2xl lg:backdrop-blur-0"
+      class="inline-flex flex-col p-11 lg:p-0 z-30 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent lg:static top-0 backdrop-blur-2xl lg:backdrop-blur-0"
     >
-      <div class="flex items-center gap-6">
-        <img :src="ProfilePicture" alt="profile" />
+      <div class="inline-flex items-center gap-6">
+        <img
+          :src="`${baseUrl}${avatar}`"
+          alt="profile"
+          class="rounded-full w-[60px] h-[60px]"
+          :class="activeClass"
+        />
         <div>
-          <h4 class="text-white">Nino Tabagari</h4>
-          <router-link to="#" class="text-xs text-[#CED4DA]">Edit your profile</router-link>
+          <h4 class="text-white">{{ name }}</h4>
+          <router-link :to="{ name: 'profile' }" class="text-xs text-[#CED4DA]"
+            >Edit your profile</router-link
+          >
         </div>
       </div>
-      <div class="pt-10 space-y-10">
-        <router-link to="#">
+      <div class="inline-flex flex-col pt-10 space-y-10">
+        <router-link :to="{ name: 'news-feed' }">
           <div class="flex items-center text-white gap-10">
-            <FeedIcon />
+            <FeedIcon :name="route.name" />
             <p>News Feed</p>
           </div>
         </router-link>
-        <router-link to="#" class="flex items-center text-white gap-10">
-          <MoviesIcon />
-          <p>List of movies</p>
+        <router-link to="#">
+          <div class="flex items-center text-white gap-10">
+            <MoviesIcon />
+            <p>List of movies</p>
+          </div>
         </router-link>
       </div>
     </aside>
@@ -30,21 +39,30 @@
   </section>
 </template>
 <script setup>
-import ProfilePicture from '@/assets/Ellipse 1.png'
 import MoviesIcon from '@/components/icons/MoviesIcon.vue'
 import FeedIcon from '@/components/icons/FeedIcon.vue'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { useUserStore } from '@/stores/userStore'
+
 defineProps({
   width: { type: String, required: false },
   navigation: { type: Boolean, required: false },
 })
 
 const emit = defineEmits(['close-navigation'])
+const route = useRoute()
+const userStore = useUserStore()
+const baseUrl = import.meta.env.VITE_BASE_URL
+const { avatar, name } = userStore.user
 
 const isDesktop = ref(false)
 function checkWidth() {
   isDesktop.value = window.innerWidth >= 1024
 }
+const activeClass = computed(() => {
+  return route.name === 'profile' && ' border-2 border-[#E31221]'
+})
 
 onMounted(() => {
   checkWidth()

@@ -1,6 +1,6 @@
 <template>
   <svg
-    class="fill-[#E31221]"
+    :class="activeClass"
     width="31"
     height="28"
     viewBox="0 0 31 28"
@@ -18,3 +18,11 @@
     />
   </svg>
 </template>
+<script setup>
+import { computed } from 'vue'
+
+const props = defineProps({ name: { type: String, required: true } })
+const activeClass = computed(() => {
+  return props.name === 'news-feed' ? 'fill-[#E31221]' : 'fill-white'
+})
+</script>
