@@ -5,12 +5,13 @@
       class="inline-flex flex-col p-11 lg:p-0 z-30 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent lg:static top-0 backdrop-blur-2xl lg:backdrop-blur-0"
     >
       <div class="inline-flex items-center gap-6">
-        <img
-          :src="userStore.userData.avatar"
-          alt="profile"
-          class="rounded-full w-[60px] h-[60px]"
+        <div
+          class="flex justify-center bg-[#D9D9D9] w-16 h-16 rounded-full overflow-hidden"
           :class="activeClass"
-        />
+        >
+          <img :src="userStore.userData.avatar" alt="profile" class="object-contain" />
+        </div>
+
         <div>
           <h4 class="text-white">{{ userStore.userData.name }}</h4>
           <router-link :to="{ name: 'profile' }" class="text-xs text-[#CED4DA]"
@@ -18,20 +19,26 @@
           >
         </div>
       </div>
-      <div class="inline-flex flex-col pt-10 space-y-10">
-        <router-link :to="{ name: 'news-feed' }">
-          <div class="flex items-center text-white gap-10">
-            <FeedIcon :name="route.name" />
-            <p>News Feed</p>
-          </div>
-        </router-link>
-        <router-link to="#">
-          <div class="flex items-center text-white gap-10">
-            <MoviesIcon />
-            <p>List of movies</p>
-          </div>
-        </router-link>
-      </div>
+      <nav class="block pt-10">
+        <ul class="space-y-10">
+          <li>
+            <router-link :to="{ name: 'news-feed' }" class="inline-flex">
+              <div class="flex items-center text-white gap-10">
+                <FeedIcon :name="route.name" />
+                <p>News Feed</p>
+              </div>
+            </router-link>
+          </li>
+          <li>
+            <router-link to="#" class="inline-flex">
+              <div class="flex items-center text-white gap-10">
+                <MoviesIcon />
+                <p>List of movies</p>
+              </div>
+            </router-link>
+          </li>
+        </ul>
+      </nav>
     </aside>
     <main :class="width" @click="emit('close-navigation', false)">
       <slot></slot>
@@ -59,7 +66,7 @@ function checkWidth() {
   isDesktop.value = window.innerWidth >= 1024
 }
 const activeClass = computed(() => {
-  return route.name === 'profile' && ' border-4 border-[#E31221]'
+  return route.name === 'profile' && ' border-2 border-[#E31221]'
 })
 
 onMounted(() => {
