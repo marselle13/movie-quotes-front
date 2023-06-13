@@ -25,8 +25,11 @@ export const useUserStore = defineStore('UserStore', {
         const authService = useAuthService()
         const response = await authService.userData()
         const { name, email, avatar, google } = response.data
+
+        const avatarPath = avatar.includes('default') ? avatar : `storage/${avatar}`
+
         this.user = {
-          avatar: google ? avatar : `${import.meta.env.VITE_BASE_URL}${avatar}`,
+          avatar: `${import.meta.env.VITE_BASE_URL}${avatarPath}`,
           name,
           email,
           google: !!google,

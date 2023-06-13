@@ -24,7 +24,6 @@
                   :id="field.name"
                   class="sr-only"
                   @input="uploadImage($event, handleChange)"
-                  accept="image/png, image/jpeg,image/jpg"
                 />
                 <label for="new_avatar" class="text-white cursor-pointer">Upload new photo</label>
               </div>
@@ -53,8 +52,10 @@
                 class="w-full"
                 v-model="nameHandler.value"
                 :value="nameHandler.value"
+                :error="error.name"
                 rules="required|min:3|max:15|alpha_num"
                 placeholder="Enter new username"
+                @update-prop="error.name = ''"
               ></base-input>
             </div>
             <div class="flex gap-9">
@@ -84,8 +85,10 @@
                 class="w-full"
                 v-model="emailHandler.value"
                 :value="emailHandler.value"
+                :error="error.email"
                 rules="required|email"
                 placeholder="Enter new Email"
+                @update-prop="error.email = ''"
               ></base-input>
             </div>
             <div class="flex items-center gap-9" v-if="!google">
@@ -154,7 +157,7 @@
               </div>
               <div class="flex items-center gap-9">
                 <base-input
-                  id="confirm_password"
+                  id="confirm_new"
                   label="Confirm new password"
                   class="w-full"
                   placeholder="Confirm new password"
@@ -185,10 +188,14 @@ import MainCard from '@/components/ui/MainCard.vue'
 import { useUserStore } from '@/stores/userStore'
 import BaseInput from '@/components/ui/form/BaseInput.vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
+import { useUserService } from '@/services/UserService'
+import { useI18n } from 'vue-i18n'
 
 const navigation = ref(false)
 const userStore = useUserStore()
+const userService = useUserService()
 const { google } = userStore.userData
+const { locale } = useI18n()
 
 const avatarHandler = reactive({
   oldValue: '',
@@ -213,6 +220,11 @@ const passwordHandler = reactive({
   correctCharacters: false,
 })
 
+const error = reactive({
+  name: '',
+  email: '',
+})
+
 function navigationHandler(value) {
   navigation.value = value
 }
@@ -231,9 +243,15 @@ function uploadImage(event, handleChange) {
   avatarHandler.edit = true
 }
 
-function onSubmit(values) {
-  userStore.updateProfile(values)
-  reset()
+async function onSubmit(values) {
+  try {
+    await userService.updateUserData(values)
+    userStore.updateProfile(values)
+    reset()
+  } catch (err) {
+    error.name = err.response.data.errors.name?.[0][locale.value]
+    error.email = err.response.data.errors.email?.[0][locale.value]
+  }
 }
 
 function reset() {
@@ -241,6 +259,8 @@ function reset() {
   resetValues(emailHandler)
   resetValues(avatarHandler)
   resetValues(passwordHandler)
+  passwordHandler.correctLength = false
+  passwordHandler.correctCharacters = false
 
   const form = document.querySelector('#updateProfile')
   form.reset()
