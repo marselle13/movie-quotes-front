@@ -29,8 +29,8 @@
               </div>
             </Field>
           </div>
-          <div class="space-y-12 lg:-mt-10">
-            <div class="flex items-center gap-9">
+          <div class="space-y-12 lg:-mt-10 mt-12">
+            <div class="flex gap-9">
               <base-input
                 id="name"
                 label="name"
@@ -45,7 +45,7 @@
                 Edit
               </button>
             </div>
-            <div class="flex items-center gap-9" v-if="nameHandler.edit">
+            <div class="hidden md:flex gap-9" v-if="nameHandler.edit">
               <base-input
                 id="new_name"
                 label="New Name"
@@ -78,7 +78,7 @@
                 Edit
               </button>
             </div>
-            <div class="flex gap-9" v-if="emailHandler.edit">
+            <div class="hidden md:flex gap-9" v-if="emailHandler.edit">
               <base-input
                 id="new_email"
                 label="New Email"
@@ -108,7 +108,7 @@
               </button>
             </div>
             <div
-              class="rounded border border-[#ced4da33] p-6 space-y-4"
+              class="hidden md:block rounded border border-[#ced4da33] p-6 space-y-4"
               v-if="!google && passwordHandler.edit"
             >
               <p class="text-white">Passwords should contain:</p>
@@ -141,7 +141,7 @@
                 </li>
               </ul>
             </div>
-            <div v-if="!google && passwordHandler.edit" class="space-y-12">
+            <div v-if="!google && passwordHandler.edit" class="hidden md:block space-y-12">
               <div class="flex items-center gap-9">
                 <base-input
                   id="new_password"
@@ -249,8 +249,8 @@ async function onSubmit(values) {
     userStore.updateProfile(values)
     reset()
   } catch (err) {
-    error.name = err.response.data.errors.name?.[0][locale.value]
-    error.email = err.response.data.errors.email?.[0][locale.value]
+    error.name = err.response.data.errors?.name[0][locale.value]
+    error.email = err.response.data.errors?.email[0][locale.value]
   }
 }
 

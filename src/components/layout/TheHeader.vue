@@ -6,7 +6,7 @@
     </div>
     <div class="flex items-center gap-4 md:gap-10">
       <div v-if="route.meta.user === 'auth'" class="flex items-center gap-5">
-        <SearchIcon class="md:hidden block" />
+        <SearchIcon class="md:hidden block" v-if="route.name === 'news-feed'" />
         <base-dropdown>
           <template #dropdownButton>
             <NotificationIcon />

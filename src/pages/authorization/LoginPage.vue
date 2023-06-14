@@ -68,7 +68,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthService } from '@/services/authService'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const userStore = useUserStore()
 const authService = useAuthService()
 
@@ -80,9 +80,7 @@ async function onSubmit(values) {
     await userStore.login(values)
     await router.push({ name: 'news-feed' })
   } catch (err) {
-    if (err.response.status === 401) {
-      error.value = t('wrong_credentials')
-    }
+    error.value = err.response.data.messages?.[locale.value]
   }
 }
 async function signInWithGoogle() {
