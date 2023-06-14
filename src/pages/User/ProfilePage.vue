@@ -7,8 +7,12 @@
   >
     <h2 class="text-white text-2xl hidden lg:block">My profile</h2>
     <Form @submit="onSubmit" id="updateProfile">
-      <main-card class="mt-8 lg:mt-32 pt-6 pb-32 px-8 lg:px-12 w-full">
-        <div class="w-full max-w-[530px] mx-auto">
+      <main-card
+        class="mt-8 lg:mt-32 py-20 md:pb-32 px-8 lg:px-12 w-full space-y-4"
+        profile
+        id="main-card"
+      >
+        <div class="w-full max-w-[530px] mx-auto" v-show="checkModalWidth">
           <div class="lg:relative lg:-top-32 space-y-2 flex flex-col items-center">
             <Field name="new_avatar" v-slot="{ field, handleChange }">
               <div class="flex justify-center bg-[#D9D9D9] w-44 h-44 rounded-full overflow-hidden">
@@ -30,7 +34,7 @@
             </Field>
           </div>
           <div class="space-y-12 lg:-mt-10 mt-12">
-            <div class="flex gap-9">
+            <div class="flex items-center gap-9 border-b border-[#ced4da80] md:border-none">
               <base-input
                 id="name"
                 label="name"
@@ -41,24 +45,30 @@
                 :edit="nameHandler.edit"
                 disabled
               ></base-input>
-              <button class="text-[#CED4DA] mt-7" type="button" @click="nameHandler.edit = true">
+              <button
+                class="text-[#CED4DA] mt-4 md:mt-7"
+                type="button"
+                @click="nameHandler.edit = true"
+              >
                 Edit
               </button>
             </div>
-            <div class="hidden md:flex gap-9" v-if="nameHandler.edit">
-              <base-input
-                id="new_name"
-                label="New Name"
-                class="w-full"
-                v-model="nameHandler.value"
-                :value="nameHandler.value"
-                :error="error.name"
-                rules="required|min:3|max:15|alpha_num"
-                placeholder="Enter new username"
-                @update-prop="error.name = ''"
-              ></base-input>
+            <div v-if="nameHandler.edit">
+              <teleport to="#main-card" :disabled="isDesktop">
+                <base-input
+                  id="new_name"
+                  label="New Name"
+                  class="w-full"
+                  v-model="nameHandler.value"
+                  :value="nameHandler.value"
+                  :error="nameHandler.error"
+                  rules="required|min:3|max:15|alpha_num"
+                  placeholder="Enter new username"
+                  @update-prop="nameHandler.error = ''"
+                ></base-input>
+              </teleport>
             </div>
-            <div class="flex gap-9">
+            <div class="flex gap-9 border-b border-[#ced4da80] md:border-none">
               <base-input
                 id="email"
                 label="Email"
@@ -70,7 +80,7 @@
                 disabled
               ></base-input>
               <button
-                class="text-[#CED4DA] mt-7"
+                class="text-[#CED4DA] mt-4 md:mt-7"
                 type="button"
                 v-if="!google"
                 @click="emailHandler.edit = true"
@@ -78,20 +88,25 @@
                 Edit
               </button>
             </div>
-            <div class="hidden md:flex gap-9" v-if="emailHandler.edit">
-              <base-input
-                id="new_email"
-                label="New Email"
-                class="w-full"
-                v-model="emailHandler.value"
-                :value="emailHandler.value"
-                :error="error.email"
-                rules="required|email"
-                placeholder="Enter new Email"
-                @update-prop="error.email = ''"
-              ></base-input>
+            <div v-if="emailHandler.edit">
+              <teleport to="#main-card" :disabled="isDesktop">
+                <base-input
+                  id="new_email"
+                  label="New Email"
+                  class="w-full"
+                  v-model="emailHandler.value"
+                  :value="emailHandler.value"
+                  :error="emailHandler.error"
+                  rules="required|email"
+                  placeholder="Enter new Email"
+                  @update-prop="emailHandler.error = ''"
+                ></base-input>
+              </teleport>
             </div>
-            <div class="flex items-center gap-9" v-if="!google">
+            <div
+              class="flex items-center gap-9 border-b border-[#ced4da80] md:border-none"
+              v-if="!google"
+            >
               <base-input
                 id="password"
                 label="password"
@@ -100,49 +115,51 @@
                 disabled
               ></base-input>
               <button
-                class="text-[#CED4DA] mt-7"
+                class="text-[#CED4DA] mt-4 md:mt-7"
                 type="button"
                 @click="passwordHandler.edit = true"
               >
                 Edit
               </button>
             </div>
-            <div
-              class="hidden md:block rounded border border-[#ced4da33] p-6 space-y-4"
-              v-if="!google && passwordHandler.edit"
-            >
-              <p class="text-white">Passwords should contain:</p>
-              <ul class="text-white list-disc px-4">
-                <li
-                  class="text-sm"
-                  :class="!passwordHandler.correctLength ? 'text-[#9C9A9A]' : 'text-green-500'"
-                >
-                  <span :class="!passwordHandler.correctLength ? 'text-[#9C9A9A]' : 'text-white'"
-                    >8 or more characters</span
-                  >
-                </li>
-                <li
-                  class="text-sm"
-                  :class="
-                    passwordHandler.correctLength && passwordHandler.correctCharacters
-                      ? 'text-green-500'
-                      : 'text-[#9C9A9A]'
-                  "
-                >
-                  <span
-                    :class="
-                      passwordHandler.correctLength && passwordHandler.correctCharacters
-                        ? 'text-white'
-                        : 'text-[#9C9A9A]'
-                    "
-                  >
-                    15 lowercase character</span
-                  >
-                </li>
-              </ul>
+            <div v-if="!google && passwordHandler.edit">
+              <teleport to="#main-card" :disabled="isDesktop">
+                <div class="block rounded border border-[#ced4da33] p-6 my-9">
+                  <p class="text-white">Passwords should contain:</p>
+                  <ul class="text-white list-disc px-4">
+                    <li
+                      class="text-sm"
+                      :class="!passwordHandler.correctLength ? 'text-[#9C9A9A]' : 'text-green-500'"
+                    >
+                      <span
+                        :class="!passwordHandler.correctLength ? 'text-[#9C9A9A]' : 'text-white'"
+                        >8 or more characters</span
+                      >
+                    </li>
+                    <li
+                      class="text-sm"
+                      :class="
+                        passwordHandler.correctLength && passwordHandler.correctCharacters
+                          ? 'text-green-500'
+                          : 'text-[#9C9A9A]'
+                      "
+                    >
+                      <span
+                        :class="
+                          passwordHandler.correctLength && passwordHandler.correctCharacters
+                            ? 'text-white'
+                            : 'text-[#9C9A9A]'
+                        "
+                      >
+                        15 lowercase character</span
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </teleport>
             </div>
-            <div v-if="!google && passwordHandler.edit" class="hidden md:block space-y-12">
-              <div class="flex items-center gap-9">
+            <div v-if="!google && passwordHandler.edit" class="block space-y-12">
+              <teleport to="#main-card" :disabled="isDesktop">
                 <base-input
                   id="new_password"
                   label="New password"
@@ -154,8 +171,6 @@
                   rules="required|min:8|max:15|alpha_num"
                   @input="updateModal"
                 ></base-input>
-              </div>
-              <div class="flex items-center gap-9">
                 <base-input
                   id="confirm_new"
                   label="Confirm new password"
@@ -164,17 +179,17 @@
                   type="password"
                   rules="required|confirmed:@new_password"
                 ></base-input>
-              </div>
+              </teleport>
             </div>
           </div>
         </div>
       </main-card>
       <div
-        class="flex justify-end mt-16 gap-4 pb-10"
+        class="flex justify-between md:flex md:justify-end mt-8 lg:mt-16 gap-4 pb-10 px-8 lg:px-0"
         v-if="nameHandler.edit || emailHandler.edit || avatarHandler.edit || passwordHandler.edit"
       >
         <base-button mode="transparent" type="button" @click="reset">Cancel</base-button>
-        <base-button class="p-2">Save Changes</base-button>
+        <base-button class="p-2">{{ isDesktop ? 'Save Changes' : 'Edit' }}</base-button>
       </div>
     </Form>
   </MainContainer>
@@ -182,7 +197,7 @@
 <script setup>
 import MainContainer from '@/components/layout/MainContainer.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
-import { reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { Field, Form } from 'vee-validate'
 import MainCard from '@/components/ui/MainCard.vue'
 import { useUserStore } from '@/stores/userStore'
@@ -197,6 +212,8 @@ const userService = useUserService()
 const { google } = userStore.userData
 const { locale } = useI18n()
 
+const isDesktop = ref(true)
+
 const avatarHandler = reactive({
   oldValue: '',
   value: '',
@@ -206,11 +223,13 @@ const avatarHandler = reactive({
 const nameHandler = reactive({
   value: '',
   edit: false,
+  error: '',
 })
 
 const emailHandler = reactive({
   value: '',
   edit: false,
+  error: '',
 })
 
 const passwordHandler = reactive({
@@ -220,9 +239,8 @@ const passwordHandler = reactive({
   correctCharacters: false,
 })
 
-const error = reactive({
-  name: '',
-  email: '',
+const checkModalWidth = computed(() => {
+  return !((nameHandler.edit || emailHandler.edit || passwordHandler.edit) && !isDesktop.value)
 })
 
 function navigationHandler(value) {
@@ -249,8 +267,8 @@ async function onSubmit(values) {
     userStore.updateProfile(values)
     reset()
   } catch (err) {
-    error.name = err.response.data.errors?.name[0][locale.value]
-    error.email = err.response.data.errors?.email[0][locale.value]
+    nameHandler.error = err.response.data.errors.name?.[0][locale.value]
+    emailHandler.error = err.response.data.errors.email?.[0][locale.value]
   }
 }
 
@@ -270,4 +288,13 @@ function resetValues(handler) {
   handler.edit = false
   handler.value = ''
 }
+
+function checkWidth() {
+  isDesktop.value = window.innerWidth >= 768
+}
+
+onMounted(() => {
+  checkWidth()
+  window.addEventListener('resize', checkWidth)
+})
 </script>
