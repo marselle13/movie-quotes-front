@@ -1,5 +1,5 @@
 <template>
-  <div class="block rounded border border-[#ced4da33] p-6 my-9">
+  <div class="block rounded border border-[#ced4da33] p-6 mb-9">
     <p class="text-white">Passwords should contain:</p>
     <ul class="text-white list-disc px-4">
       <li class="text-sm" :class="!correctLength ? 'text-[#9C9A9A]' : 'text-green-500'">

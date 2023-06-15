@@ -5,8 +5,11 @@
     :navigation="navigation"
     @close-navigation="navigationHandler"
   >
-    <h2 class="text-white text-2xl hidden lg:block">My profile</h2>
-    <Form ref="form" @submit="onSubmit" id="updateProfile" v-slot="{ meta, errors }">
+    <div class="pl-10">
+      <BackIcon class="block lg:hidden" @click="router.push({ name: 'news-feed' })" />
+      <h2 class="text-white text-2xl hidden lg:block">My profile</h2>
+    </div>
+    <Form v-slot="{ handleReset }" @submit="onSubmit" id="updateProfile">
       <ConfirmationModal
         v-if="confirmModal"
         @close-modal="confirmModal = false"
@@ -59,16 +62,16 @@
                 Edit
               </button>
             </div>
+            <div id="name-container"></div>
             <div v-if="nameHandler.edit">
-              <teleport to="#main-card" :disabled="isDesktop">
+              <teleport :to="!isDesktop ? '#main-card' : '#name-container'">
                 <base-input
                   id="new_name"
                   label="New Name"
                   class="w-full"
-                  v-model="nameHandler.value"
                   :value="nameHandler.value"
                   :error="nameHandler.error"
-                  rules="required|min:3|max:15|alpha_num"
+                  :rules="nameHandler.edit && 'required|min:3|max:15|alpha_num'"
                   placeholder="Enter new username"
                   @update-prop="nameHandler.error = ''"
                 ></base-input>
@@ -76,7 +79,7 @@
             </div>
             <div class="flex gap-9 border-b border-[#ced4da80] md:border-none">
               <base-input
-                id="email"
+                id="required|email"
                 label="Email"
                 class="w-full"
                 :placeholder="userStore.userData.email"
@@ -94,8 +97,9 @@
                 Edit
               </button>
             </div>
+            <div id="email-container"></div>
             <div v-if="emailHandler.edit">
-              <teleport to="#main-card" :disabled="isDesktop">
+              <teleport :to="!isDesktop ? '#main-card' : '#email-container'">
                 <base-input
                   id="new_email"
                   label="New Email"
@@ -103,7 +107,7 @@
                   v-model="emailHandler.value"
                   :value="emailHandler.value"
                   :error="emailHandler.error"
-                  rules="required|email"
+                  rules="email"
                   placeholder="Enter new Email"
                   @update-prop="emailHandler.error = ''"
                 ></base-input>
@@ -128,37 +132,40 @@
                 Edit
               </button>
             </div>
+            <div id="password-container" class="flex flex-col-reverse"></div>
             <div v-if="!google && passwordHandler.edit">
-              <teleport to="#main-card" :disabled="isDesktop">
+              <teleport :to="!isDesktop ? '#main-card' : '#password-container'">
                 <PasswordModal
                   :correct-length="passwordHandler.correctLength"
                   :correct-characters="passwordHandler.correctCharacters"
                 />
               </teleport>
             </div>
-            <div v-if="!google && passwordHandler.edit" class="block space-y-12">
-              <teleport to="#main-card" :disabled="isDesktop">
-                <base-input
-                  id="new_password"
-                  label="New password"
-                  class="w-full"
-                  placeholder="Enter new password"
-                  v-model="passwordHandler.value"
-                  :value="passwordHandler.value"
-                  :error="passwordHandler.error"
-                  type="password"
-                  rules="required|min:8|max:15|alpha_num"
-                  @input="validPasswordModal"
-                  @update-prop="passwordHandler.error = ''"
-                ></base-input>
-                <base-input
-                  id="confirm_new"
-                  label="Confirm new password"
-                  class="w-full"
-                  placeholder="Confirm new password"
-                  type="password"
-                  rules="required|confirmed:@new_password"
-                ></base-input>
+            <div v-if="!google && passwordHandler.edit">
+              <teleport :to="!isDesktop ? '#main-card' : '#password-container'">
+                <div class="space-y-12">
+                  <base-input
+                    id="new_password"
+                    label="New password"
+                    placeholder="Enter new password"
+                    v-model="passwordHandler.value"
+                    :value="passwordHandler.value"
+                    :error="passwordHandler.error"
+                    type="password"
+                    rules="min:8|max:15|alpha_num"
+                    @input="validPasswordModal"
+                    @update-prop="passwordHandler.error = ''"
+                  ></base-input>
+                  <base-input
+                    id="confirm_new"
+                    label="Confirm new password"
+                    placeholder="Confirm new password"
+                    :error="!!passwordHandler.error"
+                    type="password"
+                    rules="required|confirmed:@new_password"
+                    @update-prop="passwordHandler.error = ''"
+                  ></base-input>
+                </div>
               </teleport>
             </div>
           </div>
@@ -171,7 +178,9 @@
           !confirmModal
         "
       >
-        <base-button mode="transparent" type="button" @click="reset">Cancel</base-button>
+        <base-button mode="transparent" type="button" @click="reset(handleReset)"
+          >Cancel</base-button
+        >
         <base-button class="p-2">{{ isDesktop ? 'Save Changes' : 'Edit' }}</base-button>
       </div>
     </Form>
@@ -192,11 +201,12 @@ import { useUserStore } from '@/stores/userStore'
 import { useUserService } from '@/services/UserService'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import BackIcon from '@/components/icons/BackIcon.vue'
 
 const userStore = useUserStore()
 const userService = useUserService()
 const { google } = userStore.userData
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const router = useRouter()
 
 const navigation = ref(false)
@@ -257,7 +267,6 @@ async function onSubmit(values) {
     await submitChanges(values)
   } else {
     formData.value = { ...values }
-
     confirmModal.value = true
   }
 }
@@ -272,16 +281,14 @@ async function submitChanges(values) {
     await userService.updateUserData(values)
     userStore.updateProfile(values)
     reset()
-    await router.replace({ name: 'news-feed' })
   } catch (err) {
-    console.error(err)
     nameHandler.error = err.response.data.errors?.name?.[0][locale.value]
     emailHandler.error = err.response.data.errors?.email?.[0][locale.value]
     passwordHandler.error = err.response.data.errors?.password?.[0][locale.value]
   }
 }
 
-function reset() {
+function reset(handleReset) {
   resetValues(nameHandler)
   resetValues(emailHandler)
   resetValues(avatarHandler)
