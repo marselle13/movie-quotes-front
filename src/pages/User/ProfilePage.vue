@@ -6,11 +6,17 @@
     @close-navigation="navigationHandler"
   >
     <h2 class="text-white text-2xl hidden lg:block">My profile</h2>
-    <Form @submit="onSubmit" id="updateProfile">
+    <Form ref="form" @submit="onSubmit" id="updateProfile" v-slot="{ meta, errors }">
+      <ConfirmationModal
+        v-if="confirmModal"
+        @close-modal="confirmModal = false"
+        @confirm="onConfirm"
+      />
       <main-card
         class="mt-8 lg:mt-32 py-20 md:pb-32 px-8 lg:px-12 w-full space-y-4"
         profile
         id="main-card"
+        v-show="!confirmModal"
       >
         <div class="w-full max-w-[530px] mx-auto" v-show="checkModalWidth">
           <div class="lg:relative lg:-top-32 space-y-2 flex flex-col items-center">
@@ -29,7 +35,7 @@
                   class="sr-only"
                   @input="uploadImage($event, handleChange)"
                 />
-                <label for="new_avatar" class="text-white cursor-pointer">Upload new photo</label>
+                <label :for="field.name" class="text-white cursor-pointer">Upload new photo</label>
               </div>
             </Field>
           </div>
@@ -186,7 +192,10 @@
       </main-card>
       <div
         class="flex justify-between md:flex md:justify-end mt-8 lg:mt-16 gap-4 pb-10 px-8 lg:px-0"
-        v-if="nameHandler.edit || emailHandler.edit || avatarHandler.edit || passwordHandler.edit"
+        v-if="
+          (nameHandler.edit || emailHandler.edit || avatarHandler.edit || passwordHandler.edit) &&
+          !confirmModal
+        "
       >
         <base-button mode="transparent" type="button" @click="reset">Cancel</base-button>
         <base-button class="p-2">{{ isDesktop ? 'Save Changes' : 'Edit' }}</base-button>
@@ -197,22 +206,28 @@
 <script setup>
 import MainContainer from '@/components/layout/MainContainer.vue'
 import TheHeader from '@/components/layout/TheHeader.vue'
-import { computed, onMounted, reactive, ref } from 'vue'
-import { Field, Form } from 'vee-validate'
-import MainCard from '@/components/ui/MainCard.vue'
-import { useUserStore } from '@/stores/userStore'
 import BaseInput from '@/components/ui/form/BaseInput.vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
+import MainCard from '@/components/ui/MainCard.vue'
+import ConfirmationModal from '@/components/layout/user/ConfirmationModal.vue'
+
+import { computed, onMounted, reactive, ref } from 'vue'
+import { Form, Field } from 'vee-validate'
+import { useUserStore } from '@/stores/userStore'
 import { useUserService } from '@/services/UserService'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
-const navigation = ref(false)
 const userStore = useUserStore()
 const userService = useUserService()
 const { google } = userStore.userData
 const { locale } = useI18n()
+const router = useRouter()
 
+const navigation = ref(false)
 const isDesktop = ref(true)
+const confirmModal = ref(false)
+const formData = reactive({})
 
 const avatarHandler = reactive({
   oldValue: '',
@@ -262,10 +277,26 @@ function uploadImage(event, handleChange) {
 }
 
 async function onSubmit(values) {
+  if (isDesktop.value) {
+    await submitChanges(values)
+  } else {
+    formData.value = { ...values }
+
+    confirmModal.value = true
+  }
+}
+
+async function onConfirm() {
+  await submitChanges(formData.value)
+  confirmModal.value = false
+}
+
+async function submitChanges(values) {
   try {
     await userService.updateUserData(values)
     userStore.updateProfile(values)
     reset()
+    await router.replace({ name: 'news-feed' })
   } catch (err) {
     nameHandler.error = err.response.data.errors.name?.[0][locale.value]
     emailHandler.error = err.response.data.errors.email?.[0][locale.value]
