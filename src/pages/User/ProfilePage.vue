@@ -173,9 +173,11 @@
                   placeholder="Enter new password"
                   v-model="passwordHandler.value"
                   :value="passwordHandler.value"
+                  :error="passwordHandler.error"
                   type="password"
                   rules="required|min:8|max:15|alpha_num"
                   @input="updateModal"
+                  @update-prop="passwordHandler.error = ''"
                 ></base-input>
                 <base-input
                   id="confirm_new"
@@ -250,6 +252,7 @@ const emailHandler = reactive({
 const passwordHandler = reactive({
   value: '',
   edit: false,
+  error: '',
   correctLength: false,
   correctCharacters: false,
 })
@@ -298,8 +301,10 @@ async function submitChanges(values) {
     reset()
     await router.replace({ name: 'news-feed' })
   } catch (err) {
-    nameHandler.error = err.response.data.errors.name?.[0][locale.value]
-    emailHandler.error = err.response.data.errors.email?.[0][locale.value]
+    console.error(err)
+    nameHandler.error = err.response.data.errors?.name?.[0][locale.value]
+    emailHandler.error = err.response.data.errors?.email?.[0][locale.value]
+    passwordHandler.error = err.response.data.errors?.password?.[0][locale.value]
   }
 }
 

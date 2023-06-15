@@ -1,5 +1,8 @@
 <template>
-  <header class="flex justify-between items-center py-4 lg:px-16 px-4" :class="[headerBackground]">
+  <header
+    class="sticky flex justify-between items-center py-4 lg:px-16 px-4"
+    :class="[headerBackground]"
+  >
     <div class="flex items-center">
       <p class="text-[#DDCCAA] uppercase hidden lg:block">{{ t('movie_quotes') }}</p>
       <BurgerIcon v-if="background" class="lg:hidden" @click="emit('open-navigation', true)" />
