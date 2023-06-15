@@ -1,45 +1,47 @@
 <template>
   <section class="flex mt-8 lg:mx-16">
-    <aside
-      v-show="navigation || isDesktop"
-      class="inline-flex flex-col p-11 lg:p-0 z-30 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent lg:static top-0 backdrop-blur-2xl lg:backdrop-blur-0"
-    >
-      <div class="inline-flex items-center gap-6">
-        <div
-          class="flex justify-center bg-[#D9D9D9] w-16 h-16 rounded-full overflow-hidden"
-          :class="activeClass"
-        >
-          <img :src="userStore.userData.avatar" alt="profile" class="object-contain" />
-        </div>
-
-        <div>
-          <h4 class="text-white">{{ userStore.userData.name }}</h4>
-          <router-link :to="{ name: 'profile' }" class="text-xs text-[#CED4DA]"
-            >Edit your profile</router-link
+    <transition name="slide">
+      <aside
+        v-show="navigation || isDesktop"
+        class="aside-bar inline-flex flex-col p-11 lg:p-0 z-30 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent lg:static top-0 backdrop-blur-2xl lg:backdrop-blur-0"
+      >
+        <div class="inline-flex items-center gap-6">
+          <div
+            class="flex justify-center bg-[#D9D9D9] w-16 h-16 rounded-full overflow-hidden"
+            :class="activeClass"
           >
+            <img :src="userStore.userData.avatar" alt="profile" class="object-contain" />
+          </div>
+
+          <div>
+            <h4 class="text-white">{{ userStore.userData.name }}</h4>
+            <router-link :to="{ name: 'profile' }" class="text-xs text-[#CED4DA]"
+              >Edit your profile</router-link
+            >
+          </div>
         </div>
-      </div>
-      <nav class="block pt-10">
-        <ul class="space-y-10">
-          <li>
-            <router-link :to="{ name: 'news-feed' }" class="inline-flex">
-              <div class="flex items-center text-white gap-10">
-                <FeedIcon :name="route.name" />
-                <p>News Feed</p>
-              </div>
-            </router-link>
-          </li>
-          <li>
-            <router-link to="#" class="inline-flex">
-              <div class="flex items-center text-white gap-10">
-                <MoviesIcon />
-                <p>List of movies</p>
-              </div>
-            </router-link>
-          </li>
-        </ul>
-      </nav>
-    </aside>
+        <nav class="block pt-10">
+          <ul class="space-y-10">
+            <li>
+              <router-link :to="{ name: 'news-feed' }" class="inline-flex">
+                <div class="flex items-center text-white gap-10">
+                  <FeedIcon :name="route.name" />
+                  <p>News Feed</p>
+                </div>
+              </router-link>
+            </li>
+            <li>
+              <router-link to="#" class="inline-flex">
+                <div class="flex items-center text-white gap-10">
+                  <MoviesIcon />
+                  <p>List of movies</p>
+                </div>
+              </router-link>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+    </transition>
     <main :class="width" @click="emit('close-navigation', false)">
       <slot></slot>
     </main>
@@ -74,3 +76,19 @@ onMounted(() => {
   window.addEventListener('resize', checkWidth)
 })
 </script>
+<style scoped>
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease-in-out;
+}
+.slide-enter-to {
+  transform: translateX(0%);
+}
+.slide-enter-from {
+  transform: translateX(-100%);
+}
+
+.slide-leave-to {
+  transform: translateX(-100%);
+}
+</style>

@@ -71,7 +71,7 @@
                   class="w-full"
                   :value="nameHandler.value"
                   :error="nameHandler.error"
-                  :rules="nameHandler.edit && 'required|min:3|max:15|alpha_num'"
+                  rules="required|min:3|max:15|alpha_num"
                   placeholder="Enter new username"
                   @update-prop="nameHandler.error = ''"
                 ></base-input>
@@ -107,7 +107,7 @@
                   v-model="emailHandler.value"
                   :value="emailHandler.value"
                   :error="emailHandler.error"
-                  rules="email"
+                  rules="required|email"
                   placeholder="Enter new Email"
                   @update-prop="emailHandler.error = ''"
                 ></base-input>
@@ -152,7 +152,7 @@
                     :value="passwordHandler.value"
                     :error="passwordHandler.error"
                     type="password"
-                    rules="min:8|max:15|alpha_num"
+                    rules="required|min:8|max:15|alpha_num"
                     @input="validPasswordModal"
                     @update-prop="passwordHandler.error = ''"
                   ></base-input>
