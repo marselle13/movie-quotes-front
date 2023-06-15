@@ -130,38 +130,10 @@
             </div>
             <div v-if="!google && passwordHandler.edit">
               <teleport to="#main-card" :disabled="isDesktop">
-                <div class="block rounded border border-[#ced4da33] p-6 my-9">
-                  <p class="text-white">Passwords should contain:</p>
-                  <ul class="text-white list-disc px-4">
-                    <li
-                      class="text-sm"
-                      :class="!passwordHandler.correctLength ? 'text-[#9C9A9A]' : 'text-green-500'"
-                    >
-                      <span
-                        :class="!passwordHandler.correctLength ? 'text-[#9C9A9A]' : 'text-white'"
-                        >8 or more characters</span
-                      >
-                    </li>
-                    <li
-                      class="text-sm"
-                      :class="
-                        passwordHandler.correctLength && passwordHandler.correctCharacters
-                          ? 'text-green-500'
-                          : 'text-[#9C9A9A]'
-                      "
-                    >
-                      <span
-                        :class="
-                          passwordHandler.correctLength && passwordHandler.correctCharacters
-                            ? 'text-white'
-                            : 'text-[#9C9A9A]'
-                        "
-                      >
-                        15 lowercase character</span
-                      >
-                    </li>
-                  </ul>
-                </div>
+                <PasswordModal
+                  :correct-length="passwordHandler.correctLength"
+                  :correct-characters="passwordHandler.correctCharacters"
+                />
               </teleport>
             </div>
             <div v-if="!google && passwordHandler.edit" class="block space-y-12">
@@ -176,7 +148,7 @@
                   :error="passwordHandler.error"
                   type="password"
                   rules="required|min:8|max:15|alpha_num"
-                  @input="updateModal"
+                  @input="validPasswordModal"
                   @update-prop="passwordHandler.error = ''"
                 ></base-input>
                 <base-input
@@ -212,6 +184,7 @@ import BaseInput from '@/components/ui/form/BaseInput.vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
 import MainCard from '@/components/ui/MainCard.vue'
 import ConfirmationModal from '@/components/layout/user/ConfirmationModal.vue'
+import PasswordModal from '@/components/layout/user/PasswordModal.vue'
 
 import { computed, onMounted, reactive, ref } from 'vue'
 import { Form, Field } from 'vee-validate'
@@ -265,7 +238,7 @@ function navigationHandler(value) {
   navigation.value = value
 }
 
-function updateModal() {
+function validPasswordModal() {
   const alphaNum = /^[a-z0-9]+$/
   passwordHandler.correctLength = passwordHandler.value.length >= 8
   passwordHandler.correctCharacters =
