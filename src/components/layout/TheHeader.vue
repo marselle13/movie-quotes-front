@@ -55,7 +55,7 @@
         >
       </div>
       <div v-else class="hidden md:flex">
-        <base-button mode="flat" class="w-32 py-2">Log out</base-button>
+        <base-button mode="flat" class="w-32 py-2" @click="logout">Log out</base-button>
       </div>
     </div>
   </header>
@@ -65,16 +65,19 @@ import LanguageDropdown from '@/components/icons/LanguageDropdownIcon.vue'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { setLocale } from '@vee-validate/i18n'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
 import BaseDropdown from '@/components/ui/form/BaseDropdown.vue'
 import NotificationIcon from '@/components/icons/NotificationIcon.vue'
 import BurgerIcon from '@/components/icons/BurgerIcon.vue'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
+import { useUserStore } from '@/stores/userStore'
 
 const { t, locale } = useI18n({ useScope: 'global' })
 const route = useRoute()
+const router = useRouter()
 const emit = defineEmits(['open-navigation'])
+const userStore = useUserStore()
 
 const props = defineProps({
   background: { type: Boolean, required: false, default: true },
@@ -93,5 +96,14 @@ function changeLanguage(value) {
   locale.value = value
   document.documentElement.lang = value
   setLocale(value)
+}
+
+async function logout() {
+  try {
+    await userStore.logout()
+    await router.replace({ name: 'landing' })
+  } catch (err) {
+    //Error
+  }
 }
 </script>
