@@ -215,7 +215,6 @@ const confirmModal = ref(false)
 const formData = reactive({})
 
 const avatarHandler = reactive({
-  oldValue: '',
   value: '',
   edit: false,
 })
@@ -279,7 +278,8 @@ async function onConfirm() {
 async function submitChanges(values) {
   try {
     const { new_email } = values
-    await userStore.updateProfile(values)
+    const response = await userService.updateUserData(values)
+    await userStore.updateProfile(response.data.user)
     if (new_email) {
       await authService.logoutUser()
       await userStore.data()
@@ -287,6 +287,7 @@ async function submitChanges(values) {
     }
     reset()
   } catch (err) {
+    console.error(err)
     nameHandler.error = err.response.data.errors?.name?.[0][locale.value]
     emailHandler.error = err.response.data.errors?.email?.[0][locale.value]
     passwordHandler.error = err.response.data.errors?.password?.[0][locale.value]

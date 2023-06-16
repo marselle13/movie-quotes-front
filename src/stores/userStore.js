@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { useAuthService } from '@/services/authService'
-import { useUserService } from '@/services/UserService'
 export const useUserStore = defineStore('UserStore', {
   state: () => ({
     user: {
@@ -30,7 +29,7 @@ export const useUserStore = defineStore('UserStore', {
       try {
         const authService = useAuthService()
         const response = await authService.userData()
-        const { name, email, avatar, google } = response.data
+        const { name, email, avatar, registeredWithGoogle } = response.data
 
         const avatarPath = avatar.includes('default') ? avatar : `storage/${avatar}`
 
@@ -38,7 +37,7 @@ export const useUserStore = defineStore('UserStore', {
           avatar: `${import.meta.env.VITE_BASE_URL}${avatarPath}`,
           name,
           email,
-          google: !!google,
+          google: !!registeredWithGoogle,
         }
         this.isAuth = true
       } catch (err) {
@@ -46,15 +45,13 @@ export const useUserStore = defineStore('UserStore', {
       }
     },
     async updateProfile(values) {
-      const userService = useUserService()
-      await userService.updateUserData(values)
-      const { new_name, new_email, new_avatar } = values
-      if (new_name) {
-        this.user.name = new_name
-      } else if (new_email) {
-        this.user.email = new_email
-      } else if (new_avatar) {
-        this.user.avatar = URL.createObjectURL(new_avatar)
+      const { name, email, avatar } = values
+      if (name) {
+        this.user.name = name
+      } else if (email) {
+        this.user.email = email
+      } else if (avatar) {
+        this.user.avatar = `${import.meta.env.VITE_BASE_URL}storage/${avatar}`
       }
     },
   },
