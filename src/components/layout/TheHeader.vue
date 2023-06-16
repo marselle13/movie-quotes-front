@@ -4,7 +4,9 @@
     :class="[headerBackground]"
   >
     <div class="flex items-center">
-      <p class="text-[#DDCCAA] uppercase hidden lg:block">{{ t('movie_quotes') }}</p>
+      <p class="text-[#DDCCAA] uppercase" :class="[headerIcon]">
+        {{ t('movie_quotes') }}
+      </p>
       <BurgerIcon v-if="background" class="lg:hidden" @click="emit('open-navigation', true)" />
     </div>
     <div class="flex items-center gap-4 md:gap-10">
@@ -86,6 +88,10 @@ const props = defineProps({
 const headerBackground = computed(() =>
   props.background ? 'backdrop-blur-xl bg-white bg-opacity-5' : 'bg-transparent',
 )
+
+const headerIcon = computed(() => {
+  return route.name === 'landing' ? 'block' : 'hidden lg:block'
+})
 
 const showLanguage = computed(() => {
   return locale.value === 'en' ? 'Eng' : 'Geo'
