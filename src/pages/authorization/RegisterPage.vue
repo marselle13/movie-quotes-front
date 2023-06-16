@@ -72,7 +72,7 @@ const error = reactive({
 async function onSubmit(values) {
   try {
     await authService.registerUser(values)
-    await router.push({ name: 'success-message', params: { message: 'registration' } })
+    await router.push({ name: 'success-message', params: { message: 'verification' } })
   } catch (err) {
     error.name = err.response.data.errors.name?.[0][locale.value]
     error.email = err.response.data.errors.email?.[0][locale.value]

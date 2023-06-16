@@ -39,7 +39,7 @@
   "forget_password": "Forget Password?",
   "no_account" : "Don't have account yet?",
   "recover_title" : "Check your email",
-  "recover_info" : "We have sent a password recover instructions to your email",
+  "recover_password" : "We have sent a password recover instructions to your email",
   "update_title":  "Success!",
   "update_info": "Your Password changed successfully",
   "not_verified": "The selected email is not verified",

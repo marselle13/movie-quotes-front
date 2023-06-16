@@ -133,17 +133,13 @@
                 {{ t('edit') }}
               </button>
             </div>
-            <div id="password-container" class="flex flex-col-reverse"></div>
+            <div id="password-container" class="flex flex-col"></div>
             <div v-if="!google && passwordHandler.edit">
               <teleport :to="!isDesktop ? '#main-card' : '#password-container'">
                 <PasswordModal
                   :correct-length="passwordHandler.correctLength"
                   :correct-characters="passwordHandler.correctCharacters"
                 />
-              </teleport>
-            </div>
-            <div v-if="!google && passwordHandler.edit">
-              <teleport :to="!isDesktop ? '#main-card' : '#password-container'">
                 <div class="space-y-12">
                   <base-input
                     id="new_password"
@@ -287,7 +283,7 @@ async function submitChanges(values) {
     if (new_email) {
       await authService.logoutUser()
       await userStore.data()
-      await router.replace({ name: 'landing' })
+      await router.replace({ name: 'success-message', params: { message: 'verification' } })
     }
     reset()
   } catch (err) {
