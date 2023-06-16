@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useAuthService } from '@/services/authService'
+import { useUserService } from '@/services/UserService'
 export const useUserStore = defineStore('UserStore', {
   state: () => ({
     user: {
@@ -44,7 +45,9 @@ export const useUserStore = defineStore('UserStore', {
         this.isAuth = false
       }
     },
-    updateProfile(values) {
+    async updateProfile(values) {
+      const userService = useUserService()
+      await userService.updateUserData(values)
       const { new_name, new_email, new_avatar } = values
       if (new_name) {
         this.user.name = new_name

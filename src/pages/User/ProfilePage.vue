@@ -190,8 +190,8 @@ import TheHeader from '@/components/layout/TheHeader.vue'
 import BaseInput from '@/components/ui/form/BaseInput.vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
 import MainCard from '@/components/ui/MainCard.vue'
-import ConfirmationModal from '@/components/layout/user/ConfirmationModal.vue'
-import PasswordModal from '@/components/layout/user/PasswordModal.vue'
+import ConfirmationModal from '@/components/modals/user/ConfirmationModal.vue'
+import PasswordModal from '@/components/modals/user/PasswordModal.vue'
 
 import { computed, onMounted, reactive, ref } from 'vue'
 import { Form, Field } from 'vee-validate'
@@ -279,7 +279,6 @@ async function onConfirm() {
 async function submitChanges(values) {
   try {
     const { new_email } = values
-    await userService.updateUserData(values)
     await userStore.updateProfile(values)
     if (new_email) {
       await authService.logoutUser()

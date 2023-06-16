@@ -13,7 +13,7 @@
     class="text-white rounded font-medium text-sm md:text-base text-center"
     v-else
     :to="to"
-    :class="[buttonStyle, buttonAnimation]"
+    :class="[buttonStyle]"
     ><slot></slot
   ></router-link>
 </template>
