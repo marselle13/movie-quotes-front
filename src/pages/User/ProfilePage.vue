@@ -70,6 +70,7 @@
                   id="new_name"
                   :label="t('new_name')"
                   class="w-full"
+                  v-model="nameHandler.value"
                   :value="nameHandler.value"
                   :error="nameHandler.error"
                   rules="required|min:3|max:15|alpha_num"

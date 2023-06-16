@@ -28,7 +28,7 @@ configure({
       names: {
         username_email: 'სახელი ან ელ-ფოსტა',
         new_name: 'ახალი სახელი',
-        new_email: 'ახალ ელ-ფოსტა',
+        new_email: 'ახალი ელ-ფოსტა',
         new_password: 'ახალი პაროლი',
         confirm_new: 'გაიმეორე ახალი პაროლი',
         name: 'სახელი',

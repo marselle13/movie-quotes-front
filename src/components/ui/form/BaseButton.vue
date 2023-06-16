@@ -1,7 +1,10 @@
 <template>
   <button
     class="text-white rounded font-medium text-sm md:text-base"
-    :class="[buttonStyle, buttonAnimation]"
+    :class="[
+      { 'transition ease-out delay-150 hover:ring hover:ring-[#F07C84] duration-300': animation },
+      buttonStyle,
+    ]"
     v-if="!link"
   >
     <slot></slot>
@@ -40,11 +43,5 @@ const buttonStyle = computed(() => {
     default:
       return 'bg-[#E31221] hover:bg-[#CC0E10] focus:bg-[#B80D0F] disabled:bg-[#EC4C57]'
   }
-})
-
-const buttonAnimation = computed(() => {
-  return (
-    props.animation && 'transition ease-out delay-150 hover:ring hover:ring-[#F07C84] duration-300'
-  )
 })
 </script>
