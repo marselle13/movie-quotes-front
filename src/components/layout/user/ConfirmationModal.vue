@@ -1,20 +1,19 @@
 <template>
   <section class="block md:hidden">
-    <div
-      class="backdrop fixed top-0 left-0 w-full h-full -z-10 mx-auto"
-      @click="emit('close-modal')"
-    ></div>
-    <div
-      class="fixed confirm text-white text-center top-40 left-6 z-30 w-11/12 mx-auto before:absolute before:w-full before:h-full before:top-0 before:left-0 before:opacity-30 before:backdrop-blur-2xl before:rotate-180 before:rounded-lg before:-z-10"
-    >
-      <div class="pt-16 pb-12 px-10 border-b border-[#ced4da80]">
-        <h4>{{ info }}</h4>
-      </div>
-      <div class="flex justify-between w-full p-8">
-        <base-button mode="transparent" type="button" @click="emit('close-modal')">{{
-          t('cancel')
-        }}</base-button>
-        <base-button class="p-2" @click="emit('confirm')">{{ t('confirm') }}</base-button>
+    <div class="backdrop fixed top-0 left-0 w-full h-full -z-10" @click="emit('close-modal')"></div>
+    <div class="flex justify-center">
+      <div
+        class="fixed confirm text-white text-center top-40 z-30 w-10/12 mx-auto before:absolute before:w-full before:h-full before:top-0 before:left-0 before:opacity-30 before:backdrop-blur-2xl before:rotate-180 before:rounded-lg before:-z-10"
+      >
+        <div class="pt-16 pb-12 px-10 border-b border-[#ced4da80]">
+          <h4>{{ info }}</h4>
+        </div>
+        <div class="flex justify-between w-full p-8">
+          <base-button mode="transparent" type="button" @click="emit('close-modal')">{{
+            t('cancel')
+          }}</base-button>
+          <base-button class="p-2" @click="emit('confirm')">{{ t('confirm') }}</base-button>
+        </div>
       </div>
     </div>
   </section>
