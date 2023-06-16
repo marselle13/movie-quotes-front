@@ -8,20 +8,23 @@
       class="fixed confirm text-white text-center top-40 left-6 z-30 w-11/12 mx-auto before:absolute before:w-full before:h-full before:top-0 before:left-0 before:opacity-30 before:backdrop-blur-2xl before:rotate-180 before:rounded-lg before:-z-10"
     >
       <div class="pt-16 pb-12 px-10 border-b border-[#ced4da80]">
-        <h1>Are you sure to make changes ?</h1>
+        <h4>{{ info }}</h4>
       </div>
       <div class="flex justify-between w-full p-8">
-        <base-button mode="transparent" type="button" @click="emit('close-modal')"
-          >Cancel</base-button
-        >
-        <base-button class="p-2" @click="emit('confirm')">Confirm</base-button>
+        <base-button mode="transparent" type="button" @click="emit('close-modal')">{{
+          t('cancel')
+        }}</base-button>
+        <base-button class="p-2" @click="emit('confirm')">{{ t('confirm') }}</base-button>
       </div>
     </div>
   </section>
 </template>
 <script setup>
 import BaseButton from '@/components/ui/form/BaseButton.vue'
+import { useI18n } from 'vue-i18n'
 
+defineProps({ info: { type: String, required: true } })
+const { t } = useI18n()
 const emit = defineEmits(['close-modal', 'confirm'])
 </script>
 <style scoped>

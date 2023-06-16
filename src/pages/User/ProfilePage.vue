@@ -7,10 +7,11 @@
   >
     <div class="pl-10">
       <BackIcon class="block lg:hidden" @click="router.push({ name: 'news-feed' })" />
-      <h2 class="text-white text-2xl hidden lg:block">My profile</h2>
+      <h2 class="text-white text-2xl hidden lg:block">{{ t('my_profile') }}</h2>
     </div>
     <Form v-slot="{ handleReset }" @submit="onSubmit" id="updateProfile">
       <ConfirmationModal
+        :info="t('confirmation_changes')"
         v-if="confirmModal"
         @close-modal="confirmModal = false"
         @confirm="onConfirm"
@@ -38,7 +39,7 @@
                   class="sr-only"
                   @input="uploadImage($event, handleChange)"
                 />
-                <label :for="field.name" class="text-white cursor-pointer">Upload new photo</label>
+                <label :for="field.name" class="text-white cursor-pointer">{{ t('upload') }}</label>
               </div>
             </Field>
           </div>
@@ -46,7 +47,7 @@
             <div class="flex items-center gap-9 border-b border-[#ced4da80] md:border-none">
               <base-input
                 id="name"
-                label="name"
+                :label="t('name')"
                 class="w-full"
                 :placeholder="userStore.userData.name"
                 v-model="nameHandler.value"
@@ -59,7 +60,7 @@
                 type="button"
                 @click="nameHandler.edit = true"
               >
-                Edit
+                {{ t('edit') }}
               </button>
             </div>
             <div id="name-container"></div>
@@ -67,12 +68,12 @@
               <teleport :to="!isDesktop ? '#main-card' : '#name-container'">
                 <base-input
                   id="new_name"
-                  label="New Name"
+                  :label="t('new_name')"
                   class="w-full"
                   :value="nameHandler.value"
                   :error="nameHandler.error"
                   rules="required|min:3|max:15|alpha_num"
-                  placeholder="Enter new username"
+                  :placeholder="t('enter_name')"
                   @update-prop="nameHandler.error = ''"
                 ></base-input>
               </teleport>
@@ -80,7 +81,7 @@
             <div class="flex gap-9 border-b border-[#ced4da80] md:border-none">
               <base-input
                 id="required|email"
-                label="Email"
+                :label="t('email')"
                 class="w-full"
                 :placeholder="userStore.userData.email"
                 v-model="emailHandler.value"
@@ -94,7 +95,7 @@
                 v-if="!google"
                 @click="emailHandler.edit = true"
               >
-                Edit
+                {{ t('edit') }}
               </button>
             </div>
             <div id="email-container"></div>
@@ -102,13 +103,13 @@
               <teleport :to="!isDesktop ? '#main-card' : '#email-container'">
                 <base-input
                   id="new_email"
-                  label="New Email"
+                  :label="t('new_email')"
                   class="w-full"
                   v-model="emailHandler.value"
                   :value="emailHandler.value"
                   :error="emailHandler.error"
                   rules="required|email"
-                  placeholder="Enter new Email"
+                  :placeholder="t('enter_email')"
                   @update-prop="emailHandler.error = ''"
                 ></base-input>
               </teleport>
@@ -119,7 +120,7 @@
             >
               <base-input
                 id="password"
-                label="password"
+                :label="t('password')"
                 class="w-full"
                 placeholder="••••••••••••"
                 disabled
@@ -129,7 +130,7 @@
                 type="button"
                 @click="passwordHandler.edit = true"
               >
-                Edit
+                {{ t('edit') }}
               </button>
             </div>
             <div id="password-container" class="flex flex-col-reverse"></div>
@@ -146,8 +147,8 @@
                 <div class="space-y-12">
                   <base-input
                     id="new_password"
-                    label="New password"
-                    placeholder="Enter new password"
+                    :label="t('new_password')"
+                    :placeholder="t('enter_password')"
                     v-model="passwordHandler.value"
                     :value="passwordHandler.value"
                     :error="passwordHandler.error"
@@ -158,8 +159,8 @@
                   ></base-input>
                   <base-input
                     id="confirm_new"
-                    label="Confirm new password"
-                    placeholder="Confirm new password"
+                    :label="t('confirm_new')"
+                    :placeholder="t('confirm_new')"
                     :error="!!passwordHandler.error"
                     type="password"
                     rules="required|confirmed:@new_password"
@@ -178,10 +179,10 @@
           !confirmModal
         "
       >
-        <base-button mode="transparent" type="button" @click="reset(handleReset)"
-          >Cancel</base-button
-        >
-        <base-button class="p-2">{{ isDesktop ? 'Save Changes' : 'Edit' }}</base-button>
+        <base-button mode="transparent" type="button" @click="reset(handleReset)">{{
+          t('cancel')
+        }}</base-button>
+        <base-button class="p-2">{{ isDesktop ? t('save_changes') : t('edit') }}</base-button>
       </div>
     </Form>
   </MainContainer>
@@ -202,7 +203,9 @@ import { useUserService } from '@/services/UserService'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import BackIcon from '@/components/icons/BackIcon.vue'
+import { useAuthService } from '@/services/authService'
 
+const authService = useAuthService()
 const userStore = useUserStore()
 const userService = useUserService()
 const { google } = userStore.userData
@@ -278,8 +281,14 @@ async function onConfirm() {
 
 async function submitChanges(values) {
   try {
+    const { new_email } = values
     await userService.updateUserData(values)
-    userStore.updateProfile(values)
+    await userStore.updateProfile(values)
+    if (new_email) {
+      await authService.logoutUser()
+      await userStore.data()
+      await router.replace({ name: 'landing' })
+    }
     reset()
   } catch (err) {
     nameHandler.error = err.response.data.errors?.name?.[0][locale.value]
@@ -288,7 +297,7 @@ async function submitChanges(values) {
   }
 }
 
-function reset(handleReset) {
+function reset() {
   resetValues(nameHandler)
   resetValues(emailHandler)
   resetValues(avatarHandler)

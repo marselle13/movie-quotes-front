@@ -11,7 +11,6 @@ export const useUserService = () => {
       password: new_password,
       password_confirmation: confirm_new,
     }
-
     for (const [key, value] of Object.entries(fields)) {
       if (value) {
         formData.append(key, value)

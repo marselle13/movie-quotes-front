@@ -55,7 +55,7 @@
         >
       </div>
       <div v-else class="hidden md:flex">
-        <base-button mode="flat" class="w-32 py-2" @click="logout">Log out</base-button>
+        <base-button mode="flat" class="w-32 py-2" @click="logout">{{ t('log_out') }}</base-button>
       </div>
     </div>
   </header>
@@ -73,7 +73,7 @@ import BurgerIcon from '@/components/icons/BurgerIcon.vue'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
 import { useUserStore } from '@/stores/userStore'
 
-const { t, locale } = useI18n({ useScope: 'global' })
+const { t, locale } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const emit = defineEmits(['open-navigation'])

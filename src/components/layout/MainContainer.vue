@@ -3,7 +3,7 @@
     <transition name="slide">
       <aside
         v-show="navigation || isDesktop"
-        class="aside-bar inline-flex flex-col p-11 lg:p-0 z-30 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent lg:static top-0 backdrop-blur-2xl lg:backdrop-blur-0"
+        class="inline-flex flex-col p-11 lg:p-0 z-30 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent lg:static top-0 backdrop-blur-2xl lg:backdrop-blur-0"
       >
         <div class="inline-flex items-center gap-6">
           <div
@@ -15,9 +15,9 @@
 
           <div>
             <h4 class="text-white">{{ userStore.userData.name }}</h4>
-            <router-link :to="{ name: 'profile' }" class="text-xs text-[#CED4DA]"
-              >Edit your profile</router-link
-            >
+            <router-link :to="{ name: 'profile' }" class="text-xs text-[#CED4DA]">{{
+              t('edit_profile')
+            }}</router-link>
           </div>
         </div>
         <nav class="block pt-10">
@@ -26,7 +26,7 @@
               <router-link :to="{ name: 'news-feed' }" class="inline-flex">
                 <div class="flex items-center text-white gap-10">
                   <FeedIcon :name="route.name" />
-                  <p>News Feed</p>
+                  <p>{{ t('news_feed') }}</p>
                 </div>
               </router-link>
             </li>
@@ -34,7 +34,7 @@
               <router-link to="#" class="inline-flex">
                 <div class="flex items-center text-white gap-10">
                   <MoviesIcon />
-                  <p>List of movies</p>
+                  <p>{{ t('movies_list') }}</p>
                 </div>
               </router-link>
             </li>
@@ -53,6 +53,7 @@ import FeedIcon from '@/components/icons/FeedIcon.vue'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
+import { useI18n } from 'vue-i18n'
 
 defineProps({
   width: { type: String, required: false },
@@ -62,6 +63,7 @@ defineProps({
 const emit = defineEmits(['close-navigation'])
 const route = useRoute()
 const userStore = useUserStore()
+const { t } = useI18n()
 
 const isDesktop = ref(false)
 function checkWidth() {
@@ -77,18 +79,18 @@ onMounted(() => {
 })
 </script>
 <style scoped>
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.3s ease-in-out;
-}
-.slide-enter-to {
-  transform: translateX(0%);
-}
-.slide-enter-from {
-  transform: translateX(-100%);
-}
+@media (max-width: 1028px) {
+  .slide-enter-active,
+  .slide-leave-active {
+    transition: transform 0.3s ease-in-out;
+  }
+  .slide-enter-to {
+    transform: translateX(0%);
+  }
 
-.slide-leave-to {
-  transform: translateX(-100%);
+  .slide-enter-from,
+  .slide-leave-to {
+    transform: translateX(-100%);
+  }
 }
 </style>
