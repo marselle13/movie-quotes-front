@@ -33,7 +33,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePasswordService } from '@/services/passwordService'
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const passwordService = usePasswordService()
 const router = useRouter()
 const error = ref('')
@@ -42,7 +42,7 @@ async function onSubmit(values) {
     await passwordService.resetPassword(values)
     await router.push({ name: 'success-message', params: { message: 'recover' } })
   } catch (err) {
-    error.value = err.response.data.errors?.email[0][locale.value]
+    error.value = err.response.data.errors?.email[0]
   }
 }
 </script>

@@ -61,7 +61,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useAuthService } from '@/services/authService'
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const authService = useAuthService()
 const router = useRouter()
 const error = reactive({
@@ -74,8 +74,8 @@ async function onSubmit(values) {
     await authService.registerUser(values)
     await router.push({ name: 'success-message', params: { message: 'verification' } })
   } catch (err) {
-    error.name = err.response.data.errors.name?.[0][locale.value]
-    error.email = err.response.data.errors.email?.[0][locale.value]
+    error.name = err.response.data.errors?.name?.[0]
+    error.email = err.response.data.errors?.email?.[0]
   }
 }
 async function signUpWithGoogle() {

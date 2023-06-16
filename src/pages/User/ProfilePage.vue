@@ -206,7 +206,7 @@ const authService = useAuthService()
 const userStore = useUserStore()
 const userService = useUserService()
 const { google } = userStore.userData
-const { locale, t } = useI18n()
+const { t } = useI18n()
 const router = useRouter()
 
 const navigation = ref(false)
@@ -287,10 +287,9 @@ async function submitChanges(values) {
     }
     reset()
   } catch (err) {
-    console.error(err)
-    nameHandler.error = err.response.data.errors?.name?.[0][locale.value]
-    emailHandler.error = err.response.data.errors?.email?.[0][locale.value]
-    passwordHandler.error = err.response.data.errors?.password?.[0][locale.value]
+    nameHandler.error = err.response.data.errors?.name?.[0]
+    emailHandler.error = err.response.data.errors?.email?.[0]
+    passwordHandler.error = err.response.data.errors?.password?.[0]
   }
 }
 

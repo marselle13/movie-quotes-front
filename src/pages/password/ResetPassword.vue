@@ -41,7 +41,7 @@ import { onBeforeMount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { usePasswordService } from '@/services/passwordService'
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const passwordService = usePasswordService()
@@ -52,7 +52,7 @@ async function onSubmit(values) {
     await passwordService.updatePassword(values, route.query)
     await router.push({ name: 'success-message', params: { message: 'update' } })
   } catch (err) {
-    error.value = err.response.data.errors?.password[0][locale.value]
+    error.value = err.response.data.errors?.password[0]
   }
 }
 

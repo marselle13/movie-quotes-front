@@ -68,7 +68,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthService } from '@/services/authService'
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const userStore = useUserStore()
 const authService = useAuthService()
 
@@ -80,7 +80,7 @@ async function onSubmit(values) {
     await userStore.login(values)
     await router.push({ name: 'news-feed' })
   } catch (err) {
-    error.value = err.response.data.errors?.[locale.value]
+    error.value = err.response.data?.errors
   }
 }
 async function signInWithGoogle() {
