@@ -80,7 +80,7 @@ async function onSubmit(values) {
     await userStore.login(values)
     await router.push({ name: 'news-feed' })
   } catch (err) {
-    error.value = err.response.data?.errors
+    error.value = err.response?.data.errors
   }
 }
 async function signInWithGoogle() {

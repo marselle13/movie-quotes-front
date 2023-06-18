@@ -52,7 +52,7 @@ async function onSubmit(values) {
     await passwordService.updatePassword(values, route.query)
     await router.push({ name: 'success-message', params: { message: 'update' } })
   } catch (err) {
-    error.value = err.response.data.errors?.password[0]
+    error.value = err.response?.data.errors.password?.[0]
   }
 }
 

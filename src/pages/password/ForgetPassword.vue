@@ -42,7 +42,7 @@ async function onSubmit(values) {
     await passwordService.resetPassword(values)
     await router.push({ name: 'success-message', params: { message: 'recover' } })
   } catch (err) {
-    error.value = err.response.data.errors?.email[0]
+    error.value = err.response?.data.errors.email?.[0]
   }
 }
 </script>

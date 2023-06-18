@@ -74,8 +74,8 @@ async function onSubmit(values) {
     await authService.registerUser(values)
     await router.push({ name: 'success-message', params: { message: 'verification' } })
   } catch (err) {
-    error.name = err.response.data.errors?.name?.[0]
-    error.email = err.response.data.errors?.email?.[0]
+    error.name = err.response?.data.errors.name?.[0]
+    error.email = err.response?.data.errors.email?.[0]
   }
 }
 async function signUpWithGoogle() {

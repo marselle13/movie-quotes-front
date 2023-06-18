@@ -10,11 +10,12 @@
       <h2 class="text-white text-2xl hidden lg:block">{{ t('my_profile') }}</h2>
     </div>
     <Form v-slot="{ handleReset }" @submit="onSubmit" id="updateProfile">
+      <SuccessfullyUpdateModal @close="updated = false" v-if="updated" />
       <ConfirmationModal
         :info="t('confirmation_changes')"
         v-if="confirmModal"
         @close-modal="confirmModal = false"
-        @confirm="onConfirm"
+        @confirm="onConfirm(formData.value)"
       />
       <main-card
         class="mt-8 lg:mt-32 py-20 md:pb-32 px-8 lg:px-12 w-full space-y-4"
@@ -201,6 +202,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import BackIcon from '@/components/icons/BackIcon.vue'
 import { useAuthService } from '@/services/authService'
+import SuccessfullyUpdateModal from '@/components/modals/user/SuccessfullyUpdateModal.vue'
 
 const authService = useAuthService()
 const userStore = useUserStore()
@@ -212,6 +214,7 @@ const router = useRouter()
 const navigation = ref(false)
 const isDesktop = ref(true)
 const confirmModal = ref(false)
+const updated = ref(false)
 const formData = reactive({})
 
 const avatarHandler = reactive({
@@ -270,8 +273,8 @@ async function onSubmit(values) {
   }
 }
 
-async function onConfirm() {
-  await submitChanges(formData.value)
+async function onConfirm(values) {
+  await submitChanges(values)
   confirmModal.value = false
 }
 
@@ -286,10 +289,11 @@ async function submitChanges(values) {
       await router.replace({ name: 'success-message', params: { message: 'verification' } })
     }
     reset()
+    updated.value = true
   } catch (err) {
-    nameHandler.error = err.response.data.errors?.name?.[0]
-    emailHandler.error = err.response.data.errors?.email?.[0]
-    passwordHandler.error = err.response.data.errors?.password?.[0]
+    nameHandler.error = err.response?.data.errors.name?.[0]
+    emailHandler.error = err.response?.data.errors.email?.[0]
+    passwordHandler.error = err.response?.data.errors.password?.[0]
   }
 }
 

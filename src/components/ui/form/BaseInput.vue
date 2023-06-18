@@ -25,12 +25,12 @@
         />
         <div class="absolute right-3 top-3">
           <valid-icon
-            v-if="!error && meta.valid && meta.validated && type !== 'password' && rules"
-          />
-          <invalid-icon
-            v-else-if="error || (!meta.valid && meta.validated && type !== 'password' && rules)"
+            v-if="!error && meta.valid && meta.validated && rules && type !== 'password'"
           />
           <password-icon v-else-if="type === 'password'" class="mt-0.5" @click="showPassword" />
+          <invalid-icon
+            v-else-if="error || (!meta.valid && meta.validated && rules && type !== 'password')"
+          />
         </div>
       </div>
       <div class="relative" v-if="rules">
