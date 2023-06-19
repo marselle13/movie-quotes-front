@@ -23,7 +23,7 @@ export const useUserStore = defineStore('UserStore', {
     async logout() {
       const authService = useAuthService()
       await authService.logoutUser()
-      await this.data()
+      this.resetData()
     },
     async data() {
       try {
@@ -53,6 +53,13 @@ export const useUserStore = defineStore('UserStore', {
       } else if (avatar) {
         this.user.avatar = `${import.meta.env.VITE_BASE_URL}storage/${avatar}`
       }
+    },
+    resetData() {
+      this.user.avatar = ''
+      this.user.name = ''
+      this.user.email = ''
+      this.user.google = null
+      this.isAuth = false
     },
   },
 })
