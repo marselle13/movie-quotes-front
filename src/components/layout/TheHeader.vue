@@ -1,12 +1,17 @@
 <template>
-  <header class="flex justify-between items-center py-4 lg:px-16 px-4" :class="[headerBackground]">
+  <header
+    class="sticky flex justify-between items-center py-4 lg:px-16 px-4"
+    :class="[headerBackground]"
+  >
     <div class="flex items-center">
-      <p class="text-[#DDCCAA] uppercase hidden lg:block">{{ t('movie_quotes') }}</p>
+      <p class="text-[#DDCCAA] uppercase" :class="[headerIcon]">
+        {{ t('movie_quotes') }}
+      </p>
       <BurgerIcon v-if="background" class="lg:hidden" @click="emit('open-navigation', true)" />
     </div>
     <div class="flex items-center gap-4 md:gap-10">
       <div v-if="route.meta.user === 'auth'" class="flex items-center gap-5">
-        <SearchIcon class="md:hidden block" />
+        <SearchIcon class="md:hidden block" v-if="route.name === 'news-feed'" />
         <base-dropdown>
           <template #dropdownButton>
             <NotificationIcon />
@@ -52,7 +57,7 @@
         >
       </div>
       <div v-else class="hidden md:flex">
-        <base-button mode="flat" class="w-32 py-2">Log out</base-button>
+        <base-button mode="flat" class="w-32 py-2" @click="logout">{{ t('log_out') }}</base-button>
       </div>
     </div>
   </header>
@@ -62,16 +67,19 @@ import LanguageDropdown from '@/components/icons/LanguageDropdownIcon.vue'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { setLocale } from '@vee-validate/i18n'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
 import BaseDropdown from '@/components/ui/form/BaseDropdown.vue'
 import NotificationIcon from '@/components/icons/NotificationIcon.vue'
 import BurgerIcon from '@/components/icons/BurgerIcon.vue'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
+import { useUserStore } from '@/stores/userStore'
 
-const { t, locale } = useI18n({ useScope: 'global' })
+const { t, locale } = useI18n()
 const route = useRoute()
+const router = useRouter()
 const emit = defineEmits(['open-navigation'])
+const userStore = useUserStore()
 
 const props = defineProps({
   background: { type: Boolean, required: false, default: true },
@@ -80,6 +88,10 @@ const props = defineProps({
 const headerBackground = computed(() =>
   props.background ? 'backdrop-blur-xl bg-white bg-opacity-5' : 'bg-transparent',
 )
+
+const headerIcon = computed(() => {
+  return route.name === 'landing' ? 'block' : 'hidden lg:block'
+})
 
 const showLanguage = computed(() => {
   return locale.value === 'en' ? 'Eng' : 'Geo'
@@ -90,5 +102,14 @@ function changeLanguage(value) {
   locale.value = value
   document.documentElement.lang = value
   setLocale(value)
+}
+
+async function logout() {
+  try {
+    await userStore.logout()
+    await router.replace({ name: 'landing' })
+  } catch (err) {
+    //Error
+  }
 }
 </script>

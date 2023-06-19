@@ -80,9 +80,7 @@ async function onSubmit(values) {
     await userStore.login(values)
     await router.push({ name: 'news-feed' })
   } catch (err) {
-    if (err.response.status === 401) {
-      error.value = t('wrong_credentials')
-    }
+    error.value = err.response?.data.errors
   }
 }
 async function signInWithGoogle() {

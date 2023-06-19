@@ -42,12 +42,7 @@ async function onSubmit(values) {
     await passwordService.resetPassword(values)
     await router.push({ name: 'success-message', params: { message: 'recover' } })
   } catch (err) {
-    if (err.response.data.errors.email[0] === 'not verified') {
-      error.value = t('not_verified')
-    } else if (err.response.data.errors.email[0] === 'no email') {
-      error.value = t('email_invalid')
-    }
+    error.value = err.response?.data.errors.email?.[0]
   }
 }
-function updateError() {}
 </script>

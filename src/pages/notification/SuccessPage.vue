@@ -39,7 +39,7 @@ const success = reactive({
 })
 function successMessage() {
   switch (route.params.message) {
-    case 'registration':
+    case 'verification':
       setValues({
         title: t('thank_you'),
         info: t('check_email'),

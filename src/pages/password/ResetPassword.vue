@@ -52,9 +52,7 @@ async function onSubmit(values) {
     await passwordService.updatePassword(values, route.query)
     await router.push({ name: 'success-message', params: { message: 'update' } })
   } catch (err) {
-    if (err.response.data.errors.password[0] === 'Same Password') {
-      error.value = t('same_password')
-    }
+    error.value = err.response?.data.errors.password?.[0]
   }
 }
 

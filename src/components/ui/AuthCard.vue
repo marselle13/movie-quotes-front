@@ -8,7 +8,7 @@
       <div
         class="md:bg-[#222030] fixed md:rounded-lg z-10 px-8 md:px-28 md:py-12 md:top-26 w-full md:h-auto overflow-hidden"
         :class="{
-          'wrapper pt-20 pb-24 px-2 w-11/12 before:absolute before:w-full before:h-full before:top-0  before:left-0 before:opacity-30 before:backdrop-blur-xl before:rotate-180 rounded-lg before:-z-10':
+          'wrapper pt-20 pb-24 px-2 w-10/12 before:absolute before:w-full before:h-full before:top-0  before:left-0 before:opacity-30 before:backdrop-blur-xl before:rotate-180 rounded-lg before:-z-10':
             wrapper,
           'md:w-[600px]': notification,
           'md:w-[650px]': !notification,

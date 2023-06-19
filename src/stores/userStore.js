@@ -3,8 +3,10 @@ import { useAuthService } from '@/services/authService'
 export const useUserStore = defineStore('UserStore', {
   state: () => ({
     user: {
+      avatar: '',
       name: '',
       email: '',
+      google: null,
     },
     isAuth: null,
   }),
@@ -18,19 +20,46 @@ export const useUserStore = defineStore('UserStore', {
       await authService.loginUser(values)
       await this.data()
     },
+    async logout() {
+      const authService = useAuthService()
+      await authService.logoutUser()
+      this.resetData()
+    },
     async data() {
       try {
         const authService = useAuthService()
         const response = await authService.userData()
-        const { name, email } = response.data
+        const { name, email, avatar, registeredWithGoogle } = response.data
+
+        const avatarPath = avatar.includes('default') ? avatar : `storage/${avatar}`
+
         this.user = {
+          avatar: `${import.meta.env.VITE_BASE_URL}${avatarPath}`,
           name,
           email,
+          google: !!registeredWithGoogle,
         }
         this.isAuth = true
       } catch (err) {
         this.isAuth = false
       }
+    },
+    async updateProfile(values) {
+      const { name, email, avatar } = values
+      if (name) {
+        this.user.name = name
+      } else if (email) {
+        this.user.email = email
+      } else if (avatar) {
+        this.user.avatar = `${import.meta.env.VITE_BASE_URL}storage/${avatar}`
+      }
+    },
+    resetData() {
+      this.user.avatar = ''
+      this.user.name = ''
+      this.user.email = ''
+      this.user.google = null
+      this.isAuth = false
     },
   },
 })

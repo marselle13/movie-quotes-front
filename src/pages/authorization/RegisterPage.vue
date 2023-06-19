@@ -72,14 +72,10 @@ const error = reactive({
 async function onSubmit(values) {
   try {
     await authService.registerUser(values)
-    await router.push({ name: 'success-message', params: { message: 'registration' } })
+    await router.push({ name: 'success-message', params: { message: 'verification' } })
   } catch (err) {
-    if (err.response.data.errors?.email) {
-      error.email = t('already_taken_email')
-    }
-    if (err.response.data.errors?.name) {
-      error.name = t('already_taken_name')
-    }
+    error.name = err.response?.data.errors.name?.[0]
+    error.email = err.response?.data.errors.email?.[0]
   }
 }
 async function signUpWithGoogle() {

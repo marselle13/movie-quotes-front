@@ -18,6 +18,9 @@ export const useAuthService = () => {
       return await api.get('api/auth/google/callback', { params: { code } })
     }
   }
+  async function logoutUser() {
+    return await api.get('api/logout')
+  }
   async function authorizationWithGoogle() {
     return await api.get('api/auth/google/redirect')
   }
@@ -29,6 +32,7 @@ export const useAuthService = () => {
   return {
     registerUser,
     loginUser,
+    logoutUser,
     authorizationWithGoogle,
     userData,
   }
