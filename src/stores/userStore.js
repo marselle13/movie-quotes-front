@@ -45,14 +45,11 @@ export const useUserStore = defineStore('UserStore', {
       }
     },
     async updateProfile(values) {
-      const { name, email, avatar } = values
-      if (name) {
-        this.user.name = name
-      } else if (email) {
-        this.user.email = email
-      } else if (avatar) {
-        this.user.avatar = `${import.meta.env.VITE_BASE_URL}storage/${avatar}`
-      }
+      const { name, avatar } = values
+      this.user.name = name
+      this.user.avatar = `${import.meta.env.VITE_BASE_URL}${
+        avatar.includes('default') ? '' : 'storage/'
+      }${avatar}`
     },
     resetData() {
       this.user.avatar = ''
