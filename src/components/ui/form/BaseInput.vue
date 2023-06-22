@@ -23,7 +23,7 @@
           ]"
           :disabled="disabled"
         />
-        <div class="absolute right-3 top-3">
+        <div class="absolute right-3 tp-3">
           <valid-icon
             v-if="!error && meta.valid && meta.validated && rules && type !== 'password'"
           />
@@ -62,7 +62,7 @@ const props = defineProps({
   type: { type: String, required: false, default: 'text' },
   rules: { type: String, required: false },
   error: { type: [String, Boolean], required: false },
-  dark: { type: Boolean, required: false, default: false },
+  mode: { type: String, required: false, default: 'default' },
   modelValue: { type: String, required: false },
   value: { type: String, required: false },
   edit: { type: Boolean, required: false },
@@ -77,9 +77,14 @@ const isPasswordVisible = ref(false)
 const emit = defineEmits(['update-prop', 'update:modelValue'])
 
 const inputStyle = computed(() => {
-  return props.dark
-    ? 'py-3 px-4 md:px-7 placeholder-[#CED4DA] bg-[#24222F] bg-opacity-60 outline-none text-white rounded-lg'
-    : 'pl-3 pr-10 py-2 text-[#212529]  placeholder-[#6C757D] rounded  bg-[#CED4DA] border-2 outline-none focus:shadow-[0px_0px_0px_4px] focus:shadow-[#0d6efd3b] disabled:bg-transparent md:disabled:bg-[#E9ECEF] disabled:border-none disabled:placeholder-white disabled:px-0 md:disabled:px-3 disabled:py-0 disabled:pb-4 md:disabled:py-2'
+  switch (props.mode) {
+    case 'flat':
+      return 'py-2 pl-4 pr-14 bg-transparent border border-[#6C757D] text-white before:w-full outline-none'
+    case 'dark':
+      return 'py-3 px-4 md:px-7 placeholder-[#CED4DA] bg-[#24222F] bg-opacity-60 outline-none text-white rounded-lg'
+    default:
+      return 'pl-3 pr-10 py-2 text-[#212529]  placeholder-[#6C757D] rounded  bg-[#CED4DA] border-2 outline-none focus:shadow-[0px_0px_0px_4px] focus:shadow-[#0d6efd3b] disabled:bg-transparent md:disabled:bg-[#E9ECEF] disabled:border-none disabled:placeholder-white disabled:px-0 md:disabled:px-3 disabled:py-0 disabled:pb-4 md:disabled:py-2'
+  }
 })
 
 const placeholderStyle = computed(() => {

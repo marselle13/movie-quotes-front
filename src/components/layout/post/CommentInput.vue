@@ -5,7 +5,7 @@
     >
       <img :src="userStore.userData.avatar" alt="profile" class="object-cover" />
     </div>
-    <base-input placeholder="Write a comment" id="comment" class="w-full" dark></base-input>
+    <base-input placeholder="Write a comment" id="comment" class="w-full" mode="dark"></base-input>
   </section>
 </template>
 <script setup>

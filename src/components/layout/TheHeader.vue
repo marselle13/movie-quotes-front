@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky top-0 flex justify-between items-center py-4 lg:px-16 px-4 z-50"
+    class="sticky top-0 flex justify-between items-center py-4 lg:px-16 px-4 z-40"
     :class="[headerBackground]"
   >
     <div class="flex items-center">
@@ -63,7 +63,7 @@
   </header>
 </template>
 <script setup>
-import LanguageDropdown from '@/components/icons/LanguageDropdownIcon.vue'
+import LanguageDropdown from '@/components/icons/DropdownIcon.vue'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { setLocale } from '@vee-validate/i18n'
