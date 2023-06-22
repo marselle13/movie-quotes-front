@@ -15,13 +15,14 @@
     <div v-else-if="!isLoading">
       <PostContainer
         v-for="post in postStore.getPosts"
+        :post-id="post.id"
         :key="post.id"
-        :username="post.user.name"
-        :avatar="post.user.avatar"
         :quote="post.quote[locale]"
         :thumbnail="post.thumbnail"
-        :movie="post.movie.name[locale]"
-        :movie-year="post.movie.year"
+        :user="post.user"
+        :movie="post.movie"
+        :comments="post.comments"
+        :comments-length="post.commentsLength"
       ></PostContainer>
     </div>
 
@@ -42,10 +43,9 @@ import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 import { usePostStore } from '@/stores/postStore'
 import { useI18n } from 'vue-i18n'
 
-const navigation = ref(false)
 const postStore = usePostStore()
 const { locale } = useI18n()
-
+const navigation = ref(false)
 const isLoading = ref(false)
 const error = ref('')
 function navigationHandler(value) {

@@ -5,7 +5,12 @@ export const usePostService = () => {
     return await api.get(`api/posts?page=${page}`)
   }
 
+  async function fetchMoreComments(postId) {
+    return await api.get(`api/posts/${postId}/comments`)
+  }
+
   return {
     fetchPosts,
+    fetchMoreComments,
   }
 }

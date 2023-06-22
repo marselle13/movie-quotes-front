@@ -30,17 +30,23 @@ export const usePostStore = defineStore('PostStore', {
 
       try {
         const postService = usePostService()
-        const response = await postService.fetchPosts(this.currentPage++)
+        const response = await postService.fetchPosts((this.currentPage += 1))
         const newPosts = response.data
 
         this.posts = [...this.posts, ...newPosts]
-        this.currentPage++
+        this.currentPage += 1
         this.hasMoreData = newPosts.length > 0
       } catch (err) {
-        //Err
+        throw new Error('Cannot Fetch More Data')
       } finally {
         this.isFetching = false
       }
+    },
+    async loadMoreComments(postId) {
+      const postService = usePostService()
+      const response = await postService.fetchMoreComments(postId)
+      const post = this.posts.find((post) => postId === post.id)
+      post.comments = response.data
     },
   },
 })

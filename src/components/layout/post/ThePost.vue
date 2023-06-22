@@ -6,11 +6,11 @@
       >
         <img :src="avatar" alt="profile" class="object-contain" />
       </div>
-      <h5>{{ username }}</h5>
+      <h5>{{ name }}</h5>
     </div>
     <div class="flex gap-2 mt-4">
       <h3 class="text-white">
-        “{{ quote }}” <span class="text-[#DDCCAA]">{{ movie }}</span> {{ movieYear }}
+        “{{ quote }}” <span class="text-[#DDCCAA]">{{ movieName }}</span> {{ movieYear }}
       </h3>
     </div>
     <div class="my-4 lg:my-6 flex justify-center">
@@ -18,7 +18,7 @@
     </div>
     <div class="flex gap-6">
       <div class="flex gap-3">
-        <p class="text-white">0</p>
+        <p class="text-white">{{ commentsLength }}</p>
         <CommentIcon />
       </div>
       <div class="flex gap-3">
@@ -33,12 +33,13 @@ import LikeIcon from '@/components/icons/LikeIcon.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
 
 const props = defineProps({
-  username: { type: String, required: true },
+  name: { type: String, required: true },
   avatar: { type: String, required: true },
   thumbnail: { type: String, required: true },
   quote: { type: String, required: true },
-  movie: { type: String, required: true },
+  movieName: { type: String, required: true },
   movieYear: { type: Number, required: true },
+  commentsLength: { type: Number, required: true },
 })
 
 const avatar = `${import.meta.env.VITE_BASE_URL}${
