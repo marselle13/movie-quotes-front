@@ -6,7 +6,7 @@
       <div
         class="flex justify-center bg-[#D9D9D9] w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full"
       >
-        <img :src="avatar" alt="profile" class="object-contain" />
+        <img :src="avatar" alt="profile" class="object-cover" />
       </div>
       <h5>{{ name }}</h5>
     </div>

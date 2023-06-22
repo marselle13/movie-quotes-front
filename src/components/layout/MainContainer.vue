@@ -10,7 +10,7 @@
             class="flex justify-center bg-[#D9D9D9] w-16 h-16 rounded-full overflow-hidden"
             :class="activeClass"
           >
-            <img :src="userStore.userData.avatar" alt="profile" class="object-contain" />
+            <img :src="userStore.userData.avatar" alt="profile" class="object-cover" />
           </div>
 
           <div>

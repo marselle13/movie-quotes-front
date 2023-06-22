@@ -11,14 +11,18 @@
     >
       <WriteQuoteIcon class="w-23" /> Write new quote
     </button>
+
     <div
-      class="hidden md:flex transition-all duration-1000 ease-out items-center bg-transparent gap-4 relative z-40"
+      class="hidden md:flex transition-all border-opacity-30 duration-1000 ease-out items-center bg-transparent gap-4 relative z-40"
       @click="search = true"
-      :class="{ 'w-full': search, 'w-[200px]': !search }"
+      :class="{
+        'w-full border-b border-[#EFEFEF]': search,
+        'w-[200px]': !search,
+      }"
     >
       <SearchIcon class="absolute" />
       <input
-        placeholder="search by"
+        :placeholder="[search ? 'Enter @ to search movies, Enter # to search quotes' : 'search by']"
         :class="{ 'cursor-pointer': !search }"
         class="w-full placeholder-[#CED4DA] bg-transparent outline-none text-white px-8"
       />

@@ -30,7 +30,7 @@
                 <img
                   :src="avatarHandler.value || `${userStore.userData.avatar}`"
                   alt="avatar"
-                  class="object-contain"
+                  class="object-cover"
                 />
               </div>
               <div>
