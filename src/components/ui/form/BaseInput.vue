@@ -23,7 +23,7 @@
           ]"
           :disabled="disabled"
         />
-        <div class="absolute right-3 tp-3">
+        <div class="absolute right-3 top-3">
           <valid-icon
             v-if="!error && meta.valid && meta.validated && rules && type !== 'password'"
           />
