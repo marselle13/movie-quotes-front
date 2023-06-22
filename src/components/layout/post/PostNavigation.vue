@@ -4,14 +4,14 @@
     class="fixed top-0 left-0 w-full h-full bg-transparent z-30"
     @click="search = false"
   ></div>
-  <section class="inline-flex md:flex gap-4 flex-shrink-0 mx-4 lg:mx-0">
+  <section class="inline-flex md:flex gap-4 flex-shrink-0 mx-4 lg:mx-0 relative">
     <button
       class="transition-all duration-500 ease-out rounded-lg bg-transparent md:bg-[#24222F] p-3 text-start text-white flex gap-4 whitespace-nowrap"
       :class="{ 'w-full': !search, 'w-[240px]': search }"
     >
       <WriteQuoteIcon class="w-23" /> Write new quote
     </button>
-
+    <NewQuoteModal />
     <div
       class="hidden md:flex transition-all border-opacity-30 duration-1000 ease-out items-center bg-transparent gap-4 relative z-40"
       @click="search = true"
@@ -33,6 +33,9 @@
 import WriteQuoteIcon from '@/components/icons/WriteQuoteIcon.vue'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
 import { ref } from 'vue'
+import MainCard from '@/components/ui/MainCard.vue'
+import CloseIcon from '@/components/icons/CloseIcon.vue'
+import NewQuoteModal from '@/components/modals/NewQuoteModal.vue'
 
 const search = ref(false)
 </script>

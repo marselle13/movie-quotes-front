@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky flex justify-between items-center py-4 lg:px-16 px-4"
+    class="sticky top-0 flex justify-between items-center py-4 lg:px-16 px-4 z-50"
     :class="[headerBackground]"
   >
     <div class="flex items-center">

@@ -191,8 +191,8 @@ import TheHeader from '@/components/layout/TheHeader.vue'
 import BaseInput from '@/components/ui/form/BaseInput.vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
 import MainCard from '@/components/ui/MainCard.vue'
-import ConfirmationModal from '@/components/modals/user/ConfirmationModal.vue'
-import PasswordModal from '@/components/modals/user/PasswordModal.vue'
+import ConfirmationModal from '@/components/modals/profile/ConfirmationModal.vue'
+import PasswordModal from '@/components/modals/profile/PasswordModal.vue'
 
 import { computed, onMounted, reactive, ref } from 'vue'
 import { Form, Field } from 'vee-validate'
@@ -202,7 +202,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import BackIcon from '@/components/icons/BackIcon.vue'
 import { useAuthService } from '@/services/authService'
-import SuccessfullyUpdateModal from '@/components/modals/user/SuccessfullyUpdateModal.vue'
+import SuccessfullyUpdateModal from '@/components/modals/profile/SuccessfullyUpdateModal.vue'
 
 const authService = useAuthService()
 const userStore = useUserStore()

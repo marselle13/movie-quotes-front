@@ -1,5 +1,5 @@
 <template>
-  <section class="flex mt-8 lg:mx-16">
+  <section class="flex mt-8 lg:mx-16 sticky top-0">
     <transition name="slide">
       <aside
         v-show="navigation || isDesktop"
