@@ -57,8 +57,3 @@ import MoviesIcon from '@/components/icons/MoviesIcon.vue'
 const userStore = useUserStore()
 const emit = defineEmits(['close'])
 </script>
-<style scoped>
-.backdrop {
-  background: linear-gradient(225deg, #181623 0.07%, #191725 50.66%, #0d0b14 96.88%);
-}
-</style>

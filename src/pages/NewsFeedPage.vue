@@ -22,7 +22,8 @@
         :user="post.user"
         :movie="post.movie"
         :comments="post.comments"
-        :comments-length="post.commentsLength"
+        :comments-length="post.length.comments"
+        :likes-length="post.length.likes"
       ></PostContainer>
     </div>
 

@@ -22,7 +22,7 @@
         <CommentIcon />
       </div>
       <div class="flex gap-3">
-        <p class="text-white">0</p>
+        <p class="text-white">{{ likesLength }}</p>
         <LikeIcon />
       </div>
     </div>
@@ -40,6 +40,7 @@ const props = defineProps({
   movieName: { type: String, required: true },
   movieYear: { type: Number, required: true },
   commentsLength: { type: Number, required: true },
+  likesLength: { type: Number, required: true },
 })
 
 const avatar = `${import.meta.env.VITE_BASE_URL}${

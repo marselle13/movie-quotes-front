@@ -8,6 +8,7 @@
       :movie-year="movie.year"
       :thumbnail="thumbnail"
       :comments-length="commentsLength"
+      :likes-length="likesLength"
     />
     <CommentContainer
       v-for="comment in comments"
@@ -46,6 +47,7 @@ defineProps({
   movie: { type: Object, required: true },
   comments: { type: Object, required: true },
   commentsLength: { type: Number, required: true },
+  likesLength: { type: Number, required: true },
 })
 
 const { locale } = useI18n()
