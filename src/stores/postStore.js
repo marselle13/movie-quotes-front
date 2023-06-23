@@ -42,6 +42,11 @@ export const usePostStore = defineStore('PostStore', {
         this.isFetching = false
       }
     },
+    async addQuote(values) {
+      const postService = usePostService()
+      const response = await postService.addNewQuote(values)
+      this.posts = [response.data.newQuote, ...this.posts]
+    },
     async loadMoreComments(postId) {
       const postService = usePostService()
       const response = await postService.fetchMoreComments(postId)

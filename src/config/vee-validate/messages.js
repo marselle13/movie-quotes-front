@@ -20,7 +20,7 @@ configure({
         quoteEng: 'English Quote',
         quoteGeo: 'Georgian Quote',
         image: 'Image',
-        movie: 'Movie',
+        movieId: 'Movie',
       },
       messages: {
         ...en.messages,
@@ -42,7 +42,7 @@ configure({
         quoteEng: 'ინგლისური ციტატა',
         quoteGeo: 'ქართული ციტატა',
         image: 'სურათი',
-        movie: 'ფილმი',
+        movieId: 'ფილმი',
       },
       messages: {
         ...ka.messages,

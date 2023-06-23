@@ -43,6 +43,8 @@ const props = defineProps({
   likesLength: { type: Number, required: true },
 })
 
+const thumbnail = `${import.meta.env.VITE_BASE_URL}storage/${props.thumbnail}`
+
 const avatar = `${import.meta.env.VITE_BASE_URL}${
   props.avatar.includes('default') ? '' : 'storage/'
 }${props.avatar}`

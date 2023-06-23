@@ -36,7 +36,7 @@
             :resetImage="resetImage"
             @show-image="resetImage = false"
           />
-          <Field name="movie" rules="required" v-slot="{ handleChange }" class="relative">
+          <Field name="movieId" rules="required" v-slot="{ handleChange }" class="relative">
             <base-dropdown background width="w-full h-full" @isOpen="dropDownHandler">
               <template #dropdownButton
                 ><div class="flex items-center justify-between text-white text-left">
@@ -44,7 +44,7 @@
                     <MoviesIcon />
                     <h4>{{ selectedMovie[locale] || 'Choose movie' }}</h4>
                     <error-message
-                      name="movie"
+                      name="movieId"
                       class="absolute text-xs text-[#DC3545] -left-6 -bottom-12"
                     ></error-message>
                   </div>
@@ -81,20 +81,26 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import { ref } from 'vue'
 import { useMovieStore } from '@/stores/movieStore'
 import { useI18n } from 'vue-i18n'
+import { usePostStore } from '@/stores/postStore'
 
-const movieStore = useMovieStore()
-const userStore = useUserStore()
-const error = ref('')
 const { locale } = useI18n()
 const emit = defineEmits(['close'])
+const movieStore = useMovieStore()
+const userStore = useUserStore()
+const postStore = usePostStore()
+
+const error = ref('')
 const resetImage = ref(false)
 const selectedMovie = ref({})
 
-function onSubmit(values, { resetForm }) {
-  emit('close')
-  resetForm()
-  resetImage.value = true
-  selectedMovie.value = {}
+async function onSubmit(values, { resetForm }) {
+  try {
+    await postStore.addQuote(values)
+    await emit('close')
+    resetForm()
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 function selectMovie(movieId, movieName, handleChange) {
@@ -103,7 +109,7 @@ function selectMovie(movieId, movieName, handleChange) {
 }
 
 async function dropDownHandler(isOpen) {
-  if (isOpen) {
+  if (isOpen && movieStore.getMovieList.length === 0) {
     try {
       await movieStore.storeMovieList()
     } catch (err) {

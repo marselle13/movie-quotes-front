@@ -9,7 +9,7 @@
     </button>
     <teleport to="body">
       <transition name="new-quote">
-        <NewQuoteModal v-show="addQuote" @close="addQuote = false" />
+        <NewQuoteModal v-if="addQuote" @close="addQuote = false" />
       </transition>
     </teleport>
     <div
