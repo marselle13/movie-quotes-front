@@ -4,16 +4,15 @@
       class="fixed top-0 left-0 w-full h-full bg-gradient-to-r from-0% from-[#181623] via-[#191725] via-50% to-[#0D0B14] to-[95%] opacity-70 z-1 backdrop-blur-sm"
       @click="emit('close')"
     ></div>
-
     <main-card
-      class="w-full fixed top-0 md:top-20 max-w-[940px] h-screen lg:max-h-[768px] overflow-y-auto"
+      class="w-full fixed top-0 lg:top-20 max-w-[940px] h-screen lg:max-h-[768px] overflow-y-auto scrollbar-hide"
     >
       <div class="flex items-center justify-center border-b border-[#EFEFEF] border-opacity-30 p-8">
         <div class="w-full flex flex-col items-center">
           <h3 class="text-white">Write New Quote</h3>
         </div>
-        <button>
-          <close-icon class="self-end" @click="emit('close')" />
+        <button @click="emit('close')">
+          <close-icon class="self-end" />
         </button>
       </div>
       <section class="p-8">
@@ -23,24 +22,50 @@
           </div>
           <h5 class="text-white">{{ userStore.userData.name }}</h5>
         </div>
-        <Form class="flex flex-col mt-10 gap-6">
-          <base-textarea type="Eng" placeholder="Start create new quote" />
-          <base-textarea type="ქარ" placeholder="ახალი ციტატა" />
-          <base-upload />
-          <base-dropdown background width="w-full h-full">
-            <template #dropdownButton
-              ><div class="flex items-center justify-between text-white text-left">
-                <div class="flex justify-center items-end gap-4">
-                  <MoviesIcon />
-                  <h4>Choose movie</h4>
+        <Form @submit="onSubmit" class="flex flex-col mt-10 gap-6">
+          <base-textarea
+            rules="required"
+            id="quoteEng"
+            type="Eng"
+            placeholder="Start create new quote"
+          />
+          <base-textarea rules="required" id="quoteGeo" type="ქარ" placeholder="ახალი ციტატა" />
+          <base-upload
+            id="image"
+            rules="required"
+            :resetImage="resetImage"
+            @show-image="resetImage = false"
+          />
+          <Field name="movie" rules="required" v-slot="{ handleChange }" class="relative">
+            <base-dropdown background width="w-full h-full" @isOpen="dropDownHandler">
+              <template #dropdownButton
+                ><div class="flex items-center justify-between text-white text-left">
+                  <div class="flex justify-center items-end gap-4">
+                    <MoviesIcon />
+                    <h4>{{ selectedMovie[locale] || 'Choose movie' }}</h4>
+                    <error-message
+                      name="movie"
+                      class="absolute text-xs text-[#DC3545] -left-6 -bottom-12"
+                    ></error-message>
+                  </div>
+                  <LanguageDropdownIcon />
                 </div>
-                <LanguageDropdownIcon />
-              </div>
-            </template>
-            <template #dropdown>
-              <li class="p-4 hover:bg-gray-900">dropdown</li>
-            </template>
-          </base-dropdown>
+              </template>
+              <template #dropdown>
+                <li class="p-4" v-if="error">{{ error }}</li>
+                <li class="p-4" v-if="movieStore.getMovieList.length === 0">No Movies to Show</li>
+                <li
+                  v-else
+                  class="p-4 hover:bg-gray-900"
+                  v-for="movies in movieStore.getMovieList"
+                  :key="movies.id"
+                  @click="selectMovie(movies.id, movies.name, handleChange)"
+                >
+                  <p>{{ movies.name[locale] }} ({{ movies.year }})</p>
+                </li>
+              </template>
+            </base-dropdown>
+          </Field>
           <base-button class="w-full p-2 order-5">post</base-button>
         </Form>
       </section>
@@ -49,11 +74,41 @@
 </template>
 <script setup>
 import CloseIcon from '@/components/icons/CloseIcon.vue'
-import { useUserStore } from '@/stores/userStore'
-import { Form } from 'vee-validate'
 import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
 import MoviesIcon from '@/components/icons/MoviesIcon.vue'
+import { useUserStore } from '@/stores/userStore'
+import { Form, Field, ErrorMessage } from 'vee-validate'
+import { ref } from 'vue'
+import { useMovieStore } from '@/stores/movieStore'
+import { useI18n } from 'vue-i18n'
 
+const movieStore = useMovieStore()
 const userStore = useUserStore()
+const error = ref('')
+const { locale } = useI18n()
 const emit = defineEmits(['close'])
+const resetImage = ref(false)
+const selectedMovie = ref({})
+
+function onSubmit(values, { resetForm }) {
+  emit('close')
+  resetForm()
+  resetImage.value = true
+  selectedMovie.value = {}
+}
+
+function selectMovie(movieId, movieName, handleChange) {
+  selectedMovie.value = movieName
+  handleChange(movieId)
+}
+
+async function dropDownHandler(isOpen) {
+  if (isOpen) {
+    try {
+      await movieStore.storeMovieList()
+    } catch (err) {
+      error.value = err.message
+    }
+  }
+}
 </script>

@@ -26,7 +26,6 @@
         :likes-length="post.length.likes"
       ></PostContainer>
     </div>
-
     <div class="grid justify-items-center mt-20">
       <h1 class="text-white" v-if="error">{{ error }}</h1>
       <h1 class="text-white" v-else-if="!isLoading && postStore.getPosts.length === 0">
