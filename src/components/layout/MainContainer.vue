@@ -8,7 +8,7 @@
     <transition name="slide">
       <aside
         v-show="navigation || isDesktop"
-        class="z-50 lg:z-auto lg:relative inline-flex flex-col p-11 lg:p-0 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent top-0 backdrop-blur-2xl lg:backdrop-blur-0"
+        class="z-50 lg:z-auto lg:sticky lg:top-24 inline-flex flex-col p-11 lg:p-0 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent top-0 backdrop-blur-2xl lg:backdrop-blur-0"
       >
         <div class="inline-flex items-center gap-6 relative">
           <div

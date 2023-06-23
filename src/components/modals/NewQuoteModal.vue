@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center lg:mr-10 relative z-20">
+  <div class="flex justify-center lg:mr-10 relative z-40">
     <div
       class="fixed top-0 left-0 w-full h-full bg-gradient-to-r from-0% from-[#181623] via-[#191725] via-50% to-[#0D0B14] to-[95%] opacity-70 z-1 backdrop-blur-sm"
       @click="emit('close')"
