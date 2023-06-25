@@ -66,7 +66,7 @@
   "write_comment": "Write a comment",
   "new_quote": "Write New Quote",
   "search_by": "Search by",
-  "search_full": "Enter @ to search movies, Enter # to search quotes",
+  "search_full": "Enter {'@'} to search movies, Enter {'#'} to search quotes",
   "choose_movie": "Choose movie",
   "choose_file": "Choose File",
   "drag_drop": "Drag & drop your image here or",
