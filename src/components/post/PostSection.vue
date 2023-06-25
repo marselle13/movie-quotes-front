@@ -10,7 +10,7 @@
       :comments-length="commentsLength"
       :likes-length="likesLength"
     />
-    <CommentContainer
+    <CommentSection
       v-for="comment in comments"
       :key="comment.id"
       :name="comment.user.name"
@@ -29,9 +29,9 @@
 </template>
 <script setup>
 import MainCard from '@/components/ui/MainCard.vue'
-import CommentContainer from '@/components/layout/post/CommentContainer.vue'
-import ThePost from '@/components/layout/post/ThePost.vue'
-import CommentInput from '@/components/layout/post/CommentInput.vue'
+import CommentSection from '@/components/post/CommentSection.vue'
+import ThePost from '@/components/post/ThePost.vue'
+import CommentInput from '@/components/post/CommentInput.vue'
 import { useI18n } from 'vue-i18n'
 import { usePostStore } from '@/stores/postStore'
 import { ref } from 'vue'

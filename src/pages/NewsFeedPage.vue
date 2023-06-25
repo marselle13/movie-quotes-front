@@ -13,7 +13,7 @@
       ></div>
     </div>
     <div v-else-if="!isLoading">
-      <PostContainer
+      <PostSection
         v-for="post in postStore.getPosts"
         :post-id="post.id"
         :key="post.id"
@@ -24,7 +24,7 @@
         :comments="post.comments"
         :comments-length="post.length.comments"
         :likes-length="post.length.likes"
-      ></PostContainer>
+      ></PostSection>
     </div>
     <div class="grid justify-items-center mt-20">
       <h1 class="text-white" v-if="error">{{ error }}</h1>
@@ -37,8 +37,8 @@
 <script setup>
 import TheHeader from '@/components/layout/TheHeader.vue'
 import MainContainer from '@/components/layout/MainContainer.vue'
-import PostContainer from '@/components/layout/post/PostContainer.vue'
-import PostNavigation from '@/components/layout/post/PostNavigation.vue'
+import PostNavigation from '@/components/post/PostNavigation.vue'
+import PostSection from '@/components/post/PostSection.vue'
 import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 import { usePostStore } from '@/stores/postStore'
 import { useI18n } from 'vue-i18n'
