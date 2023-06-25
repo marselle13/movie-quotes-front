@@ -24,7 +24,7 @@
       @click="moreComments(postId)"
       >Load more</base-button
     >
-    <CommentInput />
+    <CommentInput :post-id="postId" :loaded="loaded" />
   </main-card>
 </template>
 <script setup>
@@ -49,6 +49,7 @@ defineProps({
   commentsLength: { type: Number, required: true },
   likesLength: { type: Number, required: true },
 })
+const emit = defineEmits(['loaded'])
 
 const { locale } = useI18n()
 
@@ -56,6 +57,7 @@ async function moreComments(postId) {
   try {
     await postStore.loadMoreComments(postId)
     loaded.value = true
+    emit('loaded')
   } catch (err) {
     //Err
   }

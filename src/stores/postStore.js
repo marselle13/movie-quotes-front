@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { usePostService } from '@/services/postService'
-import { useI18n } from 'vue-i18n'
 
 export const usePostStore = defineStore('PostStore', {
   state: () => ({
@@ -53,6 +52,17 @@ export const usePostStore = defineStore('PostStore', {
       const response = await postService.fetchMoreComments(postId)
       const post = this.posts.find((post) => postId === post.id)
       post.comments = response.data
+      post.comments.reverse()
+    },
+    async newComment(postId, comment, loaded) {
+      const postService = usePostService()
+      const response = await postService.addNewComment(postId, comment)
+      const post = this.posts.find((post) => post.id === postId)
+      loaded
+        ? post.comments.push(response.data.newComment)
+        : post.comments.unshift(response.data.newComment)
+
+      post.length.comments++
     },
   },
 })

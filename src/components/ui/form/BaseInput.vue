@@ -22,6 +22,7 @@
             placeholderStyle,
           ]"
           :disabled="disabled"
+          :autocomplete="autocomplete"
         />
         <div class="absolute right-3 top-3">
           <valid-icon
@@ -59,6 +60,7 @@ const props = defineProps({
   id: { type: String, required: true },
   label: { type: String, required: false },
   placeholder: { type: String, required: false },
+  autocomplete: { type: String, required: false, default: 'on' },
   type: { type: String, required: false, default: 'text' },
   rules: { type: String, required: false },
   error: { type: [String, Boolean], required: false },

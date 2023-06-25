@@ -21,9 +21,10 @@
         :thumbnail="post.thumbnail"
         :user="post.user"
         :movie="post.movie"
-        :comments="post.comments"
+        :comments="load ? post.comments : post.comments.slice(0, 2)"
         :comments-length="post.length.comments"
         :likes-length="post.length.likes"
+        @loaded="load = true"
       ></PostSection>
     </div>
     <div class="grid justify-items-center mt-20">
@@ -47,6 +48,7 @@ const postStore = usePostStore()
 const { t, locale } = useI18n()
 const navigation = ref(false)
 const isLoading = ref(false)
+const load = ref(false)
 const error = ref('')
 function navigationHandler(value) {
   navigation.value = value

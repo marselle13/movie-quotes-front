@@ -2,11 +2,11 @@ import api from '@/config/axios'
 
 export const usePostService = () => {
   async function fetchPosts(page) {
-    return await api.get(`api/qutes?page=${page}`)
+    return await api.get(`api/quotes?page=${page}`)
   }
 
   async function fetchMoreComments(postId) {
-    return await api.get(`api/posts/${postId}/comments`)
+    return await api.get(`api/comments/${postId}`)
   }
 
   async function addNewQuote(values) {
@@ -20,9 +20,14 @@ export const usePostService = () => {
     return await api.post('api/quotes', formData)
   }
 
+  async function addNewComment(postId, comment) {
+    return await api.post(`api/comments/${postId}`, { text: comment })
+  }
+
   return {
     fetchPosts,
     fetchMoreComments,
     addNewQuote,
+    addNewComment,
   }
 }
