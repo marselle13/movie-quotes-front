@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { usePostService } from '@/services/postService'
+import { useUserStore } from '@/stores/userStore'
 
 export const usePostStore = defineStore('PostStore', {
   state: () => ({
@@ -63,6 +64,22 @@ export const usePostStore = defineStore('PostStore', {
         : post.comments.unshift(response.data.newComment)
 
       post.length.comments++
+    },
+    async postReaction(postId) {
+      const postService = usePostService()
+      const userStore = useUserStore()
+      const post = this.posts.find((post) => post.id === postId)
+      const likedPost = post.likes.findIndex((like) => like.user.id === userStore.userData.id)
+      if (likedPost !== -1) {
+        await postService.unlikePost(postId)
+        post.likes.splice(likedPost, 1)
+        post.length.likes--
+      } else {
+        const response = await postService.likePost(postId)
+        const newLike = response.data.like
+        post.likes.push(newLike)
+        post.length.likes++
+      }
     },
   },
 })

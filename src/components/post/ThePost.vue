@@ -21,9 +21,9 @@
         <p class="text-white">{{ commentsLength }}</p>
         <CommentIcon />
       </div>
-      <div class="flex gap-3">
-        <p class="text-white">{{ likesLength }}</p>
-        <LikeIcon />
+      <div class="flex gap-3 flex-shrink-0">
+        <p class="text-white w-[10px]">{{ likesLength }}</p>
+        <LikeIcon :post-id="postId" @click="reactOnPost(postId)" />
       </div>
     </div>
   </section>
@@ -31,8 +31,10 @@
 <script setup>
 import LikeIcon from '@/components/icons/LikeIcon.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
+import { usePostStore } from '@/stores/postStore'
 
 const props = defineProps({
+  postId: { type: Number, required: true },
   name: { type: String, required: true },
   avatar: { type: String, required: true },
   thumbnail: { type: String, required: true },
@@ -43,9 +45,19 @@ const props = defineProps({
   likesLength: { type: Number, required: true },
 })
 
+const postStore = usePostStore()
+
 const thumbnail = `${import.meta.env.VITE_BASE_URL}storage/${props.thumbnail}`
 
 const avatar = `${import.meta.env.VITE_BASE_URL}${
   props.avatar.includes('default') ? '' : 'storage/'
 }${props.avatar}`
+
+async function reactOnPost(postId) {
+  try {
+    await postStore.postReaction(postId)
+  } catch (err) {
+    //Error
+  }
+}
 </script>

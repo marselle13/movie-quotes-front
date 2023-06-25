@@ -24,10 +24,19 @@ export const usePostService = () => {
     return await api.post(`api/comments/${postId}`, { text: comment })
   }
 
+  async function likePost(postId) {
+    return await api.post(`api/likes/${postId}/like`)
+  }
+  async function unlikePost(postId) {
+    return await api.delete(`api/likes/${postId}/unlike`)
+  }
+
   return {
     fetchPosts,
     fetchMoreComments,
     addNewQuote,
     addNewComment,
+    likePost,
+    unlikePost,
   }
 }

@@ -1,6 +1,7 @@
 <template>
   <main-card class="p-6 mt-6 mb-10">
     <ThePost
+      :post-id="postId"
       :name="user.name"
       :avatar="user.avatar"
       :quote="quote"

@@ -3,6 +3,7 @@ import { useAuthService } from '@/services/authService'
 export const useUserStore = defineStore('UserStore', {
   state: () => ({
     user: {
+      id: null,
       avatar: '',
       name: '',
       email: '',
@@ -29,11 +30,12 @@ export const useUserStore = defineStore('UserStore', {
       try {
         const authService = useAuthService()
         const response = await authService.userData()
-        const { name, email, avatar, registeredWithGoogle } = response.data
+        const { id, name, email, avatar, registeredWithGoogle } = response.data
 
         const avatarPath = avatar.includes('default') ? avatar : `storage/${avatar}`
 
         this.user = {
+          id,
           avatar: `${import.meta.env.VITE_BASE_URL}${avatarPath}`,
           name,
           email,
