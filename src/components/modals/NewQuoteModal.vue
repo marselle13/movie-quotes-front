@@ -9,7 +9,7 @@
     >
       <div class="flex items-center justify-center border-b border-[#EFEFEF] border-opacity-30 p-8">
         <div class="w-full flex flex-col items-center">
-          <h3 class="text-white">Write New Quote</h3>
+          <h3 class="text-white">{{ t('new_quote') }}</h3>
         </div>
         <button @click="emit('close')">
           <close-icon class="self-end" />
@@ -51,7 +51,7 @@
                 ><div class="flex items-center justify-between text-white text-left">
                   <div class="flex justify-center items-end gap-4">
                     <MoviesIcon />
-                    <h4>{{ selectedMovie[locale] || 'Choose movie' }}</h4>
+                    <h4>{{ selectedMovie[locale] || t('choose_movie') }}</h4>
                     <error-message
                       name="movieId"
                       class="absolute text-xs text-[#DC3545] -left-6 -bottom-12"
@@ -92,7 +92,7 @@ import { useMovieStore } from '@/stores/movieStore'
 import { useI18n } from 'vue-i18n'
 import { usePostStore } from '@/stores/postStore'
 
-const { locale } = useI18n()
+const { t, locale } = useI18n()
 const emit = defineEmits(['close'])
 const movieStore = useMovieStore()
 const userStore = useUserStore()

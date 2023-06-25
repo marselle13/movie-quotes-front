@@ -1,7 +1,7 @@
 <template>
   <Field :name="id" :rules="rules" v-slot="{ handleChange }">
     <div
-      class="relative flex justify-between lg:justify-start items-center border rounded bg-transparent text-white gap-8 py-6"
+      class="relative flex justify-between lg:justify-start items-center border rounded bg-transparent text-white gap-8 lg:gap-2 py-6"
       @dragenter.prevent="activeDrop = true"
       @dragleave.prevent="activeDrop = false"
       @dragover.prevent="activeDrop = true"
@@ -14,15 +14,15 @@
       >
         <img :src="imageHandler" alt="image" class="object-cover" />
       </div>
-      <div class="flex items-center gap-2 mx-4" v-else>
+      <div class="flex items-center gap-2 ml-4" v-else>
         <CameraIcon />
-        <p class="sm:block lg:hidden hidden">Upload image</p>
-        <p class="hidden lg:block">Drag & drop your image here or</p>
+        <p class="sm:block lg:hidden hidden">{{ t('upload') }}</p>
+        <p class="hidden lg:block">{{ t('drag_drop') }}</p>
       </div>
       <input id="image" type="file" class="sr-only" @input="uploadImage($event, handleChange)" />
-      <label for="image" class="bg-[#9747ff7a] text-white p-2 cursor-pointer flex-shrink-0 mr-4"
-        >Choose File</label
-      >
+      <label for="image" class="bg-[#9747ff7a] text-white p-2 cursor-pointer flex-shrink-0 mr-4">{{
+        t('choose_file')
+      }}</label>
       <ErrorMessage :name="id" class="absolute text-xs -bottom-5 text-[#DC3545]"></ErrorMessage>
     </div>
   </Field>
@@ -31,6 +31,7 @@
 import CameraIcon from '@/components/icons/CameraIcon.vue'
 import { Field, ErrorMessage } from 'vee-validate'
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 defineProps({
   id: { type: String, require: true },
@@ -38,6 +39,7 @@ defineProps({
   resetImage: { type: Boolean, required: false },
 })
 
+const { t } = useI18n()
 const imageHandler = ref('')
 const activeDrop = ref(false)
 

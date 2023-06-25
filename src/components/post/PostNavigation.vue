@@ -5,10 +5,18 @@
       :class="{ 'w-full': !search, 'w-[240px]': search }"
       @click="addQuote = true"
     >
-      <WriteQuoteIcon class="w-23" /> Write new quote
+      <WriteQuoteIcon class="w-23" /> {{ t('new_quote') }}
     </button>
     <teleport to="body">
-      <transition name="new-quote">
+      <transition
+        name="new-quote"
+        enter-active-class="transition-opacity duration-300 ease-out"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition-opacity duration-300 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
         <NewQuoteModal v-if="addQuote" @close="addQuote = false" />
       </transition>
     </teleport>
@@ -22,7 +30,7 @@
     >
       <SearchIcon class="absolute" />
       <input
-        :placeholder="[search ? 'Enter @ to search movies, Enter # to search quotes' : 'search by']"
+        :placeholder="[search ? t('search_full') : t('search_by')]"
         :class="{ 'cursor-pointer': !search }"
         class="w-full placeholder-[#CED4DA] bg-transparent outline-none text-white px-8"
       />
@@ -39,26 +47,9 @@ import WriteQuoteIcon from '@/components/icons/WriteQuoteIcon.vue'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
 import NewQuoteModal from '@/components/modals/NewQuoteModal.vue'
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const addQuote = ref(false)
 const search = ref(false)
 </script>
-<style scoped>
-.new-quote-enter-from,
-.new-quote-leave-to {
-  opacity: 0;
-}
-
-.new-quote-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.new-quote-enter-to,
-.new-quote-leave-from {
-  opacity: 1;
-}
-
-.new-quote-leave-active {
-  transition: all 0.3s ease-in;
-}
-</style>
