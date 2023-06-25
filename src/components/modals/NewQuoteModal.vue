@@ -28,11 +28,20 @@
             id="quoteEng"
             type="Eng"
             placeholder="Start create new quote"
+            :error="error.en"
+            @update-error="error.en = ''"
           />
-          <base-textarea rules="required" id="quoteGeo" type="ქარ" placeholder="ახალი ციტატა" />
+          <base-textarea
+            rules="required"
+            id="quoteGeo"
+            type="ქარ"
+            placeholder="ახალი ციტატა"
+            :error="error.ka"
+            @update-error="error.ka = ''"
+          />
           <base-upload
             id="image"
-            rules="required"
+            rules="required|image"
             :resetImage="resetImage"
             @show-image="resetImage = false"
           />
@@ -52,7 +61,7 @@
                 </div>
               </template>
               <template #dropdown>
-                <li class="p-4" v-if="error">{{ error }}</li>
+                <li class="p-4" v-if="error.select">{{ error.select }}</li>
                 <li class="p-4" v-if="movieStore.getMovieList.length === 0">No Movies to Show</li>
                 <li
                   v-else
@@ -78,7 +87,7 @@ import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
 import MoviesIcon from '@/components/icons/MoviesIcon.vue'
 import { useUserStore } from '@/stores/userStore'
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useMovieStore } from '@/stores/movieStore'
 import { useI18n } from 'vue-i18n'
 import { usePostStore } from '@/stores/postStore'
@@ -89,7 +98,11 @@ const movieStore = useMovieStore()
 const userStore = useUserStore()
 const postStore = usePostStore()
 
-const error = ref('')
+const error = reactive({
+  en: '',
+  ka: '',
+  select: '',
+})
 const resetImage = ref(false)
 const selectedMovie = ref({})
 
@@ -99,7 +112,8 @@ async function onSubmit(values, { resetForm }) {
     await emit('close')
     resetForm()
   } catch (err) {
-    console.error(err)
+    error.en = err.response?.data?.errors?.['quote.en']?.[0]
+    error.ka = err.response?.data?.errors?.['quote.ka']?.[0]
   }
 }
 
@@ -113,7 +127,7 @@ async function dropDownHandler(isOpen) {
     try {
       await movieStore.storeMovieList()
     } catch (err) {
-      error.value = err.message
+      error.select = err.message
     }
   }
 }

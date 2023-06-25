@@ -10,21 +10,29 @@
       ></textarea>
       <h6 class="capitalize absolute right-4 top-2 text-white">{{ type }}</h6>
       <ErrorMessage :name="id" class="absolute text-xs -bottom-5 text-[#DC3545]"></ErrorMessage>
+      <p class="absolute text-xs -bottom-5 text-[#DC3545]" v-if="error">{{ error }}</p>
     </div>
   </Field>
 </template>
 <script setup>
 import { Field, ErrorMessage, configure } from 'vee-validate'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 defineProps({
   id: { type: String, required: true },
   placeholder: { type: String, required: false },
   type: { type: String, required: false },
   rules: { type: String, required: false },
+  error: { type: String, required: false, default: '' },
 })
+
+const emit = defineEmits(['update-error'])
 
 const textareaValue = ref('')
 
 configure({ validateOnInput: true })
+
+watch(textareaValue, () => {
+  emit('update-error')
+})
 </script>

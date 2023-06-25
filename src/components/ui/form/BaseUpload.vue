@@ -1,7 +1,12 @@
 <template>
   <Field :name="id" :rules="rules" v-slot="{ handleChange }">
     <div
-      class="relative flex justify-between lg:justify-start items-center border border-[#6C757D] rounded bg-transparent text-white gap-8 py-6"
+      class="relative flex justify-between lg:justify-start items-center border rounded bg-transparent text-white gap-8 py-6"
+      @dragenter.prevent="activeDrop = true"
+      @dragleave.prevent="activeDrop = false"
+      @dragover.prevent="activeDrop = true"
+      @drop.prevent="uploadImage($event, handleChange)"
+      :class="[activeDrop ? 'border-green-500' : 'border-[#6C757D]']"
     >
       <div
         class="flex justify-center bg-[#D9D9D9] w-80 h-40 ml-4"
@@ -34,11 +39,13 @@ defineProps({
 })
 
 const imageHandler = ref('')
+const activeDrop = ref(false)
 
 const emit = defineEmits(['show-image'])
-
 function uploadImage(event, handleChange) {
-  const image = event.target.files[0]
+  activeDrop.value = false
+  const image = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0]
+  if (image.size > 2000000 || !image.type.includes('image')) return
   handleChange(image)
   imageHandler.value = URL.createObjectURL(image)
   emit('show-image')

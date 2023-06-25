@@ -25,7 +25,7 @@
       >
         <div class="w-full max-w-[530px] mx-auto" v-show="checkModalWidth">
           <div class="lg:relative lg:-top-32 space-y-2 flex flex-col items-center">
-            <Field name="new_avatar" v-slot="{ field, handleChange }">
+            <Field name="new_avatar" v-slot="{ field, handleChange }" rules="image">
               <div class="flex justify-center bg-[#D9D9D9] w-44 h-44 rounded-full overflow-hidden">
                 <img
                   :src="avatarHandler.value || `${userStore.userData.avatar}`"
@@ -259,6 +259,7 @@ function validPasswordModal() {
 
 function uploadImage(event, handleChange) {
   const image = event.target.files[0]
+  if (image.size > 2000000) return
   avatarHandler.value = URL.createObjectURL(image)
   handleChange(image)
   avatarHandler.edit = true
