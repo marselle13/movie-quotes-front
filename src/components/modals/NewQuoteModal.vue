@@ -62,7 +62,9 @@
               </template>
               <template #dropdown>
                 <li class="p-4" v-if="error.select">{{ error.select }}</li>
-                <li class="p-4" v-if="movieStore.getMovieList.length === 0">No Movies to Show</li>
+                <li class="p-4" v-if="movieStore.getMovieList.length === 0">
+                  {{ t('no_movies') }}
+                </li>
                 <li
                   v-else
                   class="p-4 hover:bg-gray-900"

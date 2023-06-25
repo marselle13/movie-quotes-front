@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { usePostService } from '@/services/postService'
+import { useI18n } from 'vue-i18n'
 
 export const usePostStore = defineStore('PostStore', {
   state: () => ({

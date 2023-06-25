@@ -69,5 +69,8 @@
   "search_full": "Enter @ to search movies, Enter # to search quotes",
   "choose_movie": "Choose movie",
   "choose_file": "Choose File",
-  "drag_drop": "Drag & drop your image here or"
+  "drag_drop": "Drag & drop your image here or",
+  "no_post": "No Posts to Fetch",
+  "cannot_fetch": "Cannot Fetch Data",
+  "no_movies": "No movies to show"
 }

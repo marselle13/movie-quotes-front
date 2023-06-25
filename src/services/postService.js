@@ -2,7 +2,7 @@ import api from '@/config/axios'
 
 export const usePostService = () => {
   async function fetchPosts(page) {
-    return await api.get(`api/quotes?page=${page}`)
+    return await api.get(`api/qutes?page=${page}`)
   }
 
   async function fetchMoreComments(postId) {

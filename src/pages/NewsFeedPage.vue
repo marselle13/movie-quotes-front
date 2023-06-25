@@ -29,7 +29,7 @@
     <div class="grid justify-items-center mt-20">
       <h1 class="text-white" v-if="error">{{ error }}</h1>
       <h1 class="text-white" v-else-if="!isLoading && postStore.getPosts.length === 0">
-        No Posts to Fetch
+        {{ t('no_post') }}
       </h1>
     </div>
   </MainContainer>
@@ -44,7 +44,7 @@ import { usePostStore } from '@/stores/postStore'
 import { useI18n } from 'vue-i18n'
 
 const postStore = usePostStore()
-const { locale } = useI18n()
+const { t, locale } = useI18n()
 const navigation = ref(false)
 const isLoading = ref(false)
 const error = ref('')
