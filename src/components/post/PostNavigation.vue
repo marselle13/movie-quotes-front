@@ -21,7 +21,7 @@
       </transition>
     </teleport>
     <div
-      class="hidden md:flex transition-all border-opacity-30 duration-1000 ease-out items-center bg-transparent gap-4 relative z-10"
+      class="hidden md:flex transition-all border-opacity-30 duration-1000 ease-out items-center bg-transparent gap-4 relative z-20"
       @click="search = true"
       :class="{
         'w-full border-b border-[#EFEFEF]': search,
@@ -37,7 +37,7 @@
     </div>
     <div
       v-if="search"
-      class="fixed top-0 left-0 w-full h-full bg-transparent z-1"
+      class="fixed top-0 left-0 w-full h-full bg-transparent z-10"
       @click="search = false"
     ></div>
   </section>
