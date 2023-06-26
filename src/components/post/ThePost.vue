@@ -23,7 +23,7 @@
       </div>
       <div class="flex gap-3 flex-shrink-0">
         <p class="text-white w-[10px]">{{ likesLength }}</p>
-        <LikeIcon :post-id="postId" @click="reactOnPost(postId)" />
+        <LikeIcon :like-style="likeButtonStyle" :post-id="postId" @click="reactOnPost(postId)" />
       </div>
     </div>
   </section>
@@ -32,6 +32,8 @@
 import LikeIcon from '@/components/icons/LikeIcon.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
 import { usePostStore } from '@/stores/postStore'
+import { computed } from 'vue'
+import { useUserStore } from '@/stores/userStore'
 
 const props = defineProps({
   postId: { type: Number, required: true },
@@ -46,12 +48,19 @@ const props = defineProps({
 })
 
 const postStore = usePostStore()
+const userStore = useUserStore()
 
 const thumbnail = `${import.meta.env.VITE_BASE_URL}storage/${props.thumbnail}`
 
 const avatar = `${import.meta.env.VITE_BASE_URL}${
   props.avatar.includes('default') ? '' : 'storage/'
 }${props.avatar}`
+
+const likeButtonStyle = computed(() => {
+  const post = postStore.getPosts.find((post) => props.postId === post.id)
+  const index = post.likes.findIndex((like) => like.user.id === userStore.userData.id)
+  return index !== -1 ? 'red' : 'white'
+})
 
 async function reactOnPost(postId) {
   try {
