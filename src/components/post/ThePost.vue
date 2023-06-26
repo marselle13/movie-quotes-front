@@ -32,7 +32,7 @@
 import LikeIcon from '@/components/icons/LikeIcon.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
 import { usePostStore } from '@/stores/postStore'
-import { computed } from 'vue'
+import { computed, onBeforeUnmount } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 
 const props = defineProps({
@@ -69,4 +69,8 @@ async function reactOnPost(postId) {
     //Error
   }
 }
+
+onBeforeUnmount(() => {
+  postStore.commentSection(props.postId)
+})
 </script>

@@ -51,9 +51,7 @@ export const usePostStore = defineStore('PostStore', {
     async loadMoreComments(postId) {
       const postService = usePostService()
       const response = await postService.fetchMoreComments(postId)
-      const post = this.posts.find((post) => postId === post.id)
-      post.comments = response.data
-      post.comments.reverse()
+      this.commentSection(postId, response.data)
     },
     async newComment(postId, comment, loaded) {
       const postService = usePostService()
@@ -80,6 +78,13 @@ export const usePostStore = defineStore('PostStore', {
         post.likes.push(newLike)
         post.length.likes++
       }
+    },
+    commentSection(postId, data = null) {
+      const post = this.posts.find((post) => postId === post.id)
+      if (data) {
+        post.comments = data
+      }
+      post.comments.reverse()
     },
   },
 })
