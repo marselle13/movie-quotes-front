@@ -25,10 +25,10 @@ export const usePostService = () => {
   }
 
   async function likePost(postId) {
-    return await api.post(`api/likes/${postId}/like`)
+    return await api.post(`api/likes/${postId}`)
   }
   async function unlikePost(postId) {
-    return await api.delete(`api/likes/${postId}/unlike`)
+    return await api.delete(`api/likes/${postId}`)
   }
 
   return {
