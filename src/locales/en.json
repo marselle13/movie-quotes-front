@@ -67,10 +67,13 @@
   "new_quote": "Write New Quote",
   "search_by": "Search by",
   "search_full": "Enter {'@'} to search movies, Enter {'#'} to search quotes",
+  "search_movie": "Enter {'@'} to search movies",
+  "search_quote": "Enter {'#'} to search quotes",
   "choose_movie": "Choose movie",
   "choose_file": "Choose File",
   "drag_drop": "Drag & drop your image here or",
   "no_post": "No Posts to Fetch",
   "cannot_fetch": "Cannot Fetch Data",
-  "no_movies": "No movies to show"
+  "no_movies": "No movies to show",
+  "post": "Post"
 }

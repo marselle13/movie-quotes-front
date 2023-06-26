@@ -77,7 +77,7 @@
               </template>
             </base-dropdown>
           </Field>
-          <base-button class="w-full p-2 order-5">post</base-button>
+          <base-button class="w-full p-2 order-5">{{ t('post') }}</base-button>
         </Form>
       </section>
     </main-card>
