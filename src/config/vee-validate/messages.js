@@ -17,6 +17,10 @@ configure({
         email: 'Email',
         password: 'Password',
         confirmation: 'Confirm Password',
+        quoteEng: 'English Quote',
+        quoteGeo: 'Georgian Quote',
+        image: 'Image',
+        movieId: 'Movie',
       },
       messages: {
         ...en.messages,
@@ -35,6 +39,10 @@ configure({
         email: 'ელ-ფოსტა',
         password: 'პაროლი',
         confirmation: 'გაიმეორე პაროლი',
+        quoteEng: 'ინგლისური ციტატა',
+        quoteGeo: 'ქართული ციტატა',
+        image: 'სურათი',
+        movieId: 'ფილმი',
       },
       messages: {
         ...ka.messages,

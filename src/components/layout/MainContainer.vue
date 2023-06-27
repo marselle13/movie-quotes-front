@@ -1,16 +1,21 @@
 <template>
   <section class="flex mt-8 lg:mx-16">
+    <div
+      class="fixed left-0 top-0 w-full h-full z-50"
+      @click="emit('close-navigation', false)"
+      v-if="navigation"
+    ></div>
     <transition name="slide">
       <aside
         v-show="navigation || isDesktop"
-        class="inline-flex flex-col p-11 lg:p-0 z-30 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent lg:static top-0 backdrop-blur-2xl lg:backdrop-blur-0"
+        class="z-50 lg:z-auto lg:sticky lg:top-24 inline-flex flex-col p-11 lg:p-0 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent top-0 backdrop-blur-2xl lg:backdrop-blur-0"
       >
-        <div class="inline-flex items-center gap-6">
+        <div class="inline-flex items-center gap-6 relative">
           <div
             class="flex justify-center bg-[#D9D9D9] w-16 h-16 rounded-full overflow-hidden"
             :class="activeClass"
           >
-            <img :src="userStore.userData.avatar" alt="profile" class="object-contain" />
+            <img :src="userStore.userData.avatar" alt="profile" class="object-cover" />
           </div>
 
           <div>
@@ -42,7 +47,7 @@
         </nav>
       </aside>
     </transition>
-    <main :class="width" @click="emit('close-navigation', false)">
+    <main :class="width">
       <slot></slot>
     </main>
   </section>

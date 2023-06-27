@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky flex justify-between items-center py-4 lg:px-16 px-4"
+    class="sticky top-0 flex justify-between items-center py-4 lg:px-16 px-4 z-40"
     :class="[headerBackground]"
   >
     <div class="flex items-center">
@@ -11,7 +11,38 @@
     </div>
     <div class="flex items-center gap-4 md:gap-10">
       <div v-if="route.meta.user === 'auth'" class="flex items-center gap-5">
-        <SearchIcon class="md:hidden block" v-if="route.name === 'news-feed'" />
+        <div>
+          <SearchIcon
+            class="md:hidden block"
+            v-if="route.name === 'news-feed'"
+            @click="openSearch = true"
+          />
+          <transition name="slide">
+            <div class="bg-[#12101A] fixed w-full left-0 top-0 z-20 md:hidden" v-if="openSearch">
+              <div
+                class="flex items-center p-5 gap-4 border-b border-b-[#EFEFEF4D] border-opacity-30"
+              >
+                <back-icon @click="openSearch = false" />
+                <input
+                  class="text-white bg-transparent w-full p-2 outline-none placeholder-white"
+                  type="text"
+                  :placeholder="t('search_by')"
+                />
+              </div>
+              <div class="px-16 py-6 space-y-6">
+                <p class="text-[#EFEFEF99] text-opacity-60">{{ t('search_movie') }}</p>
+                <p class="text-[#EFEFEF99] text-opacity-60">{{ t('search_quote') }}</p>
+              </div>
+            </div>
+          </transition>
+          <teleport to="body">
+            <div
+              class="fixed left-0 top-0 w-full h-full z-10"
+              v-if="openSearch"
+              @click="openSearch = false"
+            ></div>
+          </teleport>
+        </div>
         <base-dropdown>
           <template #dropdownButton>
             <NotificationIcon />
@@ -63,8 +94,8 @@
   </header>
 </template>
 <script setup>
-import LanguageDropdown from '@/components/icons/LanguageDropdownIcon.vue'
-import { computed } from 'vue'
+import LanguageDropdown from '@/components/icons/DropdownIcon.vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { setLocale } from '@vee-validate/i18n'
 import { useRoute, useRouter } from 'vue-router'
@@ -74,12 +105,14 @@ import NotificationIcon from '@/components/icons/NotificationIcon.vue'
 import BurgerIcon from '@/components/icons/BurgerIcon.vue'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
 import { useUserStore } from '@/stores/userStore'
+import BackIcon from '@/components/icons/BackIcon.vue'
 
 const { t, locale } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const emit = defineEmits(['open-navigation'])
 const userStore = useUserStore()
+const openSearch = ref(false)
 
 const props = defineProps({
   background: { type: Boolean, required: false, default: true },
@@ -113,3 +146,19 @@ async function logout() {
   }
 }
 </script>
+<style scoped>
+@media (max-width: 1028px) {
+  .slide-enter-active,
+  .slide-leave-active {
+    transition: transform 0.3s ease-in-out;
+  }
+  .slide-enter-to {
+    transform: translateY(0%);
+  }
+
+  .slide-enter-from,
+  .slide-leave-to {
+    transform: translateY(-100%);
+  }
+}
+</style>

@@ -25,12 +25,12 @@
       >
         <div class="w-full max-w-[530px] mx-auto" v-show="checkModalWidth">
           <div class="lg:relative lg:-top-32 space-y-2 flex flex-col items-center">
-            <Field name="new_avatar" v-slot="{ field, handleChange }">
+            <Field name="new_avatar" v-slot="{ field, handleChange }" rules="image">
               <div class="flex justify-center bg-[#D9D9D9] w-44 h-44 rounded-full overflow-hidden">
                 <img
                   :src="avatarHandler.value || `${userStore.userData.avatar}`"
                   alt="avatar"
-                  class="object-contain"
+                  class="object-cover"
                 />
               </div>
               <div>
@@ -191,8 +191,8 @@ import TheHeader from '@/components/layout/TheHeader.vue'
 import BaseInput from '@/components/ui/form/BaseInput.vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
 import MainCard from '@/components/ui/MainCard.vue'
-import ConfirmationModal from '@/components/modals/user/ConfirmationModal.vue'
-import PasswordModal from '@/components/modals/user/PasswordModal.vue'
+import ConfirmationModal from '@/components/modals/profile/ConfirmationModal.vue'
+import PasswordModal from '@/components/modals/profile/PasswordModal.vue'
 
 import { computed, onMounted, reactive, ref } from 'vue'
 import { Form, Field } from 'vee-validate'
@@ -202,7 +202,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import BackIcon from '@/components/icons/BackIcon.vue'
 import { useAuthService } from '@/services/authService'
-import SuccessfullyUpdateModal from '@/components/modals/user/SuccessfullyUpdateModal.vue'
+import SuccessfullyUpdateModal from '@/components/modals/profile/SuccessfullyUpdateModal.vue'
 
 const authService = useAuthService()
 const userStore = useUserStore()
@@ -259,6 +259,7 @@ function validPasswordModal() {
 
 function uploadImage(event, handleChange) {
   const image = event.target.files[0]
+  if (image.size > 2000000) return
   avatarHandler.value = URL.createObjectURL(image)
   handleChange(image)
   avatarHandler.edit = true
