@@ -9,6 +9,7 @@ import NotFound from '@/pages/NotFound.vue'
 import ResetPassword from '@/pages/password/ResetPassword.vue'
 import ForbiddenPage from '@/pages/ForbiddenPage.vue'
 import ProfilePage from '@/pages/User/ProfilePage.vue'
+import MovieListPage from '@/pages/MovieListPage.vue'
 
 const NewsFeed = () => import('@/pages/NewsFeedPage.vue')
 
@@ -35,6 +36,7 @@ const router = createRouter({
       component: NewsFeed,
       meta: { user: 'auth' },
     },
+    { name: 'movie-list', path: '/movies', component: MovieListPage, meta: { user: 'auth' } },
     { name: 'profile', path: '/profile', component: ProfilePage, meta: { user: 'auth' } },
     { name: 'forbidden', path: '/forbidden', component: ForbiddenPage },
     { name: 'not-found', path: '/:notFound(.*)', component: NotFound },
