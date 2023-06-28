@@ -8,7 +8,7 @@
         style="min-height: 80px"
         class="h-12 italic text-white w-full bg-transparent rounded outline-none pl-3 py-1 pr-16 lg:pr-24 placeholder-[#6C757D]"
       ></textarea>
-      <h6 class="capitalize absolute right-4 top-2 text-white">{{ type }}</h6>
+      <h6 v-if="lang" class="capitalize absolute right-3 top-2 text-[#6C757D]">{{ lang }}</h6>
       <ErrorMessage :name="id" class="absolute text-xs -bottom-5 text-[#DC3545]"></ErrorMessage>
       <p class="absolute text-xs -bottom-5 text-[#DC3545]" v-if="error">{{ error }}</p>
     </div>
@@ -21,7 +21,7 @@ import { ref, watch } from 'vue'
 defineProps({
   id: { type: String, required: true },
   placeholder: { type: String, required: false },
-  type: { type: String, required: false },
+  lang: { type: String, required: false },
   rules: { type: String, required: false },
   error: { type: String, required: false, default: '' },
 })

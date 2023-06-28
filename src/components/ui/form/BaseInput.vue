@@ -24,7 +24,8 @@
           :disabled="disabled"
           :autocomplete="autocomplete"
         />
-        <div class="absolute right-3 top-3">
+        <div class="absolute right-3 top-0 h-full flex items-center">
+          <h4 v-if="mode === 'flat' && lang" class="text-[#6C757D]">{{ lang }}</h4>
           <valid-icon
             v-if="!error && meta.valid && meta.validated && rules && type !== 'password'"
           />
@@ -69,6 +70,7 @@ const props = defineProps({
   value: { type: String, required: false },
   edit: { type: Boolean, required: false },
   disabled: { type: Boolean, required: false },
+  lang: { type: String, required: false },
 })
 
 configure({ validateOnInput: true })
@@ -81,7 +83,7 @@ const emit = defineEmits(['update-prop', 'update:modelValue'])
 const inputStyle = computed(() => {
   switch (props.mode) {
     case 'flat':
-      return 'py-2 pl-4 pr-14 bg-transparent border border-[#6C757D] text-white before:w-full outline-none'
+      return 'py-2 pl-4 pr-14 bg-transparent border border-[#6C757D] text-white before:w-full outline-none rounded'
     case 'dark':
       return 'py-3 px-4 md:px-7 placeholder-[#CED4DA] bg-[#24222F] bg-opacity-60 outline-none text-white rounded-lg'
     default:

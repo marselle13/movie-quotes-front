@@ -36,9 +36,9 @@
               </router-link>
             </li>
             <li>
-              <router-link to="#" class="inline-flex">
+              <router-link :to="{ name: 'movie-list' }" class="inline-flex">
                 <div class="flex items-center text-white gap-10">
-                  <MoviesIcon />
+                  <MoviesIcon :name="route.name" />
                   <p>{{ t('movies_list') }}</p>
                 </div>
               </router-link>

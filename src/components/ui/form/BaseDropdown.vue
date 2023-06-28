@@ -11,7 +11,7 @@
     <ul
       v-if="dropdown"
       @click="dropdown = false"
-      class="z-10 bg-[#24222F] rounded-[10px] absolute py-2 text-sm text-white cursor-pointer -left-12 top-12"
+      class="z-10 bg-[#24222F] rounded-[10px] absolute py-2 text-sm text-white cursor-pointer left-0 top-10 w-full"
       :class="{
         'w-full bg-black max-h-[100px] overflow-y-auto top-20 left-0 scrollbar-hide rounded-none':
           background,
@@ -25,7 +25,7 @@
 defineProps({
   hidden: { type: Boolean, required: false },
   background: { type: Boolean, required: false, default: false },
-  width: { type: String, required: false, default: 'w-[60px]' },
+  width: { type: String, required: false },
 })
 import { ref } from 'vue'
 const dropdown = ref(false)

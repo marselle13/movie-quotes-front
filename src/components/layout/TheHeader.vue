@@ -43,7 +43,7 @@
             ></div>
           </teleport>
         </div>
-        <base-dropdown>
+        <base-dropdown width="w-[3.75rem]">
           <template #dropdownButton>
             <NotificationIcon />
             <div class="w-6 h-6 absolute bg-red-500 top-0 rounded-full right-[20px] text-white">
@@ -52,7 +52,7 @@
           </template>
         </base-dropdown>
       </div>
-      <base-dropdown :hidden="true">
+      <base-dropdown :hidden="true" width="w-[6.5rem]">
         <template #dropdownButton>
           <div class="flex gap-2.5 items-center">
             <p class="text-white">{{ showLanguage }}</p>
@@ -61,10 +61,10 @@
         </template>
         <template #dropdown>
           <li @click="changeLanguage('en')">
-            <p class="block px-4 py-2 hover:opacity-80">{{ t('english') }}</p>
+            <p class="px-4 py-2 hover:opacity-80">{{ t('english') }}</p>
           </li>
           <li @click="changeLanguage('ka')">
-            <p class="block px-4 py-2 hover:opacity-80">{{ t('georgian') }}</p>
+            <p class="px-4 py-2 hover:opacity-80">{{ t('georgian') }}</p>
           </li>
         </template>
       </base-dropdown>
