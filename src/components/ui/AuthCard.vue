@@ -1,12 +1,12 @@
 <template>
   <section>
     <div
-      class="fixed top-0 left-0 h-full w-full bg-[#222030] md:bg-transparent md:backdrop-blur-sm background"
+      class="fixed top-0 left-0 h-full w-full bg-[#222030] md:bg-transparent md:backdrop-blur-sm background z-40"
       @click="closeModal"
     ></div>
-    <div class="grid justify-items-center h-auto">
+    <div class="grid justify-items-center h-auto relative">
       <div
-        class="md:bg-[#222030] fixed md:rounded-lg z-10 px-8 md:px-28 md:py-12 md:top-26 w-full md:h-auto overflow-hidden"
+        class="md:bg-[#222030] fixed md:rounded-lg z-40 px-8 md:px-28 md:py-12 md:top-26 w-full md:h-auto overflow-hidden"
         :class="{
           'wrapper pt-20 pb-24 px-2 w-10/12 before:absolute before:w-full before:h-full before:top-0  before:left-0 before:opacity-30 before:backdrop-blur-xl before:rotate-180 rounded-lg before:-z-10':
             wrapper,
