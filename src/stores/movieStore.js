@@ -14,9 +14,8 @@ export const useMovieStore = defineStore('movieStore', {
   },
   actions: {
     async storeMovieList() {
-      const movieService = useMovieService()
       try {
-        const response = await movieService.fetchMoviesList()
+        const response = await useMovieService().fetchMoviesList()
         this.movieList = response.data
       } catch (err) {
         throw new Error('Cannot Fetch movies')
@@ -24,8 +23,7 @@ export const useMovieStore = defineStore('movieStore', {
     },
     async storeUserMovies() {
       try {
-        const movieService = useMovieService()
-        const response = await movieService.fetchUserMovies()
+        const response = await useMovieService().fetchUserMovies()
         this.userMovies = response.data
       } catch (err) {
         throw new Error('Cannot Fetch user movies')
@@ -33,12 +31,15 @@ export const useMovieStore = defineStore('movieStore', {
     },
     async storeGenres() {
       try {
-        const movieService = useMovieService()
-        const response = await movieService.fetchGenres()
+        const response = await useMovieService().fetchGenres()
         this.genres = response.data
       } catch (err) {
         throw new Error('Cannot Fetch genres')
       }
+    },
+    async addNewMovie(values) {
+      const response = await useMovieService().createNewMovie(values)
+      this.userMovies = [response.data.newMovie, ...this.userMovies]
     },
   },
 })

@@ -16,7 +16,8 @@
           :class="[
             {
               'border-[#DC3545]':
-                error || (meta.validated && !meta.valid && props.rules && mode !== 'flat'),
+                (meta === 'flat' && error) ||
+                (meta.validated && !meta.valid && props.rules && mode !== 'flat'),
               'border-[#198754]':
                 !error && meta.validated && meta.valid && props.rules && mode !== 'flat',
             },
@@ -41,7 +42,7 @@
           <password-icon v-else-if="type === 'password'" class="mt-0.5" @click="showPassword" />
           <invalid-icon
             v-else-if="
-              error ||
+              (mode !== 'flat' && error) ||
               (!meta.valid && meta.validated && rules && type !== 'password' && mode !== 'flat')
             "
           />

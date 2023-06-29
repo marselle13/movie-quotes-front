@@ -1,13 +1,23 @@
 <template>
   <new-container :title="t('new_movie')" @close="emit('close')">
     <Form @submit="onSubmit" class="space-y-6 mt-7">
-      <base-input id="nameEng" placeholder="Movie name" mode="flat" lang="Eng" rules="required" />
+      <base-input
+        id="nameEng"
+        placeholder="Movie name"
+        mode="flat"
+        lang="Eng"
+        rules="required"
+        :error="error.nameEng"
+        @update-prop="error.nameEng = ''"
+      />
       <base-input
         id="nameGeo"
         placeholder="ფილმის სახელი"
         mode="flat"
         lang="Geo"
         rules="required"
+        :error="error.nameGeo"
+        @update-prop="error.nameGeo = ''"
       />
       <Field name="genres" v-slot="{ handleChange }" rules="required">
         <base-dropdown
@@ -35,7 +45,7 @@
             </div>
           </template>
           <template #dropdown>
-            <li v-if="error" class="px-4">{{ error }}</li>
+            <li v-if="error.genre" class="px-4">{{ error.genre }}</li>
             <li
               class="px-4 py-1 hover:bg-gray-900"
               v-for="genre in movieStore.getGenres"
@@ -73,21 +83,21 @@ import BaseButton from '@/components/ui/form/BaseButton.vue'
 import BaseDropdown from '@/components/ui/form/BaseDropdown.vue'
 import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
 import { useMovieStore } from '@/stores/movieStore'
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 
 const emit = defineEmits(['close'])
 const movieStore = useMovieStore()
 const { t } = useI18n()
 
-const error = ref('')
+const error = reactive({ genre: '', nameEng: '', nameGeo: '' })
 const genres = reactive([])
 
 function selectGenre(genreId, genreName, handleChange) {
   const genreExists = genres.some((genre) => genre.id === genreId)
   if (!genreExists) {
     genres.unshift({ id: genreId, name: genreName })
-    handleChange([...genres])
+    handleChange(genres.map((genre) => genre.id))
   }
 }
 function deleteGenre(genreId, handleChange) {
@@ -96,8 +106,15 @@ function deleteGenre(genreId, handleChange) {
   handleChange([...genres])
 }
 
-function onSubmit(values) {
-  console.log(values)
+async function onSubmit(values, { resetForm }) {
+  try {
+    await movieStore.addNewMovie(values)
+    emit('close')
+    resetForm()
+  } catch (err) {
+    error.nameEng = err.response?.data?.errors?.['name.en']?.[0]
+    error.nameGeo = err.response?.data?.errors?.['name.ka']?.[0]
+  }
 }
 
 async function dropDownHandler(isOpen) {
@@ -105,7 +122,7 @@ async function dropDownHandler(isOpen) {
     try {
       await movieStore.storeGenres()
     } catch (err) {
-      error.value = err.message
+      error.genre = err.message
     }
   }
 }

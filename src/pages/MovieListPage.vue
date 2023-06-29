@@ -31,7 +31,11 @@
     <section class="grid 2xl:grid-cols-3 lg:grid-cols-2 gap-x-12 gap-y-14 my-14">
       <div class="space-y-4" v-for="movie in movieStore.getUserMovies" :key="movie.id">
         <div class="rounded-xl overflow-hidden h-[18rem] md:h-[23rem]">
-          <img alt="movie" :src="movie?.image" class="object-cover h-full w-full" />
+          <img
+            alt="movie"
+            :src="`${viteBaseUrl}storage/${movie.image}`"
+            class="object-cover h-full w-full"
+          />
         </div>
         <h4 class="text-white text-2xl">{{ movie.name[locale] }}</h4>
         <p class="text-white flex items-center gap-3">{{ movie.quotesLength }} <QuoteIcon /></p>
@@ -51,6 +55,8 @@ import { useMovieStore } from '@/stores/movieStore'
 
 const movieStore = useMovieStore()
 const { t, locale } = useI18n()
+const viteBaseUrl = import.meta.env.VITE_BASE_URL
+
 const navigation = ref(false)
 const addMovie = ref(false)
 
@@ -61,7 +67,6 @@ onBeforeMount(async () => {
   try {
     await movieStore.storeUserMovies()
   } catch (err) {
-    console.error(err)
     //Err
   }
 })

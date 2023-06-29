@@ -9,7 +9,7 @@ export const usePostService = () => {
     return await api.get(`api/comments/${postId}`)
   }
 
-  async function addNewQuote(values) {
+  async function createNewQuote(values) {
     const { quoteEng, quoteGeo, image, movieId } = values
     const formData = new FormData()
     formData.append('quote[en]', quoteEng)
@@ -34,7 +34,7 @@ export const usePostService = () => {
   return {
     fetchPosts,
     fetchMoreComments,
-    addNewQuote,
+    createNewQuote,
     addNewComment,
     likePost,
     unlikePost,
