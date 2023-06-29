@@ -5,7 +5,12 @@ export const useMovieService = () => {
     return await api.get('api/movies/list')
   }
 
+  async function fetchUserMovies() {
+    return await api.get('api/movies')
+  }
+
   return {
     fetchMoviesList,
+    fetchUserMovies,
   }
 }

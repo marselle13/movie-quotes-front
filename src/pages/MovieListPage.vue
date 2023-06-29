@@ -20,7 +20,7 @@
     </teleport>
     <div class="flex justify-between gap-4">
       <h2 class="text-white text-base md:text-2xl">
-        {{ t('movie_list', { amount: 25 }) }}
+        {{ t('movie_list', { amount: movieStore.getUserMovies.length }) }}
       </h2>
       <base-button
         @click="addMovie = true"
@@ -29,12 +29,12 @@
       >
     </div>
     <section class="grid 2xl:grid-cols-3 lg:grid-cols-2 gap-x-12 gap-y-14 my-14">
-      <div class="space-y-4">
+      <div class="space-y-4" v-for="movie in movieStore.getUserMovies" :key="movie.id">
         <div class="rounded-xl overflow-hidden h-[18rem] md:h-[23rem]">
-          <img alt="movie" :src="Image" class="object-cover h-full w-full" />
+          <img alt="movie" :src="movie.image" class="object-cover h-full w-full" />
         </div>
-        <h4 class="text-white text-2xl">Loki Mobius (2021)</h4>
-        <p class="text-white flex items-center gap-3">10 <QuoteIcon /></p>
+        <h4 class="text-white text-2xl">{{ movie.name[locale] }}</h4>
+        <p class="text-white flex items-center gap-3">{{ movie.quotesLength }} <QuoteIcon /></p>
       </div>
     </section>
   </MainContainer>
@@ -42,18 +42,27 @@
 <script setup>
 import TheHeader from '@/components/layout/TheHeader.vue'
 import MainContainer from '@/components/layout/MainContainer.vue'
-import Image from '@/assets/interstellar.png'
 import MovieAddIcon from '@/components/icons/MovieAddIcon.vue'
 import QuoteIcon from '@/components/icons/QuoteIcon.vue'
 import NewMovieModal from '@/components/modals/NewMovieModal.vue'
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useMovieStore } from '@/stores/movieStore'
 
-const { t } = useI18n()
+const movieStore = useMovieStore()
+const { t, locale } = useI18n()
 const navigation = ref(false)
 const addMovie = ref(false)
 
 function navigationHandler(value) {
   navigation.value = value
 }
+onBeforeMount(async () => {
+  try {
+    await movieStore.storeUserMovies()
+  } catch (err) {
+    console.error(err)
+    //Err
+  }
+})
 </script>

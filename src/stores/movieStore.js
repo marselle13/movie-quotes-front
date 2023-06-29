@@ -3,10 +3,14 @@ import { useMovieService } from '@/services/MovieService'
 
 export const useMovieStore = defineStore('movieStore', {
   state: () => ({
+    userMovies: [],
     movieList: [],
+    genres: [],
   }),
   getters: {
+    getUserMovies: (state) => state.userMovies,
     getMovieList: (state) => state.movieList,
+    getGenres: (state) => state.genres,
   },
   actions: {
     async storeMovieList() {
@@ -16,6 +20,15 @@ export const useMovieStore = defineStore('movieStore', {
         this.movieList = response.data
       } catch (err) {
         throw new Error('Cannot Fetch movies')
+      }
+    },
+    async storeUserMovies() {
+      try {
+        const movieService = useMovieService()
+        const response = await movieService.fetchUserMovies()
+        this.userMovies = response.data
+      } catch (err) {
+        throw new Error('Cannot Fetch user movies')
       }
     },
   },
