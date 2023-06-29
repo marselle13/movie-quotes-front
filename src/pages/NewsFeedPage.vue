@@ -1,10 +1,5 @@
 <template>
-  <TheHeader @open-navigation="navigationHandler" />
-  <MainContainer
-    width="md:w-[940px] md:mx-auto lg:mx-0 w-full relative"
-    :navigation="navigation"
-    @close-navigation="navigationHandler"
-  >
+  <MainContainer width="md:w-[940px] md:mx-auto lg:mx-0 w-full relative">
     <PostNavigation />
     <div class="grid justify-items-center content-center w-full mt-20" v-if="isLoading">
       <div
@@ -36,7 +31,6 @@
   </MainContainer>
 </template>
 <script setup>
-import TheHeader from '@/components/layout/TheHeader.vue'
 import MainContainer from '@/components/layout/MainContainer.vue'
 import PostNavigation from '@/components/post/PostNavigation.vue'
 import PostSection from '@/components/post/PostSection.vue'
@@ -46,13 +40,9 @@ import { useI18n } from 'vue-i18n'
 
 const postStore = usePostStore()
 const { t, locale } = useI18n()
-const navigation = ref(false)
 const isLoading = ref(false)
 const load = ref(false)
 const error = ref('')
-function navigationHandler(value) {
-  navigation.value = value
-}
 
 async function handleScroll() {
   const { scrollTop, clientHeight, scrollHeight } = document.documentElement

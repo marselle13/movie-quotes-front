@@ -1,10 +1,5 @@
 <template>
-  <TheHeader @open-navigation="navigationHandler" />
-  <MainContainer
-    width="w-full px-10 lg:px-0"
-    :navigation="navigation"
-    @close-navigation="navigationHandler"
-  >
+  <MainContainer width="w-full px-10 lg:px-0">
     <teleport to="body">
       <transition
         name="new-quote"
@@ -44,7 +39,6 @@
   </MainContainer>
 </template>
 <script setup>
-import TheHeader from '@/components/layout/TheHeader.vue'
 import MainContainer from '@/components/layout/MainContainer.vue'
 import MovieAddIcon from '@/components/icons/MovieAddIcon.vue'
 import QuoteIcon from '@/components/icons/QuoteIcon.vue'
@@ -57,12 +51,8 @@ const movieStore = useMovieStore()
 const { t, locale } = useI18n()
 const viteBaseUrl = import.meta.env.VITE_BASE_URL
 
-const navigation = ref(false)
 const addMovie = ref(false)
 
-function navigationHandler(value) {
-  navigation.value = value
-}
 onBeforeMount(async () => {
   try {
     await movieStore.storeUserMovies()

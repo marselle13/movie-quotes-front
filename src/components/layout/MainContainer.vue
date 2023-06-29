@@ -1,8 +1,9 @@
 <template>
+  <TheHeader @open-navigation="navigationHandler" />
   <section class="flex mt-8 lg:mx-16">
     <div
       class="fixed left-0 top-0 w-full h-full z-50"
-      @click="emit('close-navigation', false)"
+      @click="navigation = false"
       v-if="navigation"
     ></div>
     <transition name="slide">
@@ -59,18 +60,22 @@ import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useI18n } from 'vue-i18n'
+import TheHeader from '@/components/layout/TheHeader.vue'
 
 defineProps({
   width: { type: String, required: false },
-  navigation: { type: Boolean, required: false },
 })
 
-const emit = defineEmits(['close-navigation'])
 const route = useRoute()
 const userStore = useUserStore()
 const { t } = useI18n()
 
+const navigation = ref(false)
 const isDesktop = ref(false)
+
+function navigationHandler(value) {
+  navigation.value = value
+}
 function checkWidth() {
   isDesktop.value = window.innerWidth >= 1024
 }

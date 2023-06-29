@@ -1,10 +1,5 @@
 <template>
-  <TheHeader @open-navigation="navigationHandler" />
-  <MainContainer
-    width="max-w-[1000px] md:mx-auto lg:mx-0 w-full"
-    :navigation="navigation"
-    @close-navigation="navigationHandler"
-  >
+  <MainContainer width="max-w-[1000px] md:mx-auto lg:mx-0 w-full">
     <div class="pl-10">
       <BackIcon class="block lg:hidden" @click="router.push({ name: 'news-feed' })" />
       <h2 class="text-white text-2xl hidden lg:block">{{ t('my_profile') }}</h2>
@@ -211,7 +206,6 @@ const { google } = userStore.userData
 const { t } = useI18n()
 const router = useRouter()
 
-const navigation = ref(false)
 const isDesktop = ref(true)
 const confirmModal = ref(false)
 const updated = ref(false)
@@ -245,10 +239,6 @@ const passwordHandler = reactive({
 const checkModalWidth = computed(() => {
   return !((nameHandler.edit || emailHandler.edit || passwordHandler.edit) && !isDesktop.value)
 })
-
-function navigationHandler(value) {
-  navigation.value = value
-}
 
 function validPasswordModal() {
   const alphaNum = /^[a-z0-9]+$/
