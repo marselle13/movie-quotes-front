@@ -1,25 +1,63 @@
 <template>
   <new-container :title="t('new_movie')" @close="emit('close')">
-    <Form class="space-y-6 mt-7">
-      <base-input id="nameEng" placeholder="Movie name" mode="flat" lang="Eng" />
-      <base-input id="nameGeo" placeholder="ფილმის სახელი" mode="flat" lang="Geo" />
-      <base-dropdown width="w-full border border-[#6C757D]  py-2 px-4 rounded text-left">
-        <template #dropdownButton>
-          <div class="flex justify-between items-center">
-            <h4 class="text-[#6C757D]">Film Genre</h4>
-            <LanguageDropdownIcon />
-          </div>
-        </template>
-        <template #dropdown>
-          <li class="px-4">hello</li>
-        </template>
-      </base-dropdown>
-      <base-input id="year" placeholder="წელი/year" mode="flat" />
-      <base-input id="directorEng" placeholder="Director" mode="flat" lang="Eng" />
-      <base-input id="directorGeo" placeholder="რეჟისორი" mode="flat" lang="Geo" />
-      <base-textarea id="descriptionEng" placeholder="Movie Description" lang="Eng" />
-      <base-textarea id="descriptionGeo" placeholder="ფილმის აღწერა" lang="Geo" />
-      <base-upload id="image" />
+    <Form @submit="onSubmit" class="space-y-6 mt-7">
+      <base-input id="nameEng" placeholder="Movie name" mode="flat" lang="Eng" rules="required" />
+      <base-input
+        id="nameGeo"
+        placeholder="ფილმის სახელი"
+        mode="flat"
+        lang="Geo"
+        rules="required"
+      />
+      <Field name="genres" v-slot="{ handleChange }" rules="required">
+        <base-dropdown
+          width="w-full border border-[#6C757D]  py-2 px-4 rounded text-left"
+          @isOpen="dropDownHandler"
+        >
+          <template #dropdownButton>
+            <div class="flex justify-between items-center">
+              <h5 v-if="genres.length === 0" class="text-[#6C757D]">{{ t('genres') }}</h5>
+              <ul v-else class="inline-flex gap-2 overflow-x-auto scrollbar-hide">
+                <li
+                  :key="genre.id"
+                  v-for="genre in genres"
+                  class="flex items-center bg-[#6C757D] rounded-sm px-1 whitespace-nowrap relative z-50"
+                >
+                  <h4 class="text-white">{{ genre.name }}</h4>
+                  <CloseIcon class="w-5 h-5" @click="deleteGenre(genre.id, handleChange)" />
+                </li>
+              </ul>
+              <LanguageDropdownIcon />
+              <error-message
+                name="genres"
+                class="absolute text-[#DC3545] -bottom-4 left-0 text-[9px] md:text-[10px]"
+              ></error-message>
+            </div>
+          </template>
+          <template #dropdown>
+            <li v-if="error" class="px-4">{{ error }}</li>
+            <li
+              class="px-4 py-1 hover:bg-gray-900"
+              v-for="genre in movieStore.getGenres"
+              :key="genre.id"
+              @click="selectGenre(genre.id, genre.name, handleChange)"
+            >
+              {{ genre.name }}
+            </li>
+          </template>
+        </base-dropdown>
+      </Field>
+      <base-input id="year" placeholder="წელი/year" mode="flat" rules="required|integer" />
+      <base-input id="directorEng" placeholder="Director" mode="flat" lang="Eng" rules="required" />
+      <base-input id="directorGeo" placeholder="რეჟისორი" mode="flat" lang="Geo" rules="required" />
+      <base-textarea
+        id="descriptionEng"
+        placeholder="Movie Description"
+        lang="Eng"
+        rules="required"
+      />
+      <base-textarea id="descriptionGeo" placeholder="ფილმის აღწერა" lang="Geo" rules="required" />
+      <base-upload id="image" rules="required|image" />
       <base-button class="w-full py-2">Add Movie</base-button>
     </Form>
   </new-container>
@@ -28,14 +66,47 @@
 import NewContainer from '@/components/layout/NewContainer.vue'
 import BaseInput from '@/components/ui/form/BaseInput.vue'
 import { useI18n } from 'vue-i18n'
-import { Form } from 'vee-validate'
+import { Form, Field, ErrorMessage } from 'vee-validate'
 import BaseTextarea from '@/components/ui/form/BaseTextarea.vue'
 import BaseUpload from '@/components/ui/form/BaseUpload.vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
 import BaseDropdown from '@/components/ui/form/BaseDropdown.vue'
 import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
+import { useMovieStore } from '@/stores/movieStore'
+import { reactive, ref } from 'vue'
+import CloseIcon from '@/components/icons/CloseIcon.vue'
 
 const emit = defineEmits(['close'])
-
+const movieStore = useMovieStore()
 const { t } = useI18n()
+
+const error = ref('')
+const genres = reactive([])
+
+function selectGenre(genreId, genreName, handleChange) {
+  const genreExists = genres.some((genre) => genre.id === genreId)
+  if (!genreExists) {
+    genres.unshift({ id: genreId, name: genreName })
+    handleChange([...genres])
+  }
+}
+function deleteGenre(genreId, handleChange) {
+  const index = genres.findIndex((genre) => genre.id === genreId)
+  genres.splice(index, 1)
+  handleChange([...genres])
+}
+
+function onSubmit(values) {
+  console.log(values)
+}
+
+async function dropDownHandler(isOpen) {
+  if (isOpen && movieStore.getMovieList.length === 0) {
+    try {
+      await movieStore.storeGenres()
+    } catch (err) {
+      error.value = err.message
+    }
+  }
+}
 </script>

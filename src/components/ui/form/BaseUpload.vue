@@ -23,7 +23,10 @@
       <label for="image" class="bg-[#9747ff7a] text-white p-2 cursor-pointer flex-shrink-0 mr-4">{{
         t('choose_file')
       }}</label>
-      <ErrorMessage :name="id" class="absolute text-xs -bottom-5 text-[#DC3545]"></ErrorMessage>
+      <ErrorMessage
+        :name="id"
+        class="absolute -bottom-4 text-[#DC3545] text-[9px] md:text-[10px]"
+      ></ErrorMessage>
     </div>
   </Field>
 </template>

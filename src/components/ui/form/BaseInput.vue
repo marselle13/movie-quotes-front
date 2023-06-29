@@ -15,8 +15,10 @@
           :value="value || inputValue"
           :class="[
             {
-              'border-[#DC3545]': error || (meta.validated && !meta.valid && props.rules),
-              'border-[#198754]': !error && meta.validated && meta.valid && props.rules,
+              'border-[#DC3545]':
+                error || (meta.validated && !meta.valid && props.rules && mode !== 'flat'),
+              'border-[#198754]':
+                !error && meta.validated && meta.valid && props.rules && mode !== 'flat',
             },
             inputStyle,
             placeholderStyle,
@@ -27,11 +29,21 @@
         <div class="absolute right-3 top-0 h-full flex items-center">
           <h4 v-if="mode === 'flat' && lang" class="text-[#6C757D]">{{ lang }}</h4>
           <valid-icon
-            v-if="!error && meta.valid && meta.validated && rules && type !== 'password'"
+            v-if="
+              !error &&
+              meta.valid &&
+              meta.validated &&
+              rules &&
+              type !== 'password' &&
+              mode !== 'flat'
+            "
           />
           <password-icon v-else-if="type === 'password'" class="mt-0.5" @click="showPassword" />
           <invalid-icon
-            v-else-if="error || (!meta.valid && meta.validated && rules && type !== 'password')"
+            v-else-if="
+              error ||
+              (!meta.valid && meta.validated && rules && type !== 'password' && mode !== 'flat')
+            "
           />
         </div>
       </div>

@@ -31,7 +31,7 @@
     <section class="grid 2xl:grid-cols-3 lg:grid-cols-2 gap-x-12 gap-y-14 my-14">
       <div class="space-y-4" v-for="movie in movieStore.getUserMovies" :key="movie.id">
         <div class="rounded-xl overflow-hidden h-[18rem] md:h-[23rem]">
-          <img alt="movie" :src="movie.image" class="object-cover h-full w-full" />
+          <img alt="movie" :src="movie?.image" class="object-cover h-full w-full" />
         </div>
         <h4 class="text-white text-2xl">{{ movie.name[locale] }}</h4>
         <p class="text-white flex items-center gap-3">{{ movie.quotesLength }} <QuoteIcon /></p>

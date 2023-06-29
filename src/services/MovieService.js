@@ -8,9 +8,12 @@ export const useMovieService = () => {
   async function fetchUserMovies() {
     return await api.get('api/movies')
   }
-
+  async function fetchGenres() {
+    return await api.get('api/genres')
+  }
   return {
     fetchMoviesList,
     fetchUserMovies,
+    fetchGenres,
   }
 }

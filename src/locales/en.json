@@ -77,5 +77,6 @@
   "cannot_fetch": "Cannot Fetch Data",
   "no_movies": "No movies to show",
   "post": "Post",
-  "movie_list": "My list of movies  (Total {amount})"
+  "movie_list": "My list of movies  (Total {amount})",
+  "genres": "Genres"
 }

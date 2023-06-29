@@ -31,5 +31,14 @@ export const useMovieStore = defineStore('movieStore', {
         throw new Error('Cannot Fetch user movies')
       }
     },
+    async storeGenres() {
+      try {
+        const movieService = useMovieService()
+        const response = await movieService.fetchGenres()
+        this.genres = response.data
+      } catch (err) {
+        throw new Error('Cannot Fetch genres')
+      }
+    },
   },
 })
