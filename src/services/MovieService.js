@@ -13,6 +13,10 @@ export const useMovieService = () => {
     return await api.get('api/genres')
   }
 
+  async function fetchMovieDescription(movie) {
+    return await api.get(`api/movies/${movie}`)
+  }
+
   async function createNewMovie(values) {
     const {
       nameEng,
@@ -44,6 +48,7 @@ export const useMovieService = () => {
   return {
     fetchMoviesList,
     fetchUserMovies,
+    fetchMovieDescription,
     fetchGenres,
     createNewMovie,
   }

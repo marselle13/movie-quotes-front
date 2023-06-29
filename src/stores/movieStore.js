@@ -4,11 +4,13 @@ import { useMovieService } from '@/services/MovieService'
 export const useMovieStore = defineStore('movieStore', {
   state: () => ({
     userMovies: [],
+    movieDescription: [],
     movieList: [],
     genres: [],
   }),
   getters: {
     getUserMovies: (state) => state.userMovies,
+    getMovieDescription: (state) => state.movieDescription,
     getMovieList: (state) => state.movieList,
     getGenres: (state) => state.genres,
   },
@@ -40,6 +42,10 @@ export const useMovieStore = defineStore('movieStore', {
     async addNewMovie(values) {
       const response = await useMovieService().createNewMovie(values)
       this.userMovies = [response.data.newMovie, ...this.userMovies]
+    },
+    async showMovie(movie) {
+      const response = await useMovieService().fetchMovieDescription(movie)
+      this.movieDescription = response.data
     },
   },
 })

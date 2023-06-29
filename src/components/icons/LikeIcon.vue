@@ -12,5 +12,5 @@
   </svg>
 </template>
 <script setup>
-defineProps({ likeStyle: { type: String, required: true } })
+defineProps({ likeStyle: { type: String, required: false, default: 'white' } })
 </script>

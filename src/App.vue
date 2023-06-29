@@ -4,9 +4,11 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
+import { useMovieStore } from '@/stores/movieStore'
 
 const router = useRouter()
 const userStore = useUserStore()
+const movieStore = useMovieStore()
 
 router.beforeResolve(async (to) => {
   const { authUser } = userStore
@@ -21,6 +23,18 @@ router.beforeResolve(async (to) => {
 
   if (!updateAuth && to.meta.user === 'auth') {
     return { name: 'forbidden', query: { page: 'landing' } }
+  }
+
+  if (to.name === 'movie-description') {
+    try {
+      await movieStore.showMovie(to.params.movie)
+    } catch (err) {
+      if (err.response.status === 404) {
+        return { path: 'not-found' }
+      } else {
+        return { name: 'forbidden', query: { page: 'movie-list' } }
+      }
+    }
   }
 })
 </script>

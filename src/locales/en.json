@@ -78,5 +78,6 @@
   "no_movies": "No movies to show",
   "post": "Post",
   "movie_list": "My list of movies  (Total {amount})",
+  "movie_description": "Movie description",
   "genres": "Genres"
 }
