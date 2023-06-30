@@ -23,7 +23,8 @@
         ><MovieAddIcon /> Add Movie</base-button
       >
     </div>
-    <section class="grid 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-x-12 gap-y-14 my-14">
+    <LoadingSpinner v-if="isLoading" />
+    <section class="grid 2xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-x-12 gap-y-14 my-14" v-else>
       <div class="space-y-4" v-for="movie in movieStore.getUserMovies" :key="movie.id">
         <div
           @click="router.push({ name: 'movie-description', params: { movie: movie.id } })"
@@ -46,6 +47,7 @@ import MainContainer from '@/components/layout/MainContainer.vue'
 import MovieAddIcon from '@/components/icons/MovieAddIcon.vue'
 import QuoteIcon from '@/components/icons/QuoteIcon.vue'
 import NewMovieModal from '@/components/modals/NewMovieModal.vue'
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import { onBeforeMount, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useMovieStore } from '@/stores/movieStore'
@@ -56,13 +58,20 @@ const movieStore = useMovieStore()
 const { t, locale } = useI18n()
 const viteBaseUrl = import.meta.env.VITE_BASE_URL
 
+const isLoading = ref(false)
 const addMovie = ref(false)
+const error = ref('')
 
 onBeforeMount(async () => {
   try {
-    await movieStore.storeUserMovies()
+    if (movieStore.getUserMovies.length === 0) {
+      isLoading.value = true
+      await movieStore.storeUserMovies()
+      isLoading.value = false
+    }
   } catch (err) {
-    //Err
+    isLoading.value = false
+    error.value = err.message
   }
 })
 </script>

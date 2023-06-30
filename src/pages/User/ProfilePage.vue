@@ -182,7 +182,6 @@
 </template>
 <script setup>
 import MainContainer from '@/components/layout/MainContainer.vue'
-import TheHeader from '@/components/layout/TheHeader.vue'
 import BaseInput from '@/components/ui/form/BaseInput.vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
 import MainCard from '@/components/ui/MainCard.vue'

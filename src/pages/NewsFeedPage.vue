@@ -1,12 +1,7 @@
 <template>
   <MainContainer width="md:w-[940px] md:mx-auto lg:mx-0 w-full relative">
     <PostNavigation />
-    <div class="grid justify-items-center content-center w-full mt-20" v-if="isLoading">
-      <div
-        style="border-top-color: transparent"
-        class="w-24 h-24 border-4 border-blue-400 border-solid rounded-full animate-spin"
-      ></div>
-    </div>
+    <LoadingSpinner v-if="isLoading" />
     <div v-else-if="!isLoading">
       <PostSection
         v-for="post in postStore.getPosts"
@@ -37,6 +32,7 @@ import PostSection from '@/components/post/PostSection.vue'
 import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 import { usePostStore } from '@/stores/postStore'
 import { useI18n } from 'vue-i18n'
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 
 const postStore = usePostStore()
 const { t, locale } = useI18n()
