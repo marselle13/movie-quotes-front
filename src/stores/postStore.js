@@ -14,9 +14,8 @@ export const usePostStore = defineStore('PostStore', {
   },
   actions: {
     async showPosts() {
-      const postService = usePostService()
       try {
-        const response = await postService.fetchPosts(this.currentPage)
+        const response = await usePostService().fetchPosts(this.currentPage)
         this.posts = response.data
       } catch (err) {
         throw new Error('Cannot Fetch Data')
@@ -30,8 +29,7 @@ export const usePostStore = defineStore('PostStore', {
       this.isFetching = true
 
       try {
-        const postService = usePostService()
-        const response = await postService.fetchPosts((this.currentPage += 1))
+        const response = await usePostService().fetchPosts((this.currentPage += 1))
         const newPosts = response.data
 
         this.posts = [...this.posts, ...newPosts]
@@ -44,18 +42,15 @@ export const usePostStore = defineStore('PostStore', {
       }
     },
     async addQuote(values) {
-      const postService = usePostService()
-      const response = await postService.createNewQuote(values)
+      const response = await usePostService().createNewQuote(values)
       this.posts = [response.data.newQuote, ...this.posts]
     },
     async loadMoreComments(postId) {
-      const postService = usePostService()
-      const response = await postService.fetchMoreComments(postId)
+      const response = await usePostService().fetchMoreComments(postId)
       this.commentSection(postId, response.data)
     },
     async newComment(postId, comment, loaded) {
-      const postService = usePostService()
-      const response = await postService.addNewComment(postId, comment)
+      const response = await usePostService().addNewComment(postId, comment)
       const post = this.posts.find((post) => post.id === postId)
       loaded
         ? post.comments.push(response.data.newComment)
@@ -64,16 +59,15 @@ export const usePostStore = defineStore('PostStore', {
       post.length.comments++
     },
     async postReaction(postId) {
-      const postService = usePostService()
       const userStore = useUserStore()
       const post = this.posts.find((post) => post.id === postId)
       const likedPost = post.likes.findIndex((like) => like.user.id === userStore.userData.id)
       if (likedPost !== -1) {
-        await postService.unlikePost(postId)
+        await usePostService().unlikePost(postId)
         post.likes.splice(likedPost, 1)
         post.length.likes--
       } else {
-        const response = await postService.likePost(postId)
+        const response = await usePostService().likePost(postId)
         const newLike = response.data.like
         post.likes.push(newLike)
         post.length.likes++
