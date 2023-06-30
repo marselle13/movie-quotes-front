@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { usePostService } from '@/services/postService'
 import { useUserStore } from '@/stores/userStore'
+import { useMovieStore } from '@/stores/movieStore'
 
 export const usePostStore = defineStore('PostStore', {
   state: () => ({
@@ -44,6 +45,7 @@ export const usePostStore = defineStore('PostStore', {
     async addQuote(values) {
       const response = await usePostService().createNewQuote(values)
       this.posts = [response.data.newQuote, ...this.posts]
+      useMovieStore().updateQuoteAmount(values.movieId)
     },
     async loadMoreComments(postId) {
       const response = await usePostService().fetchMoreComments(postId)

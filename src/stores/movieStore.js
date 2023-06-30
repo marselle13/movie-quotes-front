@@ -53,5 +53,11 @@ export const useMovieStore = defineStore('movieStore', {
       this.userMovies.splice(index, 1)
       this.movieDescription = []
     },
+    updateQuoteAmount(movieId) {
+      if (this.userMovies.length) {
+        const movie = this.userMovies.find((movie) => movie.id === movieId)
+        movie.quotesLength++
+      }
+    },
   },
 })
