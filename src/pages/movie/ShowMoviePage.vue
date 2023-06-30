@@ -25,7 +25,7 @@
             <div class="flex items-center bg-[#24222F] rounded-xl py-2 px-7">
               <button><EditIcon /></button>
               <div class="h-4 border border-[#6C757D] mx-6"></div>
-              <button><DeleteIcon /></button>
+              <button @click="deleteMovie(movieDescription.id)"><DeleteIcon /></button>
             </div>
           </div>
           <ul class="inline-flex flex-wrap gap-2 w-full">
@@ -50,7 +50,7 @@
         <div
           class="flex lg:flex-row flex-col-reverse lg:items-center mt-8 lg:mt-10 mb-4 px-9 lg:px-0"
         >
-          <h5 class="text-white text-2xl">Quotes (total {{ movieDescription.quotes.length }})</h5>
+          <h5 class="text-white text-2xl">Quotes (total {{ movieDescription.quotes?.length }})</h5>
           <div class="lg:h-7 border border-[#6C757D] lg:mx-4 my-10 lg:my-0"></div>
           <base-button class="w-40 lg:w-auto flex items-center px-4 py-2 gap-2"
             ><movie-add-icon /> Add Quote</base-button
@@ -86,30 +86,29 @@
 </template>
 <script setup>
 import MainContainer from '@/components/layout/MainContainer.vue'
-import { useI18n } from 'vue-i18n'
-import { useMovieStore } from '@/stores/movieStore'
 import MainCard from '@/components/ui/MainCard.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
 import LikeIcon from '@/components/icons/LikeIcon.vue'
 import EditIcon from '@/components/icons/EditIcon.vue'
 import DeleteIcon from '@/components/icons/DeleteIcon.vue'
-import { onMounted, ref } from 'vue'
 import BaseButton from '@/components/ui/form/BaseButton.vue'
 import MovieAddIcon from '@/components/icons/MovieAddIcon.vue'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+import { useMovieStore } from '@/stores/movieStore'
 
+const router = useRouter()
 const { t, locale } = useI18n()
 const movieStore = useMovieStore()
 const movieDescription = movieStore.getMovieDescription
 const viteBaseUrl = import.meta.env.VITE_BASE_URL
 
-const isDesktop = ref(false)
-
-function checkWidth() {
-  isDesktop.value = window.innerWidth >= 768
+async function deleteMovie(movieId) {
+  try {
+    await movieStore.removeMovie(movieId)
+    await router.replace({ name: 'movie-list' })
+  } catch (err) {
+    //Err
+  }
 }
-
-onMounted(() => {
-  checkWidth()
-  window.addEventListener('resize', checkWidth)
-})
 </script>

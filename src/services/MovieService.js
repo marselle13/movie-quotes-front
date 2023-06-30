@@ -17,6 +17,10 @@ export const useMovieService = () => {
     return await api.get(`api/movies/${movie}`)
   }
 
+  async function deleteMovie(movie) {
+    return await api.delete(`api/movies/${movie}`)
+  }
+
   async function createNewMovie(values) {
     const {
       nameEng,
@@ -50,6 +54,7 @@ export const useMovieService = () => {
     fetchUserMovies,
     fetchMovieDescription,
     fetchGenres,
+    deleteMovie,
     createNewMovie,
   }
 }

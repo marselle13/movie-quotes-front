@@ -47,5 +47,11 @@ export const useMovieStore = defineStore('movieStore', {
       const response = await useMovieService().fetchMovieDescription(movie)
       this.movieDescription = response.data
     },
+    async removeMovie(movieId) {
+      await useMovieService().deleteMovie(movieId)
+      const index = this.userMovies.findIndex((movie) => movie.id === movieId)
+      this.userMovies.splice(index, 1)
+      this.movieDescription = []
+    },
   },
 })
