@@ -5,17 +5,20 @@
     @click="dropdown = false"
   ></div>
   <div class="relative" :class="{ 'hidden md:block': hidden, 'bg-[#000000] p-6': background }">
-    <button class="relative" :class="width" type="button" @click="dropdownButton">
+    <button class="relative" type="button" @click="dropdownButton" :class="buttonWidth">
       <slot name="dropdownButton"></slot>
     </button>
     <ul
       v-if="dropdown"
       @click="dropdown = false"
-      class="z-10 bg-[#24222F] rounded-[10px] absolute py-2 text-sm text-white cursor-pointer left-0 top-10 w-full"
-      :class="{
-        'w-full bg-black max-h-[100px] overflow-y-auto top-20 left-0 scrollbar-hide rounded-none':
-          background,
-      }"
+      class="z-10 bg-[#24222F] rounded-[10px] absolute py-2 text-sm text-white cursor-pointer left-0 top-10"
+      :class="[
+        dropdownWidth,
+        {
+          'w-full bg-black max-h-[100px] overflow-y-auto top-20 left-0 scrollbar-hide rounded-none':
+            background,
+        },
+      ]"
     >
       <slot name="dropdown"></slot>
     </ul>
@@ -25,7 +28,8 @@
 defineProps({
   hidden: { type: Boolean, required: false },
   background: { type: Boolean, required: false, default: false },
-  width: { type: String, required: false },
+  buttonWidth: { type: String, required: false },
+  dropdownWidth: { type: String, required: false, default: 'w-full' },
 })
 import { ref } from 'vue'
 const dropdown = ref(false)

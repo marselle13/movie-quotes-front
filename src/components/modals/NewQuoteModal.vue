@@ -24,7 +24,7 @@
         @show-image="resetImage = false"
       />
       <Field name="movieId" rules="required" v-slot="{ handleChange }" class="relative">
-        <base-dropdown background width="w-full h-full" @isOpen="dropDownHandler">
+        <base-dropdown background buttonWidth="w-full h-full" @isOpen="dropDownHandler">
           <template #dropdownButton
             ><div class="flex items-center justify-between text-white text-left">
               <div class="flex justify-center items-end gap-4">

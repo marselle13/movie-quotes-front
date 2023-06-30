@@ -21,7 +21,7 @@
       />
       <Field name="genres" v-slot="{ handleChange }" rules="required">
         <base-dropdown
-          width="w-full border border-[#6C757D]  py-2 px-4 rounded text-left"
+          button-width="w-full border border-[#6C757D]  py-2 px-4 rounded text-left"
           @isOpen="dropDownHandler"
         >
           <template #dropdownButton>

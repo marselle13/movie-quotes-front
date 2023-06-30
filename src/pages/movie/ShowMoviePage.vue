@@ -57,17 +57,27 @@
           >
         </div>
         <main-card v-for="quote in movieDescription.quotes" class="py-6 px-8" :key="quote.id">
-          <div
-            class="flex flex-col md:flex-row md:items-center pb-6 border-b border-[#EFEFEF33] gap-8"
-          >
-            <div class="rounded-sm h-[8.75rem] md:w-[14rem] w-full">
-              <img
-                :src="`${viteBaseUrl}storage/${quote.thumbnail}`"
-                alt="thumbnail"
-                class="h-full object-cover w-full object-center"
-              />
+          <div class="flex flex-col md:flex-row pb-6 border-b border-[#EFEFEF33]">
+            <div class="flex items-center gap-8">
+              <div class="rounded-sm h-[8.75rem] md:w-[14rem] w-full">
+                <img
+                  :src="`${viteBaseUrl}storage/${quote.thumbnail}`"
+                  alt="thumbnail"
+                  class="h-full object-cover w-full object-center"
+                />
+              </div>
+              <p class="text-[#CED4DA] italic text-2xl">"{{ quote.quote[locale] }}"</p>
             </div>
-            <p class="text-[#CED4DA] italic text-2xl">"{{ quote.quote[locale] }}"</p>
+            <base-dropdown width="w-[200px] flex-shrink-0">
+              <template #dropdownButton>
+                <QuoteIcon class="w-full" />
+              </template>
+              <template #dropdown>
+                <li class="flex items-center w-[200px]">
+                  <p>View Quote</p>
+                </li>
+              </template>
+            </base-dropdown>
           </div>
           <div class="flex pt-6 gap-6">
             <div class="flex gap-4">
@@ -86,16 +96,16 @@
 </template>
 <script setup>
 import MainContainer from '@/components/layout/MainContainer.vue'
-import MainCard from '@/components/ui/MainCard.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
 import LikeIcon from '@/components/icons/LikeIcon.vue'
 import EditIcon from '@/components/icons/EditIcon.vue'
 import DeleteIcon from '@/components/icons/DeleteIcon.vue'
-import BaseButton from '@/components/ui/form/BaseButton.vue'
 import MovieAddIcon from '@/components/icons/MovieAddIcon.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useMovieStore } from '@/stores/movieStore'
+import QuoteIcon from '@/components/icons/quoteIcon.vue'
+import ViewPostIcon from '@/components/icons/ViewPostIcon.vue'
 
 const router = useRouter()
 const { t, locale } = useI18n()
