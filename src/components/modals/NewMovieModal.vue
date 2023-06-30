@@ -33,7 +33,7 @@
                   v-for="genre in genres"
                   class="flex items-center bg-[#6C757D] rounded-sm px-1 whitespace-nowrap relative z-50"
                 >
-                  <h4 class="text-white">{{ genre.name }}</h4>
+                  <h4 class="text-white">{{ genre.name[locale] }}</h4>
                   <CloseIcon class="w-5 h-5" @click="deleteGenre(genre.id, handleChange)" />
                 </li>
               </ul>
@@ -52,7 +52,7 @@
               :key="genre.id"
               @click="selectGenre(genre.id, genre.name, handleChange)"
             >
-              {{ genre.name }}
+              {{ genre.name[locale] }}
             </li>
           </template>
         </base-dropdown>
@@ -88,7 +88,7 @@ import CloseIcon from '@/components/icons/CloseIcon.vue'
 
 const emit = defineEmits(['close'])
 const movieStore = useMovieStore()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const error = reactive({ genre: '', nameEng: '', nameGeo: '' })
 const genres = reactive([])
