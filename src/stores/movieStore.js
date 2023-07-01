@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { useMovieService } from '@/services/MovieService'
+import { usePostStore } from '@/stores/postStore'
+import { usePostService } from '@/services/postService'
 
 export const useMovieStore = defineStore('movieStore', {
   state: () => ({
@@ -49,17 +51,26 @@ export const useMovieStore = defineStore('movieStore', {
     },
     async removeMovie(movieId) {
       await useMovieService().deleteMovie(movieId)
-      this.updateUserMovies(this.userMovies, movieId)
-      this.updateUserMovies(this.movieList, movieId)
+      this.userMovies = this.updateUserMovies(this.userMovies, movieId)
+      this.movieList = this.updateUserMovies(this.movieList, movieId)
+      usePostStore().updatePosts(movieId)
       this.movieDescription = []
     },
-    updateUserMovies(array, movieId) {
-      if (array.length > 0) {
-        const index = array.findIndex((movie) => movie.id === movieId)
-        array.splice(index, 1)
+    async removeQuoteFromUserMovie(quoteId, movieId) {
+      const response = await usePostService().deleteQuote(quoteId)
+      console.log(response)
+      const movie = this.userMovies.find((movie) => movie.id === movieId)
+      if (movie) {
+        movie.quotesLength--
       }
+      this.movieDescription.quotes = this.movieDescription.quotes.filter(
+        (quote) => quote.id !== quoteId,
+      )
+      usePostStore().removeQuoteFromPosts(quoteId)
     },
-
+    updateUserMovies(array, movieId) {
+      return array.filter((movie) => movie.id !== movieId)
+    },
     updateQuoteAmount(movieId) {
       if (this.userMovies.length) {
         const movie = this.userMovies.find((movie) => movie.id === movieId)

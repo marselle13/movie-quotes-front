@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { usePostService } from '@/services/postService'
-import { useUserStore } from '@/stores/userStore'
 import { useMovieStore } from '@/stores/movieStore'
 
 export const usePostStore = defineStore('PostStore', {
@@ -61,7 +60,6 @@ export const usePostStore = defineStore('PostStore', {
       post.length.comments++
     },
     async postReaction(postId) {
-      const userStore = useUserStore()
       const post = this.posts.find((post) => post.id === postId)
       const likedPost = post.likes.findIndex((like) => like.user.id === userStore.userData.id)
       if (likedPost !== -1) {
@@ -75,12 +73,18 @@ export const usePostStore = defineStore('PostStore', {
         post.length.likes++
       }
     },
+    removeQuoteFromPosts(quoteId) {
+      this.posts = this.posts.filter((post) => post.id === quoteId)
+    },
     commentSection(postId, data = null) {
       const post = this.posts.find((post) => postId === post.id)
       if (data) {
         post.comments = data
       }
       post.comments.reverse()
+    },
+    updatePosts(movieId) {
+      this.posts = this.posts.filter((post) => post.movie.id !== movieId)
     },
   },
 })

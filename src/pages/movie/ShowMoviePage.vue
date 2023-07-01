@@ -83,7 +83,10 @@
                   <EditIcon />
                   <p>Edit</p>
                 </li>
-                <li class="flex gap-2 hover:opacity-80">
+                <li
+                  class="flex gap-2 hover:opacity-80"
+                  @click="deleteQuote(quote.id, movieDescription.id)"
+                >
                   <DeleteIcon />
                   <p>Delete</p>
                 </li>
@@ -123,6 +126,14 @@ const { t, locale } = useI18n()
 const movieStore = useMovieStore()
 const movieDescription = movieStore.getMovieDescription
 const viteBaseUrl = import.meta.env.VITE_BASE_URL
+
+async function deleteQuote(quoteId, movieId) {
+  try {
+    await movieStore.removeQuoteFromUserMovie(quoteId, movieId)
+  } catch (err) {
+    //Err
+  }
+}
 
 async function deleteMovie(movieId) {
   try {

@@ -31,6 +31,10 @@ export const usePostService = () => {
     return await api.delete(`api/likes/${postId}`)
   }
 
+  async function deleteQuote(quoteId) {
+    return await api.delete(`api/quotes/${quoteId}`)
+  }
+
   return {
     fetchPosts,
     fetchMoreComments,
@@ -38,5 +42,6 @@ export const usePostService = () => {
     addNewComment,
     likePost,
     unlikePost,
+    deleteQuote,
   }
 }
