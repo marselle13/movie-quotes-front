@@ -10,7 +10,7 @@
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <NewMovieModal v-if="addMovie" @close="addMovie = false" />
+        <MovieModal v-if="addMovie" @close="addMovie = false" />
       </transition>
     </teleport>
     <div class="flex justify-between gap-4">
@@ -46,7 +46,7 @@
 import MainContainer from '@/components/layout/MainContainer.vue'
 import MovieAddIcon from '@/components/icons/MovieAddIcon.vue'
 import QuoteIcon from '@/components/icons/QuoteIcon.vue'
-import NewMovieModal from '@/components/modals/NewMovieModal.vue'
+import MovieModal from '@/components/modals/MovieModal.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import { onBeforeMount, ref } from 'vue'
 import { useI18n } from 'vue-i18n'

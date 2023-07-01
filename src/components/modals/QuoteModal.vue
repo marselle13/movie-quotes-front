@@ -1,6 +1,33 @@
 <template>
   <new-container :title="t('new_quote')" @close="emit('close')">
     <Form @submit="onSubmit" class="flex flex-col mt-10 gap-6">
+      <div class="flex gap-7" v-if="movie">
+        <Field name="movieId" v-slot="{ field }" :value="movie.id">
+          <input type="hidden" v-bind="field" />
+          <div class="rounded-2xl overflow-hidden w-[18rem] h-[10rem]">
+            <img
+              :src="`${viteBaseUrl}storage/${movie.image}`"
+              alt="image"
+              class="object-cover object-center flex-shrink-0"
+            />
+          </div>
+          <div class="space-y-5">
+            <h5 class="text-2xl text-[#DDCCAA] font-medium">{{ movie.name[locale] }}</h5>
+            <ul class="flex gap-2">
+              <li
+                class="bg-[#6C757D] text-white rounded py-1 px-3"
+                v-for="genre in movie.genres"
+                :key="genre.id"
+              >
+                {{ genre.name[locale] }}
+              </li>
+            </ul>
+            <h6 class="text-lg text-white">
+              <span class="text-[#CED4DA]">Director:</span> {{ movie.director[locale] }}
+            </h6>
+          </div>
+        </Field>
+      </div>
       <base-textarea
         rules="required"
         id="quoteEng"
@@ -23,7 +50,13 @@
         :resetImage="resetImage"
         @show-image="resetImage = false"
       />
-      <Field name="movieId" rules="required" v-slot="{ handleChange }" class="relative">
+      <Field
+        name="movieId"
+        rules="required"
+        v-slot="{ handleChange }"
+        class="relative"
+        v-if="!movie"
+      >
         <base-dropdown background buttonWidth="w-full h-full" @isOpen="dropDownHandler">
           <template #dropdownButton
             ><div class="flex items-center justify-between text-white text-left">
@@ -69,10 +102,13 @@ import { useMovieStore } from '@/stores/movieStore'
 import { useI18n } from 'vue-i18n'
 import { usePostStore } from '@/stores/postStore'
 
+defineProps({ movie: { type: Object, required: false } })
+
 const { t, locale } = useI18n()
 const emit = defineEmits(['close'])
 const movieStore = useMovieStore()
 const postStore = usePostStore()
+const viteBaseUrl = import.meta.env.VITE_BASE_URL
 
 const error = reactive({
   en: '',

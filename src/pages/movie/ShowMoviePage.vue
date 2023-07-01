@@ -1,5 +1,18 @@
 <template>
   <MainContainer width="w-full mb-10">
+    <teleport to="body">
+      <transition
+        name="new-quote"
+        enter-active-class="transition-opacity duration-300 ease-out"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition-opacity duration-300 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <QuoteModal v-if="addQuote" @close="addQuote = false" :movie="movieDescription" />
+      </transition>
+    </teleport>
     <div class="lg:flex justify-between gap-4 hidden">
       <h2 class="text-white text-2xl">
         {{ t('movie_description') }}
@@ -52,7 +65,9 @@
         >
           <h5 class="text-white text-2xl">Quotes (total {{ movieDescription.quotes?.length }})</h5>
           <div class="lg:h-7 border border-[#6C757D] lg:mx-4 my-10 lg:my-0"></div>
-          <base-button class="w-40 lg:w-auto flex items-center px-4 py-2 gap-2"
+          <base-button
+            @click="addQuote = true"
+            class="w-40 lg:w-auto flex items-center px-4 py-2 gap-2"
             ><movie-add-icon /> Add Quote</base-button
           >
         </div>
@@ -66,7 +81,10 @@
                   class="h-full object-cover w-full object-center"
                 />
               </div>
-              <p class="text-[#CED4DA] italic text-2xl">"{{ quote.quote[locale] }}"</p>
+
+              <p class="w-[400px] text-[#CED4DA] italic text-2xl break-words">
+                "{{ quote.quote[locale] }}"
+              </p>
             </div>
             <base-dropdown
               dropdown-width="w-[14rem] flex flex-col items-start space-y-8 py-8 px-10"
@@ -120,12 +138,16 @@ import { useI18n } from 'vue-i18n'
 import { useMovieStore } from '@/stores/movieStore'
 import QuoteIcon from '@/components/icons/quoteIcon.vue'
 import ViewPostIcon from '@/components/icons/ViewPostIcon.vue'
+import { ref } from 'vue'
+import QuoteModal from '@/components/modals/QuoteModal.vue'
 
 const router = useRouter()
 const { t, locale } = useI18n()
 const movieStore = useMovieStore()
 const movieDescription = movieStore.getMovieDescription
 const viteBaseUrl = import.meta.env.VITE_BASE_URL
+
+const addQuote = ref(false)
 
 async function deleteQuote(quoteId, movieId) {
   try {

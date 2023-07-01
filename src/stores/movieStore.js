@@ -57,8 +57,7 @@ export const useMovieStore = defineStore('movieStore', {
       this.movieDescription = []
     },
     async removeQuoteFromUserMovie(quoteId, movieId) {
-      const response = await usePostService().deleteQuote(quoteId)
-      console.log(response)
+      await usePostService().deleteQuote(quoteId)
       const movie = this.userMovies.find((movie) => movie.id === movieId)
       if (movie) {
         movie.quotesLength--
@@ -75,6 +74,11 @@ export const useMovieStore = defineStore('movieStore', {
       if (this.userMovies.length) {
         const movie = this.userMovies.find((movie) => movie.id === movieId)
         movie.quotesLength++
+      }
+    },
+    updateMovieQuote(newQuote) {
+      if (this.movieDescription.id) {
+        this.movieDescription.quotes = [newQuote, ...this.movieDescription.quotes]
       }
     },
   },

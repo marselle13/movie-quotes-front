@@ -17,7 +17,7 @@
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <NewQuoteModal v-if="addQuote" @close="addQuote = false" />
+        <QuoteModal v-if="addQuote" @close="addQuote = false" />
       </transition>
     </teleport>
     <div
@@ -45,7 +45,7 @@
 <script setup>
 import WriteQuoteIcon from '@/components/icons/WriteQuoteIcon.vue'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
-import NewQuoteModal from '@/components/modals/NewQuoteModal.vue'
+import QuoteModal from '@/components/modals/QuoteModal.vue'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 

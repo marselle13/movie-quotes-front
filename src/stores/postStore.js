@@ -43,8 +43,11 @@ export const usePostStore = defineStore('PostStore', {
     },
     async addQuote(values) {
       const response = await usePostService().createNewQuote(values)
-      this.posts = [response.data.newQuote, ...this.posts]
+      if (this.posts.length) {
+        this.posts = [response.data.newQuote, ...this.posts]
+      }
       useMovieStore().updateQuoteAmount(values.movieId)
+      useMovieStore().updateMovieQuote(response.data.newQuote)
     },
     async loadMoreComments(postId) {
       const response = await usePostService().fetchMoreComments(postId)
@@ -73,15 +76,15 @@ export const usePostStore = defineStore('PostStore', {
         post.length.likes++
       }
     },
-    removeQuoteFromPosts(quoteId) {
-      this.posts = this.posts.filter((post) => post.id === quoteId)
-    },
     commentSection(postId, data = null) {
       const post = this.posts.find((post) => postId === post.id)
       if (data) {
         post.comments = data
       }
       post.comments.reverse()
+    },
+    removeQuoteFromPosts(quoteId) {
+      this.posts = this.posts.filter((post) => post.id !== quoteId)
     },
     updatePosts(movieId) {
       this.posts = this.posts.filter((post) => post.movie.id !== movieId)
