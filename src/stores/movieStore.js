@@ -49,10 +49,17 @@ export const useMovieStore = defineStore('movieStore', {
     },
     async removeMovie(movieId) {
       await useMovieService().deleteMovie(movieId)
-      const index = this.userMovies.findIndex((movie) => movie.id === movieId)
-      this.userMovies.splice(index, 1)
+      this.updateUserMovies(this.userMovies, movieId)
+      this.updateUserMovies(this.movieList, movieId)
       this.movieDescription = []
     },
+    updateUserMovies(array, movieId) {
+      if (array.length > 0) {
+        const index = array.findIndex((movie) => movie.id === movieId)
+        array.splice(index, 1)
+      }
+    },
+
     updateQuoteAmount(movieId) {
       if (this.userMovies.length) {
         const movie = this.userMovies.find((movie) => movie.id === movieId)

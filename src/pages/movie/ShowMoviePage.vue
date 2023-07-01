@@ -57,7 +57,7 @@
           >
         </div>
         <main-card v-for="quote in movieDescription.quotes" class="py-6 px-8" :key="quote.id">
-          <div class="flex flex-col md:flex-row pb-6 border-b border-[#EFEFEF33]">
+          <div class="flex flex-col md:flex-row justify-between pb-6 border-b border-[#EFEFEF33]">
             <div class="flex items-center gap-8">
               <div class="rounded-sm h-[8.75rem] md:w-[14rem] w-full">
                 <img
@@ -68,13 +68,24 @@
               </div>
               <p class="text-[#CED4DA] italic text-2xl">"{{ quote.quote[locale] }}"</p>
             </div>
-            <base-dropdown width="w-[200px] flex-shrink-0">
+            <base-dropdown
+              dropdown-width="w-[14rem] flex flex-col items-start space-y-8 py-8 px-10"
+            >
               <template #dropdownButton>
-                <QuoteIcon class="w-full" />
+                <QuoteIcon />
               </template>
               <template #dropdown>
-                <li class="flex items-center w-[200px]">
+                <li class="flex gap-2 hover:opacity-80">
+                  <ViewPostIcon />
                   <p>View Quote</p>
+                </li>
+                <li class="flex gap-2 hover:opacity-80">
+                  <EditIcon />
+                  <p>Edit</p>
+                </li>
+                <li class="flex gap-2 hover:opacity-80">
+                  <DeleteIcon />
+                  <p>Delete</p>
                 </li>
               </template>
             </base-dropdown>

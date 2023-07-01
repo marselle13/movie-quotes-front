@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="dropdown"
-    class="fixed top-0 left-0 w-full h-full bg-transparent z-10"
+    class="fixed top-0 left-0 w-full h-full z-10"
     @click="dropdown = false"
   ></div>
   <div class="relative" :class="{ 'hidden md:block': hidden, 'bg-[#000000] p-6': background }">
