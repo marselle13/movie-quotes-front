@@ -1,5 +1,5 @@
 <template>
-  <new-container :title="t('new_quote')" @close="emit('close')">
+  <new-container :title="title" @close="emit('close')">
     <Form @submit="onSubmit" class="flex flex-col mt-10 gap-6">
       <div class="flex gap-7" v-if="movie">
         <Field name="movieId" v-slot="{ field }" :value="movie.id">
@@ -13,9 +13,9 @@
           </div>
           <div class="space-y-5">
             <h5 class="text-2xl text-[#DDCCAA] font-medium">{{ movie.name[locale] }}</h5>
-            <ul class="flex gap-2">
+            <ul class="inline-flex flex-wrap gap-2">
               <li
-                class="bg-[#6C757D] text-white rounded py-1 px-3"
+                class="bg-[#6C757D] text-white rounded py-1 px-3 flex-wrap"
                 v-for="genre in movie.genres"
                 :key="genre.id"
               >
@@ -102,7 +102,7 @@ import { useMovieStore } from '@/stores/movieStore'
 import { useI18n } from 'vue-i18n'
 import { usePostStore } from '@/stores/postStore'
 
-defineProps({ movie: { type: Object, required: false } })
+defineProps({ title: { type: String, required: true }, movie: { type: Object, required: false } })
 
 const { t, locale } = useI18n()
 const emit = defineEmits(['close'])

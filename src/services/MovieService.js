@@ -21,7 +21,7 @@ export const useMovieService = () => {
     return await api.delete(`api/movies/${movie}`)
   }
 
-  async function createNewMovie(values) {
+  async function createOrUpdateMovie(values, movie = null) {
     const {
       nameEng,
       nameGeo,
@@ -46,7 +46,7 @@ export const useMovieService = () => {
     formData.append('description[ka]', descriptionGeo)
     formData.append('image', image)
 
-    return await api.post('api/movies', formData)
+    return await api.post(`api/movies/${movie ? movie : ''}`, formData)
   }
 
   return {
@@ -55,6 +55,6 @@ export const useMovieService = () => {
     fetchMovieDescription,
     fetchGenres,
     deleteMovie,
-    createNewMovie,
+    createOrUpdateMovie,
   }
 }

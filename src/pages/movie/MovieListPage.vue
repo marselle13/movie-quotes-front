@@ -10,7 +10,7 @@
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <MovieModal v-if="addMovie" @close="addMovie = false" />
+        <MovieModal :title="t('new_movie')" v-if="addMovie" @close="addMovie = false" />
       </transition>
     </teleport>
     <div class="flex justify-between gap-4">

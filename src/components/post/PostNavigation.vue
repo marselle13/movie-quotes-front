@@ -17,7 +17,7 @@
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <QuoteModal v-if="addQuote" @close="addQuote = false" />
+        <QuoteModal :title="t('new_quote')" v-if="addQuote" @close="addQuote = false" />
       </transition>
     </teleport>
     <div

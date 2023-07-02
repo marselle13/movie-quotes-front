@@ -50,7 +50,7 @@
   "create_password": "Create new password",
   "create_info" : "Your new password must be different from previous used passwords",
   "reset_password": "Reset Password",
-  "upload" : "Upload new photo",
+  "upload" : "Upload photo",
   "edit": "Edit",
   "cancel": "Cancel",
   "confirm" : "Confirm",

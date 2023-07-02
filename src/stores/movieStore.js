@@ -42,7 +42,7 @@ export const useMovieStore = defineStore('movieStore', {
       }
     },
     async addNewMovie(values) {
-      const response = await useMovieService().createNewMovie(values)
+      const response = await useMovieService().createOrUpdateMovie(values)
       this.userMovies = [response.data.newMovie, ...this.userMovies]
     },
     async showMovie(movie) {
@@ -66,6 +66,10 @@ export const useMovieStore = defineStore('movieStore', {
         (quote) => quote.id !== quoteId,
       )
       usePostStore().removeQuoteFromPosts(quoteId)
+    },
+    async editMovieDescription(values, movieId) {
+      const response = await useMovieService().createOrUpdateMovie(values, movieId)
+      console.log(response)
     },
     updateUserMovies(array, movieId) {
       return array.filter((movie) => movie.id !== movieId)

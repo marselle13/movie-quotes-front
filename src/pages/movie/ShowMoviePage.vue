@@ -10,7 +10,18 @@
         leave-from-class="opacity-100"
         leave-to-class="opacity-0"
       >
-        <QuoteModal v-if="addQuote" @close="addQuote = false" :movie="movieDescription" />
+        <QuoteModal
+          :title="t('new_quote')"
+          v-if="addQuote"
+          @close="addQuote = false"
+          :movie="movieDescription"
+        />
+        <MovieModal
+          title="Edit movie"
+          v-else-if="editMovie"
+          @close="editMovie = false"
+          :movie="movieDescription"
+        />
       </transition>
     </teleport>
     <div class="lg:flex justify-between gap-4 hidden">
@@ -36,7 +47,7 @@
               <span>({{ movieDescription.year }})</span>
             </h2>
             <div class="flex items-center bg-[#24222F] rounded-xl py-2 px-7">
-              <button><EditIcon /></button>
+              <button @click="editMovie = true"><EditIcon /></button>
               <div class="h-4 border border-[#6C757D] mx-6"></div>
               <button @click="deleteMovie(movieDescription.id)"><DeleteIcon /></button>
             </div>
@@ -140,6 +151,7 @@ import QuoteIcon from '@/components/icons/quoteIcon.vue'
 import ViewPostIcon from '@/components/icons/ViewPostIcon.vue'
 import { ref } from 'vue'
 import QuoteModal from '@/components/modals/QuoteModal.vue'
+import MovieModal from '@/components/modals/MovieModal.vue'
 
 const router = useRouter()
 const { t, locale } = useI18n()
@@ -148,6 +160,7 @@ const movieDescription = movieStore.getMovieDescription
 const viteBaseUrl = import.meta.env.VITE_BASE_URL
 
 const addQuote = ref(false)
+const editMovie = ref(false)
 
 async function deleteQuote(quoteId, movieId) {
   try {
