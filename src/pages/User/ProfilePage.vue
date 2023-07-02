@@ -39,7 +39,7 @@
               </div>
             </Field>
           </div>
-          <div class="space-y-10 lg:-mt-10 mt-12">
+          <div class="space-y-14 lg:-mt-10 mt-12">
             <div class="flex items-center gap-9 border-b border-[#ced4da80] md:border-none">
               <base-input
                 id="name"
