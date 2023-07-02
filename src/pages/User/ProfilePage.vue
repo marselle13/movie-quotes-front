@@ -13,7 +13,7 @@
         @confirm="onConfirm(formData.value)"
       />
       <main-card
-        class="mt-8 lg:mt-32 py-20 md:pb-32 px-8 lg:px-12 w-full space-y-4"
+        class="mt-8 lg:mt-32 py-20 md:pb-32 px-8 lg:px-12 w-full space-y-5"
         profile
         id="main-card"
         v-show="!confirmModal"
@@ -39,7 +39,7 @@
               </div>
             </Field>
           </div>
-          <div class="space-y-12 lg:-mt-10 mt-12">
+          <div class="space-y-10 lg:-mt-10 mt-12">
             <div class="flex items-center gap-9 border-b border-[#ced4da80] md:border-none">
               <base-input
                 id="name"
@@ -51,11 +51,7 @@
                 :edit="nameHandler.edit"
                 disabled
               ></base-input>
-              <button
-                class="text-[#CED4DA] mt-4 md:mt-7"
-                type="button"
-                @click="nameHandler.edit = true"
-              >
+              <button class="text-[#CED4DA]" type="button" @click="nameHandler.edit = true">
                 {{ t('edit') }}
               </button>
             </div>
@@ -87,7 +83,7 @@
                 disabled
               ></base-input>
               <button
-                class="text-[#CED4DA] mt-4 md:mt-7"
+                class="text-[#CED4DA]"
                 type="button"
                 v-if="!google"
                 @click="emailHandler.edit = true"
@@ -122,11 +118,7 @@
                 placeholder="••••••••••••"
                 disabled
               ></base-input>
-              <button
-                class="text-[#CED4DA] mt-4 md:mt-7"
-                type="button"
-                @click="passwordHandler.edit = true"
-              >
+              <button class="text-[#CED4DA]" type="button" @click="passwordHandler.edit = true">
                 {{ t('edit') }}
               </button>
             </div>

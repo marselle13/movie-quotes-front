@@ -1,10 +1,23 @@
 <template>
   <div class="flex flex-col gap-2">
-    <label for="name" class="text-white capitalize" :class="{ 'sr-only': !label }"
+    <label
+      v-if="mode !== 'flat'"
+      :for="id"
+      class="text-white capitalize"
+      :class="{ 'sr-only': disabled }"
       >{{ label }}<span class="text-[#E31221]" v-if="label && !disabled">*</span></label
     >
-    <Field :name="id" :rules="rules" v-slot="{ field, meta }" v-model="inputValue">
-      <div class="relative">
+    <div
+      class="relative"
+      :class="[mode === 'flat' ? 'border border-gray-500 flex items-center w-full pl-4 gap-2' : '']"
+    >
+      <Field :name="id" :rules="rules" v-slot="{ field, meta }" v-model="inputValue">
+        <label
+          :for="id"
+          v-if="edit && label && mode === 'flat'"
+          class="whitespace-nowrap text-[#6C757D]"
+          >{{ label }}:</label
+        >
         <input
           :type="type === 'password' && isPasswordVisible ? 'text' : type"
           :id="id"
@@ -16,7 +29,7 @@
           :class="[
             {
               'border-[#DC3545]':
-                (mode === 'flat' && error) ||
+                (mode !== 'flat' && error) ||
                 (meta.validated && !meta.valid && props.rules && mode !== 'flat'),
               'border-[#198754]':
                 !error && meta.validated && meta.valid && props.rules && mode !== 'flat',
@@ -47,20 +60,22 @@
             "
           />
         </div>
-      </div>
-      <div class="relative" v-if="rules">
-        <ErrorMessage
-          :name="id"
-          class="absolute text-[9px] -top-1 text-[#DC3545] md:text-[10px]"
-        ></ErrorMessage>
-        <p
-          class="absolute text-[11px] -top-1 text-[#DC3545]"
-          v-if="error && meta.valid && typeof error === 'string'"
-        >
-          {{ error }}
-        </p>
-      </div>
-    </Field>
+        <div class="absolute w-full" v-if="rules">
+          <ErrorMessage
+            :name="id"
+            class="absolute text-[9px] top-1 text-[#DC3545] md:text-[10px]"
+            :class="{ '-left-4 top-6': mode === 'flat' }"
+          ></ErrorMessage>
+          <p
+            class="absolute text-[11px] top-1 text-[#DC3545]"
+            v-if="error && meta.valid && typeof error === 'string'"
+            :class="{ '-left-4 top-6': mode === 'flat' }"
+          >
+            {{ error }}
+          </p>
+        </div>
+      </Field>
+    </div>
   </div>
 </template>
 <script setup>
@@ -79,7 +94,7 @@ const props = defineProps({
   rules: { type: String, required: false },
   error: { type: [String, Boolean], required: false },
   mode: { type: String, required: false, default: 'default' },
-  modelValue: { type: String, required: false },
+  modelValue: { type: [String, Number], required: false },
   value: { type: String, required: false },
   edit: { type: Boolean, required: false },
   disabled: { type: Boolean, required: false },
@@ -88,7 +103,7 @@ const props = defineProps({
 
 configure({ validateOnInput: true })
 
-const inputValue = ref('')
+const inputValue = ref(props.modelValue || '')
 const isPasswordVisible = ref(false)
 
 const emit = defineEmits(['update-prop', 'update:modelValue'])
@@ -96,11 +111,11 @@ const emit = defineEmits(['update-prop', 'update:modelValue'])
 const inputStyle = computed(() => {
   switch (props.mode) {
     case 'flat':
-      return 'py-2 pl-4 pr-14 bg-transparent border border-[#6C757D] text-white before:w-full outline-none rounded placeholder:text-[#6C757D]'
+      return 'py-2 pr-14 bg-transparent  text-white before:w-full outline-none rounded placeholder:text-[#6C757D]'
     case 'dark':
       return 'py-3 px-4 md:px-7 placeholder-[#CED4DA] bg-[#24222F] bg-opacity-60 outline-none text-white rounded-lg'
     default:
-      return 'pl-3 pr-10 py-2 text-[#212529]  placeholder-[#6C757D] rounded  bg-[#CED4DA] border-2 outline-none focus:shadow-[0px_0px_0px_4px] focus:shadow-[#0d6efd3b] disabled:bg-transparent md:disabled:bg-[#E9ECEF] disabled:border-none disabled:placeholder-white disabled:px-0 md:disabled:px-3 disabled:py-0 disabled:pb-4 md:disabled:py-2'
+      return 'pl-3 pr-10 py-2 text-[#212529]  placeholder-[#6C757D] rounded  bg-[#CED4DA] border-2 outline-none focus:shadow-[0px_0px_0px_4px] focus:shadow-[#0d6efd3b] disabled:bg-transparent md:disabled:bg-[#E9ECEF] disabled:border-none disabled:placeholder-white disabled:px-0 md:disabled:px-3 disabled:py-0 disabled:py-2 md:disabled:py-2'
   }
 })
 
