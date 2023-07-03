@@ -65,6 +65,7 @@
   "movies_list": "List of movies",
   "write_comment": "Write a comment",
   "new_quote": "Write New Quote",
+  "add_quote": "Add Quote",
   "new_movie": "Add Movie",
   "search_by": "Search by",
   "search_full": "Enter {'@'} to search movies, Enter {'#'} to search quotes",
@@ -78,8 +79,13 @@
   "no_movies": "No movies to show",
   "post": "Post",
   "movie_list": "My list of movies  (Total {amount})",
+  "quote_total": "Quotes (Total {amount})",
   "movie_description": "Movie description",
   "genres": "Genres",
   "edit_quote": "Edit Quote",
-  "view_quote": "View Quote"
+  "view_quote": "View Quote",
+  "delete": "Delete",
+  "director": "Director: ",
+  "quote": "Quote",
+  "change_photo": "Change Photo"
 }

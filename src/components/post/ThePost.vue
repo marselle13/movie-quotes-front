@@ -49,7 +49,7 @@
               for="upload"
               class="cursor-pointer bg-gradient-to-r from-[#181623] from-5% via-[#191725] via-50% to-[#0D0B14] to-[95%] text-white bg-red-500 flex flex-col items-center w-full px-4 pb-4 pt-6 rounded-2xl bg-linear-gradient opacity-80"
             >
-              <CameraIcon /> Change Photo</label
+              <CameraIcon />{{ t('change_photo') }}</label
             >
           </Field>
         </div>
@@ -64,7 +64,7 @@
           <LikeIcon :like-style="likeButtonStyle" :post-id="postId" @click="reactOnPost(postId)" />
         </div>
       </div>
-      <base-button v-else-if="edit" class="w-full py-2">Edit Quote</base-button>
+      <base-button v-else-if="edit" class="w-full py-2">{{ t('edit_quote') }}</base-button>
     </Form>
   </section>
 </template>
@@ -76,6 +76,7 @@ import { usePostStore } from '@/stores/postStore'
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { Form, Field } from 'vee-validate'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   postId: { type: Number, required: true },
@@ -90,8 +91,11 @@ const props = defineProps({
   edit: { type: Boolean, required: false },
 })
 
+const emit = defineEmits(['close'])
+
 const postStore = usePostStore()
 const userStore = useUserStore()
+const { t } = useI18n()
 
 const thumbnail = `${import.meta.env.VITE_BASE_URL}storage/${props.thumbnail}`
 
@@ -119,8 +123,8 @@ function uploadNewImage(event, handleChange) {
 async function onSubmit(values) {
   try {
     await postStore.editPost(values, props.postId)
+    emit('close')
   } catch (err) {
-    console.error(err)
     //Err
   }
 }

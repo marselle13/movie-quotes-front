@@ -20,7 +20,7 @@
       <base-button
         @click="addMovie = true"
         class="self-start flex py-2 px-4 items-center gap-2 whitespace-nowrap"
-        ><MovieAddIcon /> Add Movie</base-button
+        ><MovieAddIcon />{{ t('new_movie') }}</base-button
       >
     </div>
     <LoadingSpinner v-if="isLoading" />

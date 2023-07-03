@@ -71,10 +71,10 @@
             </li>
           </ul>
           <h4 class="text-lg text-white font-medium">
-            <span class="text-[#CED4DA] font-bold">Director: </span
+            <span class="text-[#CED4DA] font-bold">{{ t('director') }}</span
             >{{ movieStore.getMovieDescription.director[locale] }}
           </h4>
-          <p class="text-lg text-[#CED4DA] break-words">
+          <p class="text-lg text-[#CED4DA] break-words pb-10">
             {{ movieStore.getMovieDescription.description[locale] }}
           </p>
         </div>
@@ -84,13 +84,13 @@
           class="flex lg:flex-row flex-col-reverse lg:items-center mt-8 lg:mt-10 mb-4 px-9 lg:px-0"
         >
           <h5 class="text-white text-2xl">
-            Quotes (total {{ movieStore.getMovieDescription.quotes?.length }})
+            {{ t('quote_total', { amount: movieStore.getMovieDescription.quotes.length }) }}
           </h5>
           <div class="lg:h-7 border border-[#6C757D] lg:mx-4 my-10 lg:my-0"></div>
           <base-button
             @click="addQuote = true"
             class="w-40 lg:w-auto flex items-center px-4 py-2 gap-2"
-            ><movie-add-icon /> Add Quote</base-button
+            ><movie-add-icon />{{ t('add_quote') }}</base-button
           >
         </div>
         <main-card
@@ -187,7 +187,7 @@ async function PostHandler(quoteId, editQuote) {
     viewQuote.value = true
     edit.value = editQuote
   } catch (err) {
-    console.error(err)
+    //Err
   }
 }
 
