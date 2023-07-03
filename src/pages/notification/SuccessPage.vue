@@ -60,7 +60,7 @@ function successMessage() {
     case 'recover':
       setValues({
         title: t('recover_title'),
-        info: t('recover_info'),
+        info: t('recover_password'),
         button: t('go_email'),
         icon: false,
         redirect: redirectToEmail,

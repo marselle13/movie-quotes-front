@@ -19,7 +19,7 @@
         id="nameGeo"
         :placeholder="title === t('new_movie') ? 'ფილმის სახელი' : ''"
         mode="flat"
-        lang="Geo"
+        lang="ქარ"
         rules="required"
         :edit="title !== t('new_movie')"
         v-model="movieForm.nameGeo"
@@ -93,7 +93,7 @@
         :placeholder="title === t('new_movie') ? 'რეჟისორი' : ''"
         :edit="title !== t('new_movie')"
         mode="flat"
-        lang="Geo"
+        lang="ქარ"
         rules="required"
         autocomplete="off"
       />
@@ -112,7 +112,7 @@
         id="descriptionGeo"
         :placeholder="title === t('new_movie') ? 'ფილმის აღწერა' : ''"
         :edit="title !== t('new_movie')"
-        lang="Geo"
+        lang="ქარ"
         rules="required"
       />
       <base-upload

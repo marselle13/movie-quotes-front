@@ -46,9 +46,9 @@ export const usePostStore = defineStore('PostStore', {
     },
     async addQuote(values) {
       const response = await usePostService().createOrUpdateQuote(values)
-      if (this.posts.length) {
-        this.posts = [response.data.newQuote, ...this.posts]
-      }
+
+      this.posts = [response.data.newQuote, ...this.posts]
+
       useMovieStore().updateQuoteAmount(values.movieId)
       useMovieStore().addNewMovieQuote(response.data.newQuote)
     },

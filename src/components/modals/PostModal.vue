@@ -14,6 +14,7 @@
         :likes-length="postStore.getPost.length.likes"
         :comments-length="postStore.getPost.length.comments"
         :thumbnail="postStore.getPost.thumbnail"
+        @close="emit('close')"
       />
       <CommentSection
         :post-id="postStore.getPost.id"
