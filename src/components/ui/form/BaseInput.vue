@@ -111,7 +111,7 @@ const emit = defineEmits(['update-prop', 'update:modelValue'])
 const inputStyle = computed(() => {
   switch (props.mode) {
     case 'flat':
-      return 'py-2 pr-14 bg-transparent  text-white before:w-full outline-none rounded placeholder:text-[#6C757D]'
+      return 'py-2 pr-14 bg-transparent  text-white before:w-full outline-none rounded placeholder:text-[#6C757D] disabled:italic disabled:placeholder-white'
     case 'dark':
       return 'py-3 px-4 md:px-7 placeholder-[#CED4DA] bg-[#24222F] bg-opacity-60 outline-none text-white rounded-lg'
     default:

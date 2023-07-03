@@ -13,14 +13,15 @@
         :placeholder="placeholder"
         v-model="textareaValue"
         style="min-height: 80px"
-        class="h-12 italic text-white w-full bg-transparent rounded outline-none pr-16 lg:pr-24 placeholder-[#6C757D]"
+        :disabled="disabled"
+        class="h-12 italic text-white w-full bg-transparent rounded outline-none pr-16 lg:pr-24 placeholder-[#6C757D] disabled:resize-none disabled:h-4"
       ></textarea>
       <h6 v-if="lang" class="capitalize absolute right-3 top-2 text-[#6C757D]">{{ lang }}</h6>
       <ErrorMessage
         :name="id"
         class="absolute text-[9px] text-[#DC3545] md:text-[10px] -bottom-5 left-0"
       ></ErrorMessage>
-      <p class="absolute text-xs -bottom-5 text-[#DC3545]" v-if="error">{{ error }}</p>
+      <p class="absolute text-xs -bottom-5 left-0 text-[#DC3545]" v-if="error">{{ error }}</p>
     </Field>
   </div>
 </template>
@@ -37,6 +38,7 @@ const props = defineProps({
   error: { type: String, required: false, default: '' },
   modelValue: { type: String, required: false },
   edit: { type: Boolean, required: false },
+  disabled: { type: Boolean, required: false },
 })
 
 const emit = defineEmits(['update-error', 'update:modelValue'])
