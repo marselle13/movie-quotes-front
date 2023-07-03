@@ -6,11 +6,11 @@
       <QuoteIcon />
     </template>
     <template #dropdown>
-      <li class="flex gap-2 hover:opacity-80" @click="emit('view-quote', quoteId)">
+      <li class="flex gap-2 hover:opacity-80" @click="emit('view-quote', quoteId, false)">
         <ViewPostIcon />
         <p>View Quote</p>
       </li>
-      <li class="flex gap-2 hover:opacity-80">
+      <li class="flex gap-2 hover:opacity-80" @click="emit('edit-quote', quoteId, true)">
         <EditIcon />
         <p>Edit</p>
       </li>
@@ -28,7 +28,7 @@ import DeleteIcon from '@/components/icons/DeleteIcon.vue'
 import ViewPostIcon from '@/components/icons/ViewPostIcon.vue'
 import { useMovieStore } from '@/stores/movieStore'
 
-const emit = defineEmits(['view-quote'])
+const emit = defineEmits(['view-quote', 'edit-quote'])
 
 defineProps({
   quoteId: { type: Number, required: true },

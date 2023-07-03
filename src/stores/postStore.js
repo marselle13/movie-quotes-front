@@ -1,16 +1,19 @@
 import { defineStore } from 'pinia'
 import { usePostService } from '@/services/postService'
 import { useMovieStore } from '@/stores/movieStore'
+import { useUserStore } from '@/stores/userStore'
 
 export const usePostStore = defineStore('PostStore', {
   state: () => ({
     posts: [],
+    post: [],
     currentPage: 1,
     isFetching: false,
     hasMoreData: true,
   }),
   getters: {
     getPosts: (state) => state.posts,
+    getPost: (state) => state.post,
   },
   actions: {
     async showPosts() {
@@ -55,7 +58,7 @@ export const usePostStore = defineStore('PostStore', {
     },
     async newComment(postId, comment, loaded) {
       const response = await usePostService().addNewComment(postId, comment)
-      const post = this.posts.find((post) => post.id === postId)
+      const post = this.posts.find((post) => post.id === postId) || this.post
       loaded
         ? post.comments.push(response.data.newComment)
         : post.comments.unshift(response.data.newComment)
@@ -63,8 +66,8 @@ export const usePostStore = defineStore('PostStore', {
       post.length.comments++
     },
     async postReaction(postId) {
-      const post = this.posts.find((post) => post.id === postId)
-      const likedPost = post.likes.findIndex((like) => like.user.id === userStore.userData.id)
+      const post = this.posts.find((post) => post.id === postId) || this.post
+      const likedPost = post.likes.findIndex((like) => like.user.id === useUserStore().userData.id)
       if (likedPost !== -1) {
         await usePostService().unlikePost(postId)
         post.likes.splice(likedPost, 1)
@@ -76,8 +79,17 @@ export const usePostStore = defineStore('PostStore', {
         post.length.likes++
       }
     },
+    async showPost(quoteId) {
+      const post = this.posts.find((post) => post.id === quoteId)
+      if (!post) {
+        const response = await usePostService().viewPost(quoteId)
+        this.post = response.data
+        return
+      }
+      this.post = post
+    },
     commentSection(postId, data = null) {
-      const post = this.posts.find((post) => postId === post.id)
+      const post = this.posts.find((post) => postId === post.id) || this.post
       if (data) {
         post.comments = data
       }
@@ -86,7 +98,7 @@ export const usePostStore = defineStore('PostStore', {
     removeQuoteFromPosts(quoteId) {
       this.posts = this.posts.filter((post) => post.id !== quoteId)
     },
-    updatePosts(movieId) {
+    deletePostsWithMovies(movieId) {
       this.posts = this.posts.filter((post) => post.movie.id !== movieId)
     },
   },

@@ -44,7 +44,9 @@ export const useMovieService = () => {
     formData.append('director[ka]', directorGeo)
     formData.append('description[en]', descriptionEng)
     formData.append('description[ka]', descriptionGeo)
-    formData.append('image', image)
+    if (image) {
+      formData.append('image', image)
+    }
 
     return await api.post(`api/movies/${movie ? movie : ''}`, formData)
   }

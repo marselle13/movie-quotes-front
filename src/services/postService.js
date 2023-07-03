@@ -35,6 +35,10 @@ export const usePostService = () => {
     return await api.delete(`api/quotes/${quoteId}`)
   }
 
+  async function viewPost(quoteId) {
+    return await api.get(`api/quotes/${quoteId}`)
+  }
+
   return {
     fetchPosts,
     fetchMoreComments,
@@ -43,5 +47,6 @@ export const usePostService = () => {
     likePost,
     unlikePost,
     deleteQuote,
+    viewPost,
   }
 }

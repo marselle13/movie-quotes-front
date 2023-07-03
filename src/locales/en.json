@@ -79,5 +79,7 @@
   "post": "Post",
   "movie_list": "My list of movies  (Total {amount})",
   "movie_description": "Movie description",
-  "genres": "Genres"
+  "genres": "Genres",
+  "edit_quote": "Edit Quote",
+  "view_quote": "View Quote"
 }

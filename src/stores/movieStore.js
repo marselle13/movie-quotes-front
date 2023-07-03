@@ -51,9 +51,9 @@ export const useMovieStore = defineStore('movieStore', {
     },
     async removeMovie(movieId) {
       await useMovieService().deleteMovie(movieId)
-      this.userMovies = this.updateUserMovies(this.userMovies, movieId)
-      this.movieList = this.updateUserMovies(this.movieList, movieId)
-      usePostStore().updatePosts(movieId)
+      this.userMovies = this.deleteUserMovies(this.userMovies, movieId)
+      this.movieList = this.deleteUserMovies(this.movieList, movieId)
+      usePostStore().deletePostsWithMovies(movieId)
       this.movieDescription = []
     },
     async removeQuoteFromUserMovie(quoteId, movieId) {
@@ -69,10 +69,18 @@ export const useMovieStore = defineStore('movieStore', {
     },
     async editMovieDescription(values, movieId) {
       const response = await useMovieService().createOrUpdateMovie(values, movieId)
-      console.log(response)
+      this.movieDescription = response.data.updatedMovieDescription
+      this.updateMovie(this.userMovies, movieId, response.data.updatedUserMovie)
+      this.updateMovie(this.movieList, movieId, response.data.updatedMovieList)
     },
-    updateUserMovies(array, movieId) {
+    deleteUserMovies(array, movieId) {
       return array.filter((movie) => movie.id !== movieId)
+    },
+    updateMovie(array, movieId, data) {
+      if (array.length) {
+        const index = array.findIndex((movie) => movie.id === movieId)
+        array[index] = data
+      }
     },
     updateQuoteAmount(movieId) {
       if (this.userMovies.length) {

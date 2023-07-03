@@ -12,6 +12,7 @@
         v-model="movieForm.nameEng"
         :error="error.nameEng"
         @update-prop="error.nameEng = ''"
+        autocomplete="off"
       />
       <base-input
         label="ფილმის სახელი"
@@ -24,6 +25,7 @@
         v-model="movieForm.nameGeo"
         :error="error.nameGeo"
         @update-prop="error.nameGeo = ''"
+        autocomplete="off"
       />
       <Field name="genres" v-slot="{ handleChange }" rules="required" v-model="movieForm.genresId">
         <base-dropdown
@@ -71,6 +73,7 @@
         :edit="title !== t('new_movie')"
         mode="flat"
         rules="required|integer"
+        autocomplete="off"
       />
       <base-input
         label="Director"
@@ -81,6 +84,7 @@
         mode="flat"
         lang="Eng"
         rules="required"
+        autocomplete="off"
       />
       <base-input
         label="რეჟისორი"
@@ -91,6 +95,7 @@
         mode="flat"
         lang="Geo"
         rules="required"
+        autocomplete="off"
       />
       <base-textarea
         label="Description"
@@ -161,7 +166,7 @@ const error = reactive({ genre: '', nameEng: '', nameGeo: '' })
 function selectGenre(genreId, genreName, handleChange) {
   const genreExists = genres.some((genre) => genre.id === genreId)
   if (!genreExists) {
-    genres.unshift({ id: genreId, name: genreName })
+    genres.push({ id: genreId, name: genreName })
     handleChange(genres.map((genre) => genre.id))
   }
 }
@@ -173,7 +178,7 @@ function deleteGenre(genreId, handleChange) {
 
 async function onSubmit(values, { resetForm }) {
   try {
-    if (props.movie.id) {
+    if (props.movie?.id) {
       await movieStore.editMovieDescription(values, props.movie.id)
     } else {
       await movieStore.addNewMovie(values)
