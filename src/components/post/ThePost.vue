@@ -3,12 +3,13 @@
     <div class="flex items-center gap-4 text-white">
       <div
         class="flex justify-center bg-[#D9D9D9] w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden"
+        v-if="name"
       >
         <img :src="avatar" alt="profile" class="object-cover" />
       </div>
       <h5>{{ name }}</h5>
     </div>
-    <div class="flex gap-2 mt-4">
+    <div class="flex gap-2 mt-4" v-if="movieName">
       <h3 class="text-white">
         “{{ quote }}” <span class="text-[#DDCCAA]">{{ movieName }}</span> {{ movieYear }}
       </h3>
@@ -37,12 +38,12 @@ import { useUserStore } from '@/stores/userStore'
 
 const props = defineProps({
   postId: { type: Number, required: true },
-  name: { type: String, required: true },
-  avatar: { type: String, required: true },
+  name: { type: String, required: false },
+  avatar: { type: String, required: false },
   thumbnail: { type: String, required: true },
-  quote: { type: String, required: true },
-  movieName: { type: String, required: true },
-  movieYear: { type: Number, required: true },
+  quote: { type: String, required: false },
+  movieName: { type: String, required: false },
+  movieYear: { type: Number, required: false },
   commentsLength: { type: Number, required: true },
   likesLength: { type: Number, required: true },
 })
@@ -53,11 +54,11 @@ const userStore = useUserStore()
 const thumbnail = `${import.meta.env.VITE_BASE_URL}storage/${props.thumbnail}`
 
 const avatar = `${import.meta.env.VITE_BASE_URL}${
-  props.avatar.includes('default') ? '' : 'storage/'
+  props.avatar?.includes('default') ? '' : 'storage/'
 }${props.avatar}`
 
 const likeButtonStyle = computed(() => {
-  const post = postStore.getPosts.find((post) => props.postId === post.id)
+  const post = postStore.getPosts.find((post) => props.postId === post.id) || postStore.getPost
   const index = post.likes.findIndex((like) => like.user.id === userStore.userData.id)
   return index !== -1 ? 'red' : 'white'
 })
@@ -66,6 +67,7 @@ async function reactOnPost(postId) {
   try {
     await postStore.postReaction(postId)
   } catch (err) {
+    console.error(err)
     //Error
   }
 }
