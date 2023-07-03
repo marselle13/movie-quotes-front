@@ -88,7 +88,11 @@ export const useMovieStore = defineStore('movieStore', {
         movie.quotesLength++
       }
     },
-    updateMovieQuote(newQuote) {
+    updateMovieQuote(quoteId, updatedQuote) {
+      const index = this.movieDescription.quotes.findIndex((quote) => quote.id === quoteId)
+      this.movieDescription.quotes[index] = updatedQuote
+    },
+    addNewMovieQuote(newQuote) {
       if (this.movieDescription.id) {
         this.movieDescription.quotes = [newQuote, ...this.movieDescription.quotes]
       }

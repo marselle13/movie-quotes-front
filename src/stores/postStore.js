@@ -45,12 +45,12 @@ export const usePostStore = defineStore('PostStore', {
       }
     },
     async addQuote(values) {
-      const response = await usePostService().createNewQuote(values)
+      const response = await usePostService().createOrUpdateQuote(values)
       if (this.posts.length) {
         this.posts = [response.data.newQuote, ...this.posts]
       }
       useMovieStore().updateQuoteAmount(values.movieId)
-      useMovieStore().updateMovieQuote(response.data.newQuote)
+      useMovieStore().addNewMovieQuote(response.data.newQuote)
     },
     async loadMoreComments(postId) {
       const response = await usePostService().fetchMoreComments(postId)
@@ -67,10 +67,10 @@ export const usePostStore = defineStore('PostStore', {
     },
     async postReaction(postId) {
       const post = this.posts.find((post) => post.id === postId) || this.post
-      const likedPost = post.likes.findIndex((like) => like.user.id === useUserStore().userData.id)
-      if (likedPost !== -1) {
+      const likedPost = post.likes.find((like) => like.user.id === useUserStore().userData.id)
+      if (likedPost) {
         await usePostService().unlikePost(postId)
-        post.likes.splice(likedPost, 1)
+        post.likes = post.likes.filter((like) => like !== likedPost)
         post.length.likes--
       } else {
         const response = await usePostService().likePost(postId)
@@ -87,6 +87,12 @@ export const usePostStore = defineStore('PostStore', {
         return
       }
       this.post = post
+    },
+    async editPost(values, quoteId) {
+      const response = await usePostService().createOrUpdateQuote(values, quoteId)
+      this.post.quote = response.data.updatedQuote.quote
+      this.post.thumbnail = response.data.updatedQuote.thumbnail
+      useMovieStore().updateMovieQuote(quoteId, response.data.updatedQuote)
     },
     commentSection(postId, data = null) {
       const post = this.posts.find((post) => postId === post.id) || this.post

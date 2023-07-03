@@ -1,5 +1,5 @@
 <template>
-  <section :class="{ 'pb-5 lg:pb-7 border-b border-[#efefef4d]': movieName }">
+  <section :class="{ 'pb-7 lg:pb-7 border-b border-[#efefef4d]': movieName }">
     <div class="flex items-center gap-4 text-white">
       <div
         class="flex justify-center bg-[#D9D9D9] w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden"
@@ -9,36 +9,73 @@
       </div>
       <h5>{{ name }}</h5>
     </div>
-    <div class="flex gap-2 mt-4" v-if="movieName && movieYear">
-      <h3 class="text-white">
-        “{{ quote }}” <span class="text-[#DDCCAA]">{{ movieName }}</span> {{ movieYear }}
-      </h3>
-    </div>
-    <div v-else class="space-y-6">
-      <base-textarea id="quoteEng" v-model="quoteEng" :disabled="!edit" mode="flat" lang="Eng" />
-      <base-textarea id="quoteGeo" v-model="quoteGeo" :disabled="!edit" mode="flat" lang="ქარ" />
-    </div>
-    <div class="my-4 lg:my-6 flex justify-center">
-      <img :src="thumbnail" alt="movie" />
-    </div>
-    <div class="flex gap-6" v-if="!edit">
-      <div class="flex gap-3">
-        <p class="text-white">{{ commentsLength }}</p>
-        <CommentIcon />
+    <Form @submit="onSubmit">
+      <div class="flex gap-2 mt-4" v-if="movieName && movieYear">
+        <h3 class="text-white">
+          “{{ quote }}” <span class="text-[#DDCCAA]">{{ movieName }}</span> {{ movieYear }}
+        </h3>
       </div>
-      <div class="flex gap-3 flex-shrink-0">
-        <p class="text-white w-[10px]">{{ likesLength }}</p>
-        <LikeIcon :like-style="likeButtonStyle" :post-id="postId" @click="reactOnPost(postId)" />
+      <div v-else class="space-y-6">
+        <base-textarea
+          id="quoteEng"
+          v-model="quoteEng"
+          rules="required"
+          :disabled="!edit"
+          mode="flat"
+          lang="Eng"
+        />
+        <base-textarea
+          id="quoteGeo"
+          v-model="quoteGeo"
+          rules="required"
+          :disabled="!edit"
+          mode="flat"
+          lang="ქარ"
+        />
       </div>
-    </div>
+      <div
+        class="relative my-6 flex justify-center items-center w-full max-h-[32rem] overflow-hidden rounded-2xl"
+      >
+        <img :src="imageHandler || thumbnail" alt="movie" class="object-cover w-full" />
+        <div class="absolute" v-if="edit">
+          <Field name="image" v-slot="{ handleChange }">
+            <input
+              id="upload"
+              type="file"
+              class="sr-only"
+              @input="uploadNewImage($event, handleChange)"
+            />
+            <label
+              for="upload"
+              class="cursor-pointer bg-gradient-to-r from-[#181623] from-5% via-[#191725] via-50% to-[#0D0B14] to-[95%] text-white bg-red-500 flex flex-col items-center w-full px-4 pb-4 pt-6 rounded-2xl bg-linear-gradient opacity-80"
+            >
+              <CameraIcon /> Change Photo</label
+            >
+          </Field>
+        </div>
+      </div>
+      <div class="flex gap-6" v-if="!edit">
+        <div class="flex gap-3">
+          <p class="text-white">{{ commentsLength }}</p>
+          <CommentIcon />
+        </div>
+        <div class="flex gap-3 flex-shrink-0">
+          <p class="text-white w-[10px]">{{ likesLength }}</p>
+          <LikeIcon :like-style="likeButtonStyle" :post-id="postId" @click="reactOnPost(postId)" />
+        </div>
+      </div>
+      <base-button v-else-if="edit" class="w-full py-2">Edit Quote</base-button>
+    </Form>
   </section>
 </template>
 <script setup>
 import LikeIcon from '@/components/icons/LikeIcon.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
+import CameraIcon from '@/components/icons/CameraIcon.vue'
 import { usePostStore } from '@/stores/postStore'
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
+import { Form, Field } from 'vee-validate'
 
 const props = defineProps({
   postId: { type: Number, required: true },
@@ -62,14 +99,31 @@ const avatar = `${import.meta.env.VITE_BASE_URL}${
   props.avatar?.includes('default') ? '' : 'storage/'
 }${props.avatar}`
 
-const quoteEng = ref(props.quote.en || '')
-const quoteGeo = ref(props.quote.ka || '')
+const quoteEng = ref(props.quote.en)
+const quoteGeo = ref(props.quote.ka)
+const imageHandler = ref('')
 
 const likeButtonStyle = computed(() => {
   const post = postStore.getPosts.find((post) => props.postId === post.id) || postStore.getPost
   const index = post.likes.findIndex((like) => like.user.id === userStore.userData.id)
   return index !== -1 ? 'red' : 'white'
 })
+
+function uploadNewImage(event, handleChange) {
+  const image = event.target.files[0]
+  if (image.size > 2000000 || !image.type.includes('image')) return
+  handleChange(image)
+  imageHandler.value = URL.createObjectURL(image)
+}
+
+async function onSubmit(values) {
+  try {
+    await postStore.editPost(values, props.postId)
+  } catch (err) {
+    console.error(err)
+    //Err
+  }
+}
 
 async function reactOnPost(postId) {
   try {

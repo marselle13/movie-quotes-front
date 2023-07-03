@@ -12,9 +12,9 @@
         v-bind="field"
         :placeholder="placeholder"
         v-model="textareaValue"
-        style="min-height: 80px"
+        :style="{ minHeight: disabled ? '40px' : '80px' }"
         :disabled="disabled"
-        class="h-12 italic text-white w-full bg-transparent rounded outline-none pr-16 lg:pr-24 placeholder-[#6C757D] disabled:resize-none disabled:h-4"
+        class="italic text-white w-full bg-transparent rounded outline-none pr-16 lg:pr-24 placeholder-[#6C757D] disabled:resize-none"
       ></textarea>
       <h6 v-if="lang" class="capitalize absolute right-3 top-2 text-[#6C757D]">{{ lang }}</h6>
       <ErrorMessage
