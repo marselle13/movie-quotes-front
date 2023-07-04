@@ -11,6 +11,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'helvetic-en';
+    src: url("../public/fonts/Helvetica Neue W01 66 Medium It.ttf");
+    font-weight: normal;
+    font-style: italic;
+}
+
 @font-face{
     font-family: 'helvetic-ge';
     src: url("../public/fonts/Helvetica Neue LT GEO 65 Medium.ttf");
