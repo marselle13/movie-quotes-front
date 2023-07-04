@@ -54,7 +54,7 @@
           </template>
         </base-dropdown>
       </div>
-      <base-dropdown :hidden="true" dropdown-width="w-[6.5rem] top-10">
+      <base-dropdown :hidden="true" dropdown-width="w-[6.5rem] top-10" :disabled="false">
         <template #dropdownButton>
           <div class="flex gap-2.5 items-center">
             <p class="text-white">{{ showLanguage }}</p>
@@ -145,7 +145,7 @@ watch(searchValue, async (newValue) => {
       try {
         await postStore.searchPosts(newValue.toLowerCase().trim())
       } catch (err) {
-        console.error(err)
+        //Err
       }
     }, 500)
   } else {
@@ -153,7 +153,7 @@ watch(searchValue, async (newValue) => {
       try {
         await postStore.showPosts()
       } catch (err) {
-        console.error(err)
+        //Err
       }
     }, 500)
   }

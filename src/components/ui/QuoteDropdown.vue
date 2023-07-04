@@ -1,5 +1,6 @@
 <template>
   <base-dropdown
+    :disabled="false"
     dropdown-width="absolute -left-[12rem] -top-[13rem] lg:left-0 lg:top-6 w-[14rem] flex flex-col items-start space-y-8 py-8 px-10"
   >
     <template #dropdownButton>

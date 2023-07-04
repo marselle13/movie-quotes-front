@@ -39,7 +39,7 @@
                 <li
                   :key="genre.id"
                   v-for="genre in genres"
-                  class="flex items-center bg-[#6C757D] rounded-sm px-1 whitespace-nowrap relative z-50"
+                  class="flex items-center bg-[#6C757D] rounded-sm px-1 whitespace-nowrap relative"
                 >
                   <h4 class="text-white">{{ genre.name?.[locale] }}</h4>
                   <CloseIcon class="w-5 h-5" @click="deleteGenre(genre.id, handleChange)" />
