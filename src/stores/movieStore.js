@@ -71,7 +71,6 @@ export const useMovieStore = defineStore('movieStore', {
       const response = await useMovieService().createOrUpdateMovie(values, movieId)
       this.movieDescription = response.data.updatedMovieDescription
       this.updateMovie(this.userMovies, movieId, response.data.updatedUserMovie)
-      this.updateMovie(this.movieList, movieId, response.data.updatedMovieList)
     },
     deleteUserMovies(array, movieId) {
       return array.filter((movie) => movie.id !== movieId)
