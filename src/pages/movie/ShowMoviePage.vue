@@ -74,7 +74,7 @@
             <span class="text-[#CED4DA] font-bold">{{ t('director') }}</span
             >{{ movieStore.getMovieDescription.director[locale] }}
           </h4>
-          <p class="text-lg text-[#CED4DA] break-words pb-10">
+          <p class="text-lg text-[#CED4DA] break-words lg:pb-10">
             {{ movieStore.getMovieDescription.description[locale] }}
           </p>
         </div>
@@ -99,12 +99,12 @@
           :key="quote.id"
         >
           <div class="flex flex-col md:flex-row justify-between pb-6 border-b border-[#EFEFEF33]">
-            <div class="flex items-center gap-8">
-              <div class="rounded-sm h-[8.75rem] md:w-[14rem] w-full">
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
+              <div class="rounded-sm md:w-[14rem] h-[8.75rem] w-full">
                 <img
                   :src="`${viteBaseUrl}storage/${quote.thumbnail}`"
                   alt="thumbnail"
-                  class="h-full object-cover w-full object-center"
+                  class="h-full object-cover w-full object-top md:object-center"
                 />
               </div>
               <p class="max-w-[400px] text-[#CED4DA] italic text-2xl break-words">
@@ -122,11 +122,11 @@
           <div class="flex pt-6 gap-6 justify-between">
             <div class="flex gap-4">
               <div class="flex gap-4">
-                <h5 class="text-white">{{ quote.length.comments }}</h5>
+                <h5 class="text-white w-[0.7rem]">{{ quote.length.comments }}</h5>
                 <CommentIcon />
               </div>
               <div class="flex gap-4">
-                <h5 class="text-white">{{ quote.length.likes }}</h5>
+                <h5 class="text-white w-[0.7rem]">{{ quote.length.likes }}</h5>
                 <LikeIcon />
               </div>
             </div>

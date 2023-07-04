@@ -33,34 +33,42 @@
           lang="ქარ"
         />
       </div>
-      <div
-        class="relative my-6 flex justify-center items-center w-full max-h-[32rem] overflow-hidden rounded-2xl"
-      >
-        <img :src="imageHandler || thumbnail" alt="movie" class="object-cover w-full" />
-        <div class="absolute" v-if="edit">
-          <Field name="image" v-slot="{ handleChange }">
-            <input
-              id="upload"
-              type="file"
-              class="sr-only"
-              @input="uploadNewImage($event, handleChange)"
-            />
-            <label
-              for="upload"
-              class="cursor-pointer bg-gradient-to-r from-[#181623] from-5% via-[#191725] via-50% to-[#0D0B14] to-[95%] text-white bg-red-500 flex flex-col items-center w-full px-4 pb-4 pt-6 rounded-2xl bg-linear-gradient opacity-80"
-            >
-              <CameraIcon />{{ t('change_photo') }}</label
-            >
-          </Field>
+
+      <Field name="image" v-slot="{ handleChange }" :rules="imageHandler ? 'required|image' : ''">
+        <div class="relative">
+          <div
+            class="relative my-6 flex justify-center items-center w-full h-[18rem] md:h-[32rem] rounded-2xl overflow-hidden"
+          >
+            <img :src="imageHandler || thumbnail" alt="movie" class="object-cover w-full h-full" />
+            <div class="absolute" v-if="edit">
+              <input
+                id="upload"
+                type="file"
+                class="sr-only"
+                @input="uploadNewImage($event, handleChange)"
+              />
+              <label
+                for="upload"
+                class="cursor-pointer bg-gradient-to-r from-[#181623] from-5% via-[#191725] via-50% to-[#0D0B14] to-[95%] text-white bg-red-500 flex flex-col items-center w-full px-4 pb-4 pt-6 rounded-2xl bg-linear-gradient opacity-80"
+              >
+                <CameraIcon />{{ t('change_photo') }}</label
+              >
+            </div>
+          </div>
+          <ErrorMessage
+            name="image"
+            class="absolute -bottom-4 text-[9px] text-[#DC3545] md:text-[10px]"
+          ></ErrorMessage>
         </div>
-      </div>
+      </Field>
+
       <div class="flex gap-6" v-if="!edit">
         <div class="flex gap-3">
-          <p class="text-white">{{ commentsLength }}</p>
+          <p class="text-white w-[0.7rem]">{{ commentsLength }}</p>
           <CommentIcon />
         </div>
-        <div class="flex gap-3 flex-shrink-0">
-          <p class="text-white w-[10px]">{{ likesLength }}</p>
+        <div class="flex gap-3">
+          <p class="text-white w-[0.7rem]">{{ likesLength }}</p>
           <LikeIcon :like-style="likeButtonStyle" :post-id="postId" @click="reactOnPost(postId)" />
         </div>
       </div>
@@ -75,7 +83,7 @@ import CameraIcon from '@/components/icons/CameraIcon.vue'
 import { usePostStore } from '@/stores/postStore'
 import { computed, onBeforeUnmount, ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
-import { Form, Field } from 'vee-validate'
+import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
