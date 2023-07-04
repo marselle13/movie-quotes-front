@@ -52,7 +52,7 @@
           </template>
         </base-dropdown>
       </div>
-      <base-dropdown :hidden="true" dropdown-width="w-[6.5rem]">
+      <base-dropdown :hidden="true" dropdown-width="w-[6.5rem] top-10">
         <template #dropdownButton>
           <div class="flex gap-2.5 items-center">
             <p class="text-white">{{ showLanguage }}</p>

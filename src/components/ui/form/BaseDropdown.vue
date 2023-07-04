@@ -11,7 +11,7 @@
     <ul
       v-if="dropdown"
       @click="dropdown = false"
-      class="z-10 bg-[#24222F] rounded-[10px] absolute py-2 text-sm text-white cursor-pointer left-0 top-10"
+      class="z-10 bg-[#24222F] rounded-[10px] absolute py-2 text-sm text-white cursor-pointer"
       :class="[
         dropdownWidth,
         {
