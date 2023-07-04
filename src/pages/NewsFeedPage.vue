@@ -44,7 +44,7 @@ async function handleScroll() {
   const { scrollTop, clientHeight, scrollHeight } = document.documentElement
   const bottomOffset = 1000
   if (scrollTop + clientHeight + bottomOffset >= scrollHeight && !error.value) {
-    await postStore.showMorePosts()
+    await postStore.showMorePosts(postStore.getSearch ?? null)
   }
 }
 

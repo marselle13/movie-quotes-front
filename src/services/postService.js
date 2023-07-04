@@ -1,8 +1,13 @@
 import api from '@/config/axios'
 
 export const usePostService = () => {
-  async function fetchPosts(page) {
-    return await api.get(`api/quotes?page=${page}`)
+  async function fetchPosts(page, search = null) {
+    if (search) {
+      const searchType = search.startsWith('#') ? `quote_search` : `movie_search`
+      return await api.get(`api/quotes?${searchType}=${search.slice(1)}&page=${page}`)
+    } else {
+      return await api.get(`api/quotes?page=${page}`)
+    }
   }
 
   async function fetchMoreComments(postId) {

@@ -44,6 +44,7 @@
           :error="error.en"
           @update-error="error.en = ''"
           class="order-2"
+          :class="{ 'order-1': movie }"
         />
         <base-textarea
           rules="required"
@@ -53,6 +54,7 @@
           :error="error.ka"
           @update-error="error.ka = ''"
           class="order-3"
+          :class="{ 'order-2': movie }"
         />
         <base-upload
           id="image"
@@ -60,6 +62,7 @@
           :resetImage="resetImage"
           @show-image="resetImage = false"
           class="order-1"
+          :class="{ 'order-3': movie }"
         />
       </div>
 

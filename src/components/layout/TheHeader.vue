@@ -18,15 +18,17 @@
             @click="openSearch = true"
           />
           <transition name="slide">
-            <div class="bg-[#12101A] fixed w-full left-0 top-0 z-20 md:hidden" v-if="openSearch">
+            <div class="bg-[#12101A] fixed w-full left-0 top-0 z-20 md:hidden" v-show="openSearch">
               <div
                 class="flex items-center p-5 gap-4 border-b border-b-[#EFEFEF4D] border-opacity-30"
               >
                 <back-icon @click="openSearch = false" />
                 <input
+                  name="search"
                   class="text-white bg-transparent w-full p-2 outline-none placeholder-white"
                   type="text"
                   :placeholder="t('search_by')"
+                  v-model="searchValue"
                 />
               </div>
               <div class="px-16 py-6 space-y-6">
@@ -95,7 +97,7 @@
 </template>
 <script setup>
 import LanguageDropdown from '@/components/icons/DropdownIcon.vue'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { setLocale } from '@vee-validate/i18n'
 import { useRoute, useRouter } from 'vue-router'
@@ -106,17 +108,19 @@ import BurgerIcon from '@/components/icons/BurgerIcon.vue'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
 import { useUserStore } from '@/stores/userStore'
 import BackIcon from '@/components/icons/BackIcon.vue'
+import { usePostStore } from '@/stores/postStore'
 
+const props = defineProps({
+  background: { type: Boolean, required: false, default: true },
+})
 const { t, locale } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const emit = defineEmits(['open-navigation'])
 const userStore = useUserStore()
+const postStore = usePostStore()
 const openSearch = ref(false)
-
-const props = defineProps({
-  background: { type: Boolean, required: false, default: true },
-})
+const searchValue = ref('')
 
 const headerBackground = computed(() =>
   props.background ? 'backdrop-blur-xl bg-white bg-opacity-5' : 'bg-transparent',
@@ -128,6 +132,31 @@ const headerIcon = computed(() => {
 
 const showLanguage = computed(() => {
   return locale.value === 'en' ? 'Eng' : 'Geo'
+})
+
+let searchTimeout
+let showTimeout
+
+watch(searchValue, async (newValue) => {
+  clearTimeout(searchTimeout)
+  clearTimeout(showTimeout)
+  if (newValue.length > 2) {
+    searchTimeout = setTimeout(async () => {
+      try {
+        await postStore.searchPosts(newValue.toLowerCase().trim())
+      } catch (err) {
+        console.error(err)
+      }
+    }, 500)
+  } else {
+    showTimeout = setTimeout(async () => {
+      try {
+        await postStore.showPosts()
+      } catch (err) {
+        console.error(err)
+      }
+    }, 500)
+  }
 })
 
 function changeLanguage(value) {

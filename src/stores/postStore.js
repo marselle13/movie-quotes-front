@@ -7,6 +7,7 @@ export const usePostStore = defineStore('PostStore', {
   state: () => ({
     posts: [],
     post: [],
+    search: null,
     currentPage: 1,
     isFetching: false,
     hasMoreData: true,
@@ -14,17 +15,21 @@ export const usePostStore = defineStore('PostStore', {
   getters: {
     getPosts: (state) => state.posts,
     getPost: (state) => state.post,
+    getSearch: (state) => state.search,
   },
   actions: {
     async showPosts() {
       try {
+        this.currentPage = 1
+        this.hasMoreData = true
+        this.search = null
         const response = await usePostService().fetchPosts(this.currentPage)
         this.posts = response.data
       } catch (err) {
         throw new Error('Cannot Fetch Data')
       }
     },
-    async showMorePosts() {
+    async showMorePosts(search = null) {
       if (this.isFetching || !this.hasMoreData) {
         return
       }
@@ -32,9 +37,8 @@ export const usePostStore = defineStore('PostStore', {
       this.isFetching = true
 
       try {
-        const response = await usePostService().fetchPosts((this.currentPage += 1))
+        const response = await usePostService().fetchPosts((this.currentPage += 1), search)
         const newPosts = response.data
-
         this.posts = [...this.posts, ...newPosts]
         this.currentPage += 1
         this.hasMoreData = newPosts.length > 0
@@ -53,8 +57,12 @@ export const usePostStore = defineStore('PostStore', {
       useMovieStore().addNewMovieQuote(response.data.newQuote)
     },
     async loadMoreComments(postId) {
-      const response = await usePostService().fetchMoreComments(postId)
-      this.commentSection(postId, response.data)
+      try {
+        const response = await usePostService().fetchMoreComments(postId)
+        this.commentSection(postId, response.data)
+      } catch (err) {
+        throw new Error('cannot load Comments')
+      }
     },
     async newComment(postId, comment, loaded) {
       const response = await usePostService().addNewComment(postId, comment)
@@ -94,12 +102,19 @@ export const usePostStore = defineStore('PostStore', {
       this.post.thumbnail = response.data.updatedQuote.thumbnail
       useMovieStore().updateMovieQuote(quoteId, response.data.updatedQuote)
     },
+    async searchPosts(search) {
+      this.search = search
+      this.currentPage = 1
+      const response = await usePostService().fetchPosts(this.currentPage, search)
+      this.posts = response.data
+      console.log(response)
+    },
     commentSection(postId, data = null) {
       const post = this.posts.find((post) => postId === post.id) || this.post
       if (data) {
         post.comments = data
       }
-      post.comments.reverse()
+      post.comments?.reverse()
     },
     removeQuoteFromPosts(quoteId) {
       this.posts = this.posts.filter((post) => post.id !== quoteId)

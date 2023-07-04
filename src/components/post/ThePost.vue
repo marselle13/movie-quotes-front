@@ -33,7 +33,6 @@
           lang="ქარ"
         />
       </div>
-
       <Field name="image" v-slot="{ handleChange }" :rules="imageHandler ? 'required|image' : ''">
         <div class="relative">
           <div
@@ -61,7 +60,6 @@
           ></ErrorMessage>
         </div>
       </Field>
-
       <div class="flex gap-6" v-if="!edit">
         <div class="flex gap-3">
           <p class="text-white w-[0.7rem]">{{ commentsLength }}</p>
