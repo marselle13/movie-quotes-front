@@ -29,8 +29,8 @@
       />
       <Field name="genres" v-slot="{ handleChange }" rules="required" v-model="movieForm.genresId">
         <base-dropdown
+          :delete="deleted"
           button-width="w-full border border-[#6C757D]  py-2 px-4 rounded text-left"
-          @isOpen="dropDownHandler"
         >
           <template #dropdownButton>
             <div class="flex justify-between items-center">
@@ -135,7 +135,7 @@ import BaseButton from '@/components/ui/form/BaseButton.vue'
 import BaseDropdown from '@/components/ui/form/BaseDropdown.vue'
 import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
 import { useMovieStore } from '@/stores/movieStore'
-import { reactive } from 'vue'
+import { onBeforeMount, reactive, ref } from 'vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 
 const props = defineProps({
@@ -160,20 +160,22 @@ const movieForm = reactive({
   image: props.movie?.image ? `${viteBaseUrl}storage/${props.movie?.image}` : '',
 })
 
-const genres = reactive(props.movie?.genres.length ? props.movie.genres.map((genre) => genre) : [])
+const genres = ref(props.movie?.genres.length ? props.movie.genres.map((genre) => genre) : [])
 const error = reactive({ genre: '', nameEng: '', nameGeo: '' })
+const deleted = ref(false)
 
 function selectGenre(genreId, genreName, handleChange) {
-  const genreExists = genres.some((genre) => genre.id === genreId)
+  const genreExists = genres.value.some((genre) => genre.id === genreId)
   if (!genreExists) {
-    genres.push({ id: genreId, name: genreName })
-    handleChange(genres.map((genre) => genre.id))
+    genres.value.push({ id: genreId, name: genreName })
+    handleChange(genres.value.map((genre) => genre.id))
   }
 }
 function deleteGenre(genreId, handleChange) {
-  const index = genres.findIndex((genre) => genre.id === genreId)
-  genres.splice(index, 1)
-  handleChange([...genres])
+  deleted.value = true
+  genres.value = genres.value.filter((genre) => genre.id !== genreId)
+  handleChange(genres.value.map((genre) => genre.id))
+  setTimeout(() => (deleted.value = false), 100)
 }
 
 async function onSubmit(values, { resetForm }) {
@@ -186,19 +188,20 @@ async function onSubmit(values, { resetForm }) {
     }
     emit('close')
   } catch (err) {
-    console.error(err)
     error.nameEng = err.response?.data?.errors?.['name.en']?.[0]
     error.nameGeo = err.response?.data?.errors?.['name.ka']?.[0]
   }
 }
 
-async function dropDownHandler(isOpen) {
-  if (isOpen && movieStore.getMovieList.length === 0) {
-    try {
-      await movieStore.storeGenres()
-    } catch (err) {
-      error.genre = err.message
-    }
+async function dropDownHandler() {
+  try {
+    await movieStore.storeGenres()
+  } catch (err) {
+    error.genre = err.message
   }
 }
+
+onBeforeMount(() => {
+  dropDownHandler()
+})
 </script>

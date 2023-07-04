@@ -25,7 +25,8 @@
   </div>
 </template>
 <script setup>
-defineProps({
+const props = defineProps({
+  delete: { type: Boolean, required: false, default: false },
   hidden: { type: Boolean, required: false },
   background: { type: Boolean, required: false, default: false },
   buttonWidth: { type: String, required: false },
@@ -36,7 +37,9 @@ const dropdown = ref(false)
 const emit = defineEmits(['isOpen'])
 
 function dropdownButton() {
-  dropdown.value = !dropdown.value
-  emit('isOpen', dropdown)
+  if (!props.delete) {
+    dropdown.value = !dropdown.value
+    emit('isOpen', dropdown)
+  }
 }
 </script>

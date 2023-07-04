@@ -1,55 +1,68 @@
 <template>
   <new-container :title="title" @close="emit('close')">
     <Form @submit="onSubmit" class="flex flex-col mt-10 gap-6">
-      <div class="flex gap-7" v-if="movie">
+      <div
+        class="flex items-center gap-7 bg-black rounded md:rounded-none md:bg-transparent px-2 py-4 md:px-0 md:py-0"
+        v-if="movie"
+      >
         <Field name="movieId" v-slot="{ field }" :value="movie.id">
           <input type="hidden" v-bind="field" />
-          <div class="rounded-2xl overflow-hidden w-[18rem] h-[10rem]">
+          <div class="rounded-2xl overflow-hidden w-[18rem] h-[8rem] md:h-[9rem]">
             <img
               :src="`${viteBaseUrl}storage/${movie.image}`"
               alt="image"
               class="object-cover object-center flex-shrink-0"
             />
           </div>
-          <div class="space-y-5">
-            <h5 class="text-2xl text-[#DDCCAA] font-medium">{{ movie.name[locale] }}</h5>
-            <ul class="inline-flex flex-wrap gap-2">
-              <li
-                class="bg-[#6C757D] text-white rounded py-1 px-3 flex-wrap"
-                v-for="genre in movie.genres"
-                :key="genre.id"
-              >
-                {{ genre.name[locale] }}
-              </li>
-            </ul>
-            <h6 class="text-lg text-white">
-              <span class="text-[#CED4DA]">Director:</span> {{ movie.director[locale] }}
-            </h6>
+          <div class="md:space-y-5 space-y-2">
+            <h5 class="md:text-2xl text-base text-[#DDCCAA] font-medium">
+              {{ movie.name[locale] }}
+            </h5>
+            <div class="flex flex-col-reverse md:flex-col gap-2 md:gap-5">
+              <ul class="inline-flex flex-wrap gap-2">
+                <li
+                  class="bg-[#6C757D] text-white rounded py-1 px-3 flex-wrap"
+                  v-for="genre in movie.genres"
+                  :key="genre.id"
+                >
+                  {{ genre.name[locale] }}
+                </li>
+              </ul>
+              <h6 class="md:text-lg text-base text-white">
+                <span class="text-[#CED4DA]">Director:</span> {{ movie.director[locale] }}
+              </h6>
+            </div>
           </div>
         </Field>
       </div>
-      <base-textarea
-        rules="required"
-        id="quoteEng"
-        language="Eng"
-        placeholder="Start create new quote"
-        :error="error.en"
-        @update-error="error.en = ''"
-      />
-      <base-textarea
-        rules="required"
-        id="quoteGeo"
-        language="ქარ"
-        placeholder="ახალი ციტატა"
-        :error="error.ka"
-        @update-error="error.ka = ''"
-      />
-      <base-upload
-        id="image"
-        rules="required|image"
-        :resetImage="resetImage"
-        @show-image="resetImage = false"
-      />
+      <div class="flex flex-col gap-6 md:block md:space-y-6">
+        <base-textarea
+          rules="required"
+          id="quoteEng"
+          language="Eng"
+          placeholder="Start create new quote"
+          :error="error.en"
+          @update-error="error.en = ''"
+          class="order-2"
+        />
+        <base-textarea
+          rules="required"
+          id="quoteGeo"
+          language="ქარ"
+          placeholder="ახალი ციტატა"
+          :error="error.ka"
+          @update-error="error.ka = ''"
+          class="order-3"
+        />
+        <base-upload
+          id="image"
+          rules="required|image"
+          :resetImage="resetImage"
+          @show-image="resetImage = false"
+          class="order-1"
+        />
+      </div>
+
       <Field
         name="movieId"
         rules="required"
@@ -57,7 +70,7 @@
         class="relative"
         v-if="!movie"
       >
-        <base-dropdown background buttonWidth="w-full h-full" @isOpen="dropDownHandler">
+        <base-dropdown background buttonWidth="w-full h-full">
           <template #dropdownButton
             ><div class="flex items-center justify-between text-white text-left">
               <div class="flex justify-center items-end gap-4">
@@ -97,7 +110,7 @@ import NewContainer from '@/components/layout/NewContainer.vue'
 import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
 import MoviesIcon from '@/components/icons/MoviesIcon.vue'
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import { reactive, ref } from 'vue'
+import { onBeforeMount, reactive, ref } from 'vue'
 import { useMovieStore } from '@/stores/movieStore'
 import { useI18n } from 'vue-i18n'
 import { usePostStore } from '@/stores/postStore'
@@ -134,13 +147,15 @@ function selectMovie(movieId, movieName, handleChange) {
   handleChange(movieId)
 }
 
-async function dropDownHandler(isOpen) {
-  if (isOpen && movieStore.getMovieList.length === 0) {
-    try {
-      await movieStore.storeMovieList()
-    } catch (err) {
-      error.select = err.message
-    }
+async function dropDownHandler() {
+  try {
+    await movieStore.storeMovieList()
+  } catch (err) {
+    error.select = err.message
   }
 }
+
+onBeforeMount(() => {
+  dropDownHandler()
+})
 </script>
