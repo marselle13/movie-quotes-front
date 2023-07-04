@@ -107,7 +107,6 @@ export const usePostStore = defineStore('PostStore', {
       this.currentPage = 1
       const response = await usePostService().fetchPosts(this.currentPage, search)
       this.posts = response.data
-      console.log(response)
     },
     commentSection(postId, data = null) {
       const post = this.posts.find((post) => postId === post.id) || this.post
