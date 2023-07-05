@@ -1,7 +1,7 @@
 <template>
   <teleport to="body" :disabled="disabled">
     <div
-      v-if="dropdown"
+      v-show="dropdown"
       class="fixed top-0 left-0 w-full h-full z-10"
       @click="dropdown = false"
     ></div>
@@ -11,7 +11,7 @@
       <slot name="dropdownButton"></slot>
     </button>
     <ul
-      v-if="dropdown"
+      v-show="dropdown"
       @click="dropdown = false"
       class="z-10 bg-[#24222F] rounded-[10px] absolute py-2 text-sm text-white cursor-pointer"
       :class="[
@@ -24,7 +24,7 @@
     >
       <slot name="dropdown"></slot>
     </ul>
-    <div v-if="dropdown" class="fixed top-0 left-0 w-full h-full" @click="dropdown = false"></div>
+    <div v-show="dropdown" class="fixed top-0 left-0 w-full h-full" @click="dropdown = false"></div>
   </div>
 </template>
 <script setup>

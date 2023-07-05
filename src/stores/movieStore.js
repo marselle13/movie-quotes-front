@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { useMovieService } from '@/services/MovieService'
-import { usePostStore } from '@/stores/postStore'
 import { usePostService } from '@/services/postService'
 
 export const useMovieStore = defineStore('movieStore', {
@@ -51,12 +50,10 @@ export const useMovieStore = defineStore('movieStore', {
     },
     async removeMovie(movieId) {
       await useMovieService().deleteMovie(movieId)
-      this.userMovies = this.deleteUserMovies(this.userMovies, movieId)
-      this.movieList = this.deleteUserMovies(this.movieList, movieId)
-      usePostStore().deletePostsWithMovies(movieId)
+      this.userMovies = this.userMovies.filter((movie) => movie.id !== movieId)
       this.movieDescription = []
     },
-    async removeQuoteFromUserMovie(quoteId, movieId) {
+    async removeQuoteFromMovie(quoteId, movieId) {
       await usePostService().deleteQuote(quoteId)
       const movie = this.userMovies.find((movie) => movie.id === movieId)
       if (movie) {
@@ -65,20 +62,13 @@ export const useMovieStore = defineStore('movieStore', {
       this.movieDescription.quotes = this.movieDescription.quotes.filter(
         (quote) => quote.id !== quoteId,
       )
-      usePostStore().removeQuoteFromPosts(quoteId)
     },
     async editMovie(values, movieId) {
       const response = await useMovieService().createOrUpdateMovie(values, movieId)
       this.movieDescription = response.data.updatedMovieDescription
-      this.updateMovie(this.userMovies, movieId, response.data.updatedUserMovie)
-    },
-    deleteUserMovies(array, movieId) {
-      return array.filter((movie) => movie.id !== movieId)
-    },
-    updateMovie(array, movieId, data) {
-      if (array.length) {
-        const index = array.findIndex((movie) => movie.id === movieId)
-        array[index] = data
+      if (this.userMovies.length) {
+        const index = this.userMovies.findIndex((movie) => movie.id === movieId)
+        this.userMovies[index] = response.data.updatedUserMovie
       }
     },
     updateQuoteAmount(movieId) {

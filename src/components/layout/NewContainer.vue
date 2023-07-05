@@ -15,7 +15,7 @@
             <EditIcon />
           </button>
           <div class="h-4 border border-[#6C757D] mx-4" v-if="!edit"></div>
-          <button @click="deleteQuote(quoteId)">
+          <button @click="remove(quoteId)">
             <DeleteIcon />
           </button>
         </div>
@@ -56,9 +56,9 @@ const emit = defineEmits(['close', 'edit-quote'])
 const userStore = useUserStore()
 const movieStore = useMovieStore()
 
-async function deleteQuote(quoteId) {
+async function remove(quoteId) {
   try {
-    await useMovieStore().removeQuoteFromUserMovie(quoteId, movieStore.getMovieDescription.id)
+    await useMovieStore().removeQuoteFromMovie(quoteId, movieStore.getMovieDescription.id)
     emit('close')
   } catch (err) {
     //Err

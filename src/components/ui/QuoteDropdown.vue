@@ -41,7 +41,7 @@ const { t } = useI18n()
 
 async function deleteQuote(quoteId, movieId) {
   try {
-    await useMovieStore().removeQuoteFromUserMovie(quoteId, movieId)
+    await useMovieStore().removeQuoteFromMovie(quoteId, movieId)
   } catch (err) {
     //Err
   }

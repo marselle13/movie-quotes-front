@@ -42,7 +42,7 @@
               class="sr-only"
               @input="uploadImage($event, handleChange)"
             />
-            <label for="image" class="bg-[#9747ff7a] text-white p-2 cursor-pointer flex-shrink-0">{{
+            <label for="image" class="bg-[#9747ff7a] text-white p-2 cursor-pointer">{{
               t('choose_file')
             }}</label>
           </div>

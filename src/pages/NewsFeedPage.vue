@@ -49,15 +49,13 @@ async function handleScroll() {
 }
 
 onBeforeMount(async () => {
-  if (postStore.getPosts.length === 0) {
-    try {
-      isLoading.value = true
-      await postStore.showPosts()
-      isLoading.value = false
-    } catch (err) {
-      isLoading.value = false
-      error.value = err.message
-    }
+  try {
+    isLoading.value = true
+    await postStore.showPosts()
+    isLoading.value = false
+  } catch (err) {
+    isLoading.value = false
+    error.value = err.message
   }
 })
 

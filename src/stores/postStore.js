@@ -50,9 +50,7 @@ export const usePostStore = defineStore('PostStore', {
     },
     async addQuote(values) {
       const response = await usePostService().createOrUpdateQuote(values)
-
       this.posts = [response.data.newQuote, ...this.posts]
-
       useMovieStore().updateQuoteAmount(values.movieId)
       useMovieStore().addNewMovieQuote(response.data.newQuote)
     },
@@ -114,12 +112,6 @@ export const usePostStore = defineStore('PostStore', {
         post.comments = data
       }
       post.comments?.reverse()
-    },
-    removeQuoteFromPosts(quoteId) {
-      this.posts = this.posts.filter((post) => post.id !== quoteId)
-    },
-    deletePostsWithMovies(movieId) {
-      this.posts = this.posts.filter((post) => post.movie.id !== movieId)
     },
   },
 })
