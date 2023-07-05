@@ -49,7 +49,7 @@
         </div>
         <div class="lg:max-w-[34rem] space-y-6 w-full">
           <div class="inline-flex flex-col md:flex-row w-full gap-6 justify-between items-start">
-            <h2 class="w-full text-[#DDCCAA] text-2xl font-medium">
+            <h2 class="w-full text-[#DDCCAA] text-2xl font-medium break-all">
               {{ movieStore.getMovieDescription.name[locale] }}
               <span>({{ movieStore.getMovieDescription.year }})</span>
             </h2>
@@ -89,7 +89,7 @@
           <div class="lg:h-7 border border-[#6C757D] lg:mx-4 my-10 lg:my-0"></div>
           <base-button
             @click="addQuote = true"
-            class="w-40 lg:w-auto flex items-center px-4 py-2 gap-2"
+            class="w-40 lg:w-auto flex items-center px-4 py-2 gap-2 md:whitespace-nowrap whitespace-normal"
             ><movie-add-icon />{{ t('add_quote') }}</base-button
           >
         </div>
