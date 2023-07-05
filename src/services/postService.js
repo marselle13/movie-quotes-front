@@ -3,8 +3,13 @@ import api from '@/config/axios'
 export const usePostService = () => {
   async function fetchPosts(page, search = null) {
     if (search) {
-      const searchType = search.startsWith('#') ? `quote_search` : `movie_search`
-      return await api.get(`api/quotes?${searchType}=${search.slice(1)}&page=${page}`)
+      let searchType = `search=${search}`
+      if (search.startsWith('#')) {
+        searchType = `quote_search=${search.slice(1)}`
+      } else if (search.startsWith('@')) {
+        searchType = `movie_search=${search.slice(1)}`
+      }
+      return await api.get(`api/quotes?${searchType}&page=${page}`)
     } else {
       return await api.get(`api/quotes?page=${page}`)
     }
