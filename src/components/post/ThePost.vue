@@ -62,7 +62,7 @@
       </Field>
       <div class="flex gap-6" v-if="!edit">
         <div class="flex gap-3">
-          <p class="text-white w-[0.7rem]">{{ commentsLength }}</p>
+          <p class="text-white w-[1.4rem]">{{ commentsLength }}</p>
           <CommentIcon />
         </div>
         <div class="flex gap-3">

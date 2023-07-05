@@ -49,7 +49,7 @@
         </div>
         <div class="lg:max-w-[34rem] space-y-6 w-full">
           <div class="inline-flex flex-col md:flex-row w-full gap-6 justify-between items-start">
-            <h2 class="w-full text-[#DDCCAA] text-2xl font-medium break-words">
+            <h2 class="w-full text-[#DDCCAA] text-2xl font-medium">
               {{ movieStore.getMovieDescription.name[locale] }}
               <span>({{ movieStore.getMovieDescription.year }})</span>
             </h2>
@@ -120,12 +120,12 @@
             />
           </div>
           <div class="flex pt-6 gap-6 justify-between">
-            <div class="flex gap-4">
-              <div class="flex gap-4">
-                <h5 class="text-white w-[0.7rem]">{{ quote.length.comments }}</h5>
+            <div class="flex gap-6">
+              <div class="flex gap-3">
+                <h5 class="text-white w-[1.4rem]">{{ quote.length.comments }}</h5>
                 <CommentIcon />
               </div>
-              <div class="flex gap-4">
+              <div class="flex gap-3">
                 <h5 class="text-white w-[0.7rem]">{{ quote.length.likes }}</h5>
                 <LikeIcon />
               </div>
