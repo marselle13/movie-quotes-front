@@ -67,7 +67,7 @@ export const useMovieStore = defineStore('movieStore', {
       )
       usePostStore().removeQuoteFromPosts(quoteId)
     },
-    async editMovieDescription(values, movieId) {
+    async editMovie(values, movieId) {
       const response = await useMovieService().createOrUpdateMovie(values, movieId)
       this.movieDescription = response.data.updatedMovieDescription
       this.updateMovie(this.userMovies, movieId, response.data.updatedUserMovie)

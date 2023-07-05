@@ -87,5 +87,11 @@
   "delete": "Delete",
   "director": "Director: ",
   "quote": "Quote",
-  "change_photo": "Change Photo"
+  "change_photo": "Change Photo",
+  "replace_photo" : "Replace Photo",
+  "whops" :"Whoops!",
+  "cannot_find": ">We can't see the page you are looking for",
+  "return_home": "Return Home",
+  "no_pass": "You shall not pass!",
+  "no_permission": "Sorry, but you don’t have permission to access this page"
 }

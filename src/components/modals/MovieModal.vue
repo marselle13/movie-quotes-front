@@ -72,7 +72,7 @@
         :placeholder="title === t('new_movie') ? 'წელი/year' : ''"
         :edit="title !== t('new_movie')"
         mode="flat"
-        rules="required|integer"
+        rules="required|valid_year"
         autocomplete="off"
       />
       <base-input
@@ -181,7 +181,7 @@ function deleteGenre(genreId, handleChange) {
 async function onSubmit(values, { resetForm }) {
   try {
     if (props.movie?.id) {
-      await movieStore.editMovieDescription(values, props.movie.id)
+      await movieStore.editMovie(values, props.movie.id)
     } else {
       await movieStore.addNewMovie(values)
       resetForm()

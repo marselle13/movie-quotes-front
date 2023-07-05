@@ -23,7 +23,7 @@
             v-if="imageHandler || uploadedImage"
             class="uppercase text-[#DDCCAA] text-xs md:text-base"
           >
-            Replace Photo
+            {{ t('replace_photo') }}
           </p>
           <div class="flex justify-between items-center gap-2">
             <CameraIcon

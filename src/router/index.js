@@ -10,7 +10,7 @@ import ResetPassword from '@/pages/password/ResetPassword.vue'
 import ForbiddenPage from '@/pages/ForbiddenPage.vue'
 import ProfilePage from '@/pages/User/ProfilePage.vue'
 import MovieListPage from '@/pages/movie/MovieListPage.vue'
-import ShowMoviePage from '@/pages/movie/ShowMoviePage.vue'
+import MoviePage from '@/pages/movie/MoviePage.vue'
 
 const NewsFeed = () => import('@/pages/NewsFeedPage.vue')
 
@@ -41,7 +41,7 @@ const router = createRouter({
     {
       name: 'movie-description',
       path: '/movies/:movie',
-      component: ShowMoviePage,
+      component: MoviePage,
       meta: { user: 'auth' },
     },
     { name: 'profile', path: '/profile', component: ProfilePage, meta: { user: 'auth' } },

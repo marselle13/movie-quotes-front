@@ -33,7 +33,7 @@ configure({
       messages: {
         ...en.messages,
         alpha_num: '{field} field may only contain lowercase alpha numeric characters',
-        integer: '{field} may only be valid year',
+        valid_year: '{field} may only be valid year',
       },
     },
     ka: {
@@ -65,7 +65,7 @@ configure({
         ...ka.messages,
         alpha_num: '{field} უნდა შეიცავდეს მხოლოდ დაბალი რეგისტრის სიმბოლოებს და რიცხვებს',
         confirmed: 'გაიმეორე პაროლი არ ემთხვევა პაროლს',
-        integer: 'არასწორი {field}',
+        valid_year: 'არასწორი {field}',
       },
     },
   }),

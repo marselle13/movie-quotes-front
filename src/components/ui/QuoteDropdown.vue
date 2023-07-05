@@ -43,7 +43,6 @@ async function deleteQuote(quoteId, movieId) {
   try {
     await useMovieStore().removeQuoteFromUserMovie(quoteId, movieId)
   } catch (err) {
-    console.error(err)
     //Err
   }
 }
