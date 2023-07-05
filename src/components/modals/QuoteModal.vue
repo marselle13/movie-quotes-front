@@ -7,28 +7,28 @@
       >
         <Field name="movieId" v-slot="{ field }" :value="movie.id">
           <input type="hidden" v-bind="field" />
-          <div class="rounded-2xl overflow-hidden w-[18rem] h-[8rem] md:h-[9rem]">
+          <div class="flex rounded-2xl overflow-hidden w-[18rem] h-[8rem] md:h-[9rem] min-w-[4rem]">
             <img
               :src="`${viteBaseUrl}storage/${movie.image}`"
               alt="image"
-              class="object-cover object-center flex-shrink-0"
+              class="object-cover object-center w-full"
             />
           </div>
           <div class="md:space-y-5 space-y-2">
-            <h5 class="md:text-2xl text-base text-[#DDCCAA] font-medium">
+            <h5 class="md:text-2xl text-[#DDCCAA] font-medium text-xs">
               {{ movie.name[locale] }}
             </h5>
             <div class="flex flex-col-reverse md:flex-col gap-2 md:gap-5">
               <ul class="inline-flex flex-wrap gap-2">
                 <li
-                  class="bg-[#6C757D] text-white rounded py-1 px-3 flex-wrap"
+                  class="bg-[#6C757D] text-white rounded py-1 px-3 flex-wrap text-xs md:text-lg"
                   v-for="genre in movie.genres"
                   :key="genre.id"
                 >
                   {{ genre.name[locale] }}
                 </li>
               </ul>
-              <h6 class="md:text-lg text-base text-white">
+              <h6 class="md:text-lg text-white text-xs">
                 <span class="text-[#CED4DA]">Director:</span> {{ movie.director[locale] }}
               </h6>
             </div>
