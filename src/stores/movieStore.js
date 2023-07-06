@@ -5,13 +5,13 @@ import { usePostService } from '@/services/postService'
 export const useMovieStore = defineStore('movieStore', {
   state: () => ({
     userMovies: [],
-    movieDescription: [],
+    currentMovie: [],
     movieList: [],
     genres: [],
   }),
   getters: {
     getUserMovies: (state) => state.userMovies,
-    getMovieDescription: (state) => state.movieDescription,
+    getCurrentMovie: (state) => state.currentMovie,
     getMovieList: (state) => state.movieList,
     getGenres: (state) => state.genres,
   },
@@ -46,12 +46,12 @@ export const useMovieStore = defineStore('movieStore', {
     },
     async showMovie(movie) {
       const response = await useMovieService().fetchMovieDescription(movie)
-      this.movieDescription = response.data
+      this.currentMovie = response.data
     },
     async removeMovie(movieId) {
       await useMovieService().deleteMovie(movieId)
       this.userMovies = this.userMovies.filter((movie) => movie.id !== movieId)
-      this.movieDescription = []
+      this.currentMovie = []
     },
     async removeQuoteFromMovie(quoteId, movieId) {
       await usePostService().deleteQuote(quoteId)
@@ -59,13 +59,11 @@ export const useMovieStore = defineStore('movieStore', {
       if (movie) {
         movie.quotesLength--
       }
-      this.movieDescription.quotes = this.movieDescription.quotes.filter(
-        (quote) => quote.id !== quoteId,
-      )
+      this.currentMovie.quotes = this.currentMovie.quotes.filter((quote) => quote.id !== quoteId)
     },
     async editMovie(values, movieId) {
       const response = await useMovieService().createOrUpdateMovie(values, movieId)
-      this.movieDescription = response.data.updatedMovieDescription
+      this.currentMovie = response.data.updatedMovieDescription
       if (this.userMovies.length) {
         const index = this.userMovies.findIndex((movie) => movie.id === movieId)
         this.userMovies[index] = response.data.updatedUserMovie
@@ -78,12 +76,12 @@ export const useMovieStore = defineStore('movieStore', {
       }
     },
     updateMovieQuote(quoteId, updatedQuote) {
-      const index = this.movieDescription.quotes.findIndex((quote) => quote.id === quoteId)
-      this.movieDescription.quotes[index] = updatedQuote
+      const index = this.currentMovie.quotes.findIndex((quote) => quote.id === quoteId)
+      this.currentMovie.quotes[index] = updatedQuote
     },
     addNewMovieQuote(newQuote) {
-      if (this.movieDescription.id) {
-        this.movieDescription.quotes = [newQuote, ...this.movieDescription.quotes]
+      if (this.currentMovie.id) {
+        this.currentMovie.quotes = [newQuote, ...this.currentMovie.quotes]
       }
     },
   },
