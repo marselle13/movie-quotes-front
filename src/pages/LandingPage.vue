@@ -30,12 +30,12 @@
   <TheFooter />
 </template>
 <script setup>
-import TheHeader from '@/components/layout/TheHeader.vue'
+import TheHeader from '@/components/TheHeader.vue'
 import interstellarImage from '@/assets/interstellar.png'
 import tanenbaumImage from '@/assets/tanenbaum.png'
 import lotrImage from '@/assets/lotr.png'
 import QuotesContainer from '@/components/layout/QuotesContainer.vue'
-import TheFooter from '@/components/layout/TheFooter.vue'
+import TheFooter from '@/components/TheFooter.vue'
 
 import { useI18n } from 'vue-i18n'
 import { onBeforeMount } from 'vue'

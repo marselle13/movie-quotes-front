@@ -1,10 +1,6 @@
 <template>
   <div v-if="type === 'small'">
-    <SearchIcon
-      class="md:hidden block"
-      v-if="route.name === 'news-feed' || route.name === 'movie-list'"
-      @click="openSearch = true"
-    />
+    <SearchIcon class="md:hidden block" @click="openSearch = true" />
     <transition name="slide">
       <div class="bg-[#12101A] fixed w-full left-0 top-0 z-20 md:hidden" v-show="openSearch">
         <div class="flex items-center p-5 gap-4 border-b border-b-[#EFEFEF4D] border-opacity-30">
@@ -58,7 +54,6 @@
 <script setup>
 import BackIcon from '@/components/icons/BackIcon.vue'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
-import { useRoute } from 'vue-router'
 import { ref, watch } from 'vue'
 import { usePostStore } from '@/stores/postStore'
 import { useI18n } from 'vue-i18n'
@@ -70,7 +65,6 @@ defineProps({
 
 const emit = defineEmits(['search'])
 
-const route = useRoute()
 const postStore = usePostStore()
 const { t } = useI18n()
 const openSearch = ref(false)

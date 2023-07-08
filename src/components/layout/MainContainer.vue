@@ -60,7 +60,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useI18n } from 'vue-i18n'
-import TheHeader from '@/components/layout/TheHeader.vue'
+import TheHeader from '@/components/TheHeader.vue'
 
 defineProps({
   width: { type: String, required: false },
