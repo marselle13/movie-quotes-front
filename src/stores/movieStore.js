@@ -1,16 +1,19 @@
 import { defineStore } from 'pinia'
 import { useMovieService } from '@/services/MovieService'
 import { usePostService } from '@/services/postService'
+import { useI18n } from 'vue-i18n'
 
 export const useMovieStore = defineStore('movieStore', {
   state: () => ({
     userMovies: [],
+    searchedMovies: [],
     currentMovie: [],
     movieList: [],
     genres: [],
   }),
   getters: {
     getUserMovies: (state) => state.userMovies,
+    getSearchedMovies: (state) => state.searchedMovies,
     getCurrentMovie: (state) => state.currentMovie,
     getMovieList: (state) => state.movieList,
     getGenres: (state) => state.genres,
@@ -39,6 +42,9 @@ export const useMovieStore = defineStore('movieStore', {
       } catch (err) {
         throw new Error('Cannot Fetch genres')
       }
+    },
+    searchMovies(search, locale) {
+      this.searchedMovies = this.userMovies.filter((movie) => movie.name[locale].includes(search))
     },
     async addNewMovie(values) {
       const response = await useMovieService().createOrUpdateMovie(values)
