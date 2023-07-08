@@ -20,7 +20,7 @@
   </main-card>
 </template>
 <script setup>
-import MainCard from '@/components/ui/MainCard.vue'
+import MainCard from '@/components/common/MainCard.vue'
 import CommentSection from '@/components/post/CommentSection.vue'
 import ThePost from '@/components/post/ThePost.vue'
 import { useI18n } from 'vue-i18n'

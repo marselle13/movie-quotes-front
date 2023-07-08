@@ -42,7 +42,7 @@ import WriteQuoteIcon from '@/components/icons/WriteQuoteIcon.vue'
 import QuoteModal from '@/components/modals/QuoteModal.vue'
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import BaseSearch from '@/components/ui/form/BaseSearch.vue'
+import BaseSearch from '@/components/common/form/BaseSearch.vue'
 import { usePostStore } from '@/stores/postStore'
 
 const postStore = usePostStore()

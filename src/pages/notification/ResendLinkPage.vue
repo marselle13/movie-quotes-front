@@ -9,9 +9,9 @@
   </auth-card>
 </template>
 <script setup>
-import AuthCard from '@/components/ui/AuthCard.vue'
+import AuthCard from '@/components/common/AuthCard.vue'
 import ExpiredIcon from '@/components/icons/ExpiredIcon.vue'
-import BaseButton from '@/components/ui/form/BaseButton.vue'
+import BaseButton from '@/components/common/form/BaseButton.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useEmailService } from '@/services/emailService'

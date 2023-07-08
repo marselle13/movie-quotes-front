@@ -32,7 +32,7 @@ import PostSection from '@/components/post/PostSection.vue'
 import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 import { usePostStore } from '@/stores/postStore'
 import { useI18n } from 'vue-i18n'
-import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const postStore = usePostStore()
 const { t, locale } = useI18n()

@@ -174,9 +174,9 @@
 </template>
 <script setup>
 import MainContainer from '@/components/layout/MainContainer.vue'
-import BaseInput from '@/components/ui/form/BaseInput.vue'
-import BaseButton from '@/components/ui/form/BaseButton.vue'
-import MainCard from '@/components/ui/MainCard.vue'
+import BaseInput from '@/components/common/form/BaseInput.vue'
+import BaseButton from '@/components/common/form/BaseButton.vue'
+import MainCard from '@/components/common/MainCard.vue'
 import ConfirmationModal from '@/components/modals/profile/ConfirmationModal.vue'
 import PasswordModal from '@/components/modals/profile/PasswordModal.vue'
 

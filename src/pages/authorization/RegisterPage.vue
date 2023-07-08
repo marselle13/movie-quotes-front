@@ -53,7 +53,7 @@
   </auth-card>
 </template>
 <script setup>
-import AuthCard from '@/components/ui/AuthCard.vue'
+import AuthCard from '@/components/common/AuthCard.vue'
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { Form } from 'vee-validate'
 import { reactive } from 'vue'

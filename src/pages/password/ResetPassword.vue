@@ -32,10 +32,10 @@
   </auth-card>
 </template>
 <script setup>
-import AuthCard from '@/components/ui/AuthCard.vue'
+import AuthCard from '@/components/common/AuthCard.vue'
 import { Form } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
-import BaseButton from '@/components/ui/form/BaseButton.vue'
+import BaseButton from '@/components/common/form/BaseButton.vue'
 import BackIcon from '@/components/icons/BackIcon.vue'
 import { onBeforeMount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'

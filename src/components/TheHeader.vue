@@ -64,8 +64,8 @@
 </template>
 <script setup>
 import LanguageDropdown from '@/components/icons/DropdownIcon.vue'
-import BaseButton from '@/components/ui/form/BaseButton.vue'
-import BaseDropdown from '@/components/ui/form/BaseDropdown.vue'
+import BaseButton from '@/components/common/form/BaseButton.vue'
+import BaseDropdown from '@/components/common/form/BaseDropdown.vue'
 import NotificationIcon from '@/components/icons/NotificationIcon.vue'
 import BurgerIcon from '@/components/icons/BurgerIcon.vue'
 import { computed } from 'vue'

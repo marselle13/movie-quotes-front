@@ -126,12 +126,12 @@
 </template>
 <script setup>
 import NewContainer from '@/components/layout/NewContainer.vue'
-import BaseInput from '@/components/ui/form/BaseInput.vue'
+import BaseInput from '@/components/common/form/BaseInput.vue'
 import { useI18n } from 'vue-i18n'
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import BaseTextarea from '@/components/ui/form/BaseTextarea.vue'
-import BaseButton from '@/components/ui/form/BaseButton.vue'
-import BaseDropdown from '@/components/ui/form/BaseDropdown.vue'
+import BaseTextarea from '@/components/common/form/BaseTextarea.vue'
+import BaseButton from '@/components/common/form/BaseButton.vue'
+import BaseDropdown from '@/components/common/form/BaseDropdown.vue'
 import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { useMovieStore } from '@/stores/movieStore'
