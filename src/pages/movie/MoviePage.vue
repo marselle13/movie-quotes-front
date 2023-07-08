@@ -111,7 +111,7 @@
                 "{{ quote.quote[locale] }}"
               </p>
             </div>
-            <QuoteDropdown
+            <PostDropdown
               v-if="isDesktop"
               :quote-id="quote.id"
               :movie-id="movieStore.getCurrentMovie.id"
@@ -130,7 +130,7 @@
                 <LikeIcon />
               </div>
             </div>
-            <QuoteDropdown
+            <PostDropdown
               v-if="!isDesktop"
               :quote-id="quote.id"
               :movie-id="movieStore.getCurrentMovie.id"
@@ -152,7 +152,7 @@ import DeleteIcon from '@/components/icons/DeleteIcon.vue'
 import MovieAddIcon from '@/components/icons/MovieAddIcon.vue'
 import QuoteModal from '@/components/modals/QuoteModal.vue'
 import MovieModal from '@/components/modals/MovieModal.vue'
-import QuoteDropdown from '@/components/QuoteDropdown.vue'
+import PostDropdown from '@/components/post/PostDropdown.vue'
 import PostModal from '@/components/modals/PostModal.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
