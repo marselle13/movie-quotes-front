@@ -11,7 +11,7 @@
         class="flex items-center justify-between border-b border-[#EFEFEF] border-opacity-30 p-8"
       >
         <div class="flex items-center" v-if="quoteId">
-          <button @click="emit('edit-quote')" v-if="!edit">
+          <button @click="emit('edit')" v-if="!edit">
             <EditIcon />
           </button>
           <div class="h-4 border border-[#6C757D] mx-4" v-if="!edit"></div>
@@ -51,14 +51,14 @@ defineProps({
   edit: { type: Boolean, required: false },
 })
 
-const emit = defineEmits(['close', 'edit-quote'])
+const emit = defineEmits(['close', 'edit'])
 
 const userStore = useUserStore()
 const movieStore = useMovieStore()
 
 async function remove(quoteId) {
   try {
-    await useMovieStore().removeQuoteFromMovie(quoteId, movieStore.getMovieDescription.id)
+    await useMovieStore().removeQuoteFromMovie(quoteId, movieStore.getCurrentMovie.id)
     emit('close')
   } catch (err) {
     //Err

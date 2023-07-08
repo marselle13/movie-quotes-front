@@ -21,7 +21,7 @@ import BaseUpload from '@/components/ui/form/BaseUpload.vue'
 
 const i18n = createI18n({
   legacy: false,
-  locale: localStorage.getItem('locale'),
+  locale: localStorage.getItem('locale') || 'en',
   messages: {
     en: English,
     ka: Georgian,

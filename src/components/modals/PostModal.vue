@@ -3,7 +3,7 @@
     :quoteId="postStore.getPost.id"
     :title="edit ? t('edit_quote') : t('view_quote')"
     @close="emit('close')"
-    @edit-quote="emit('edit')"
+    @edit="emit('edit')"
     :edit="edit"
   >
     <section class="mt-6 space-y-6">

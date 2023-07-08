@@ -27,7 +27,7 @@
           :quote="postStore.getPost"
           v-else-if="viewQuote"
           @close="viewQuote = false"
-          @edit-quote="edit = true"
+          @edit="edit = true"
         />
       </transition>
     </teleport>
