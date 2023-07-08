@@ -67,6 +67,7 @@
   "new_quote": "Write New Quote",
   "add_quote": "Add Quote",
   "new_movie": "Add Movie",
+  "movie_search" : "Find a movie",
   "search_by": "Search by",
   "search_full": "Enter {'@'} to search movies, Enter {'#'} to search quotes",
   "search_movie": "Enter {'@'} to search movies",

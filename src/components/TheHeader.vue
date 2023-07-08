@@ -11,7 +11,7 @@
     </div>
     <div class="flex items-center gap-4 md:gap-10">
       <div v-if="route.meta.user === 'auth'" class="flex items-center gap-5">
-        <BaseSearch type="small" v-if="route.name === 'news-feed' || route.name === 'movie-list'" />
+        <div id="search"></div>
         <base-dropdown button-width="w-[3.75rem]">
           <template #dropdownButton>
             <NotificationIcon />
