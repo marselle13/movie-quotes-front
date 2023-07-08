@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { useMovieService } from '@/services/MovieService'
 import { usePostService } from '@/services/postService'
-import { useI18n } from 'vue-i18n'
 
 export const useMovieStore = defineStore('movieStore', {
   state: () => ({
