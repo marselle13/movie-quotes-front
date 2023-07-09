@@ -10,20 +10,40 @@
     >
       {{ t('title') }}
     </h1>
-    <base-button class="w-28 md:w-32 py-2" :animation="true">{{ t('get_started') }}</base-button>
+    <base-button
+      :link="true"
+      :to="{ name: 'register' }"
+      class="w-28 md:w-32 py-2"
+      :animation="true"
+      >{{ t('get_started') }}</base-button
+    >
   </section>
-  <quotes-container :image="interstellarImage">
+  <quotes-container
+    class="bg-[url('@/assets/interstellar.png')]"
+    :fixed="fixed"
+    @click="scrollToImage(0)"
+  >
     <template #quote>You have to leave something behind to go forward</template>
     <template #movie> Interstellar, 2014 </template>
   </quotes-container>
-  <quotes-container :image="tanenbaumImage" backdrop="backdrop-half">
+  <quotes-container
+    :fixed="fixed"
+    class="bg-[url('@/assets/tanenbaum.png')]"
+    backdrop="backdrop-half"
+    @click="scrollToImage(1)"
+  >
     <template #quote>
       I think we’re just gonna have to be secretly in love with each other and leave it
       that</template
     >
     <template #movie>The Royal Tenenbaums,2001 </template>
   </quotes-container>
-  <quotes-container :image="lotrImage">
+  <quotes-container
+    :fixed="fixed"
+    class="bg-[url('@/assets/lotr.png')]"
+    @click="scrollToImage(2)"
+    position="bg-right"
+  >
     <template #quote>Death Is Just Another Path, One That We All Must Take.</template>
     <template #movie>The Lord of the Rings,2001 </template>
   </quotes-container>
@@ -31,14 +51,11 @@
 </template>
 <script setup>
 import TheHeader from '@/components/TheHeader.vue'
-import interstellarImage from '@/assets/interstellar.png'
-import tanenbaumImage from '@/assets/tanenbaum.png'
-import lotrImage from '@/assets/lotr.png'
 import QuotesContainer from '@/components/layout/QuotesContainer.vue'
 import TheFooter from '@/components/TheFooter.vue'
 
 import { useI18n } from 'vue-i18n'
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useEmailService } from '@/services/emailService'
 import { useUserStore } from '@/stores/userStore'
@@ -49,11 +66,46 @@ const router = useRouter()
 const emailService = useEmailService()
 const userStore = useUserStore()
 
-onBeforeMount(() => {
-  registerWithGoogle()
-  verifyUser()
-})
+const fixed = ref(false)
+const isDesktop = ref(false)
+const isClicked = ref(null)
+const imageIndex = ref(null)
 
+function scrollToImage(index) {
+  if (!isDesktop.value) return
+  isClicked.value = true
+
+  if (fixed.value && index !== 2) {
+    index++
+  }
+  const container = document.querySelectorAll('.quote-container')[index]
+  container.scrollIntoView({ behavior: 'smooth' })
+  setTimeout(() => {
+    imageIndex.value++
+  }, 500)
+}
+
+function handleScroll() {
+  const { scrollTop } = document.documentElement
+  if (!isDesktop.value) return
+
+  if (scrollTop > 810 && !isClicked.value) {
+    fixed.value = true
+  } else if (scrollTop < 810 && !isClicked.value) {
+    fixed.value = false
+  } else if (scrollTop > 810 && isClicked.value && !imageIndex.value) {
+    fixed.value = true
+  } else if (scrollTop < 810 && isClicked.value && imageIndex.value > 0) {
+    fixed.value = false
+    isClicked.value = false
+    imageIndex.value = null
+  }
+}
+function checkWidth() {
+  isDesktop.value = window.innerWidth >= 1028
+}
+
+onMounted(() => {})
 async function registerWithGoogle() {
   const { code } = route.query
   if (code) {
@@ -81,4 +133,12 @@ async function verifyUser() {
     }
   }
 }
+
+onBeforeMount(() => {
+  registerWithGoogle()
+  verifyUser()
+  checkWidth()
+  window.addEventListener('scroll', handleScroll)
+  window.addEventListener('resize', checkWidth)
+})
 </script>

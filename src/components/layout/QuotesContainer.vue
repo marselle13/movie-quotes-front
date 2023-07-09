@@ -1,26 +1,27 @@
 <template>
-  <section :class="backdrop">
-    <div class="relative -z-10 w-full" v-if="image">
-      <img :src="image" alt="image" class="w-full" />
-      <div
-        class="z-40 md:pl-32 pl-6 absolute top-0 xl:w-[1100px] md:w-[700px] w-[320px] grid grid-cols-12 content-center h-full gap-4"
-      >
-        <div class="border-t-2 border-white my-4 md:my-10"></div>
-        <div class="col-span-11">
-          <h2 class="flex text-white text-xl md:text-5xl md:leading-[75px] font-bold">
-            “<slot name="quote"></slot>”
-          </h2>
-          <p class="text-[#D9D9D9] text-base md:text-3xl font-bold"><slot name="movie"></slot></p>
-        </div>
+  <div
+    class="quote-container relative bg-no-repeat bg-cover h-[27rem] lg:h-[67.5rem]"
+    :class="[fixed ? 'lg:bg-fixed bg-scroll' : 'bg-scroll', position]"
+  >
+    <div
+      class="z-10 md:pl-32 pl-6 absolute top-0 xl:w-[1100px] md:w-[700px] w-[320px] grid grid-cols-12 content-center h-full gap-4"
+    >
+      <div class="border-t-2 border-white my-4 md:my-10"></div>
+      <div class="col-span-11">
+        <h2 class="flex text-white text-xl lg:text-5xl lg:leading-[75px] font-bold">
+          “<slot name="quote"></slot>”
+        </h2>
+        <p class="text-[#D9D9D9] text-base lg:text-3xl font-bold"><slot name="movie"></slot></p>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script setup>
 defineProps({
-  image: { type: String, required: true },
   backdrop: { type: String, required: false, default: 'backdrop-full' },
+  fixed: { type: Boolean, required: false, default: false },
+  position: { type: String, required: false, default: 'bg-center' },
 })
 </script>
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
   <header
-    class="sticky top-0 flex justify-between items-center py-4 lg:px-16 px-4 z-40"
-    :class="[headerBackground]"
+    class="flex justify-between items-center py-4 lg:px-16 px-4 z-40"
+    :class="[headerBackground, route.meta.user !== 'guest' ? 'sticky top-0' : '']"
   >
     <div class="flex items-center">
       <p class="text-[#DDCCAA] uppercase" :class="[headerIcon]">
