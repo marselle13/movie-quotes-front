@@ -151,7 +151,7 @@ const { setValues, defineInputBinds } = useForm()
 
 setValues({
   nameEng: props.movie?.name.en || '',
-  nameGeo: props.movie?.name.en || '',
+  nameGeo: props.movie?.name.ka || '',
   genresId: props.movie?.genres.map((genre) => genre.id) || [],
   year: props.movie?.year || '',
   directorEng: props.movie?.director.en || '',

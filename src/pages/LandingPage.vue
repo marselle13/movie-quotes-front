@@ -2,10 +2,10 @@
   <TheHeader :background="false" />
   <router-view></router-view>
   <section
-    class="w-[300px] mx-auto md:w-full md:mx-0 md:grid text-center md:content-center md:justify-items-center pt-32 pb-24 md:py-64 space-y-6"
+    class="w-[300px] mx-auto md:w-full md:mx-0 md:grid text-center md:content-center md:justify-items-center pt-32 pb-24 md:py-64"
   >
     <h1
-      class="text-2xl md:text-6xl md:leading-[90px] text-[#DDCCAA] font-bold"
+      class="text-2xl md:text-6xl md:leading-[90px] text-[#DDCCAA] font-bold mb-6"
       :class="locale === 'en' ? 'max-w-[800px]' : 'max-w-[1100px]'"
     >
       {{ t('title') }}
@@ -13,7 +13,7 @@
     <base-button
       :link="true"
       :to="{ name: 'register' }"
-      class="w-28 md:w-32 py-2"
+      class="w-28 md:w-32 p-2"
       :animation="true"
       >{{ t('get_started') }}</base-button
     >
