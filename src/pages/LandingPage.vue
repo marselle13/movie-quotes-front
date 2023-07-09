@@ -68,8 +68,7 @@ const userStore = useUserStore()
 
 const fixed = ref(false)
 const isDesktop = ref(false)
-const isClicked = ref(null)
-const imageIndex = ref(null)
+const isClicked = ref(false)
 
 function scrollToImage(index) {
   if (!isDesktop.value) return
@@ -80,25 +79,18 @@ function scrollToImage(index) {
   }
   const container = document.querySelectorAll('.quote-container')[index]
   container.scrollIntoView({ behavior: 'smooth' })
-  setTimeout(() => {
-    imageIndex.value++
-  }, 500)
 }
 
 function handleScroll() {
   const { scrollTop } = document.documentElement
   if (!isDesktop.value) return
-
-  if (scrollTop > 810 && !isClicked.value) {
+  if (isClicked.value && scrollTop > 500) {
     fixed.value = true
-  } else if (scrollTop < 810 && !isClicked.value) {
-    fixed.value = false
-  } else if (scrollTop > 810 && isClicked.value && !imageIndex.value) {
+  } else if (!isClicked.value && scrollTop > 700) {
     fixed.value = true
-  } else if (scrollTop < 810 && isClicked.value && imageIndex.value > 0) {
+  } else if (scrollTop < 700) {
     fixed.value = false
     isClicked.value = false
-    imageIndex.value = null
   }
 }
 function checkWidth() {
