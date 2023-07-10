@@ -69,17 +69,16 @@ export const usePostStore = defineStore('PostStore', {
 
       post.length.comments++
     },
-    async postReaction(postId) {
-      const post = this.posts.find((post) => post.id === postId) || this.post
-      const likedPost = post.likes.find((like) => like.user.id === useUserStore().userData.id)
+    postReaction(reactData) {
+      const post = Array.isArray(this.posts)
+        ? this.posts.find((post) => post.id === reactData.quoteId)
+        : this.posts
+      const likedPost = post.likes.find((like) => like.id === reactData.id)
       if (likedPost) {
-        await usePostService().unlikePost(postId)
         post.likes = post.likes.filter((like) => like !== likedPost)
         post.length.likes--
       } else {
-        const response = await usePostService().likePost(postId)
-        const newLike = response.data.like
-        post.likes.push(newLike)
+        post.likes.push(reactData)
         post.length.likes++
       }
     },

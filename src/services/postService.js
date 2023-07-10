@@ -1,4 +1,6 @@
 import api from '@/config/axios'
+import { useUserStore } from '@/stores/userStore'
+import { usePostStore } from '@/stores/postStore'
 
 export const usePostService = () => {
   async function fetchPosts(page, search = null) {
@@ -38,11 +40,18 @@ export const usePostService = () => {
     return await api.post(`api/comments/${postId}`, { text: comment })
   }
 
-  async function likePost(postId) {
-    return await api.post(`api/likes/${postId}`)
-  }
-  async function unlikePost(postId) {
-    return await api.delete(`api/likes/${postId}`)
+  async function reactOnPost(postId) {
+    const postStore = usePostStore()
+    const userStore = useUserStore()
+    const post = Array.isArray(postStore.getPosts)
+      ? postStore.getPosts.find((post) => post.id === postId)
+      : postStore.getPosts
+    const likedPost = post.likes.find((like) => like.user.id === userStore.userData.id)
+    if (likedPost) {
+      return await api.delete(`api/likes/${postId}`)
+    } else {
+      return await api.post(`api/likes/${postId}`)
+    }
   }
 
   async function deleteQuote(quoteId) {
@@ -58,8 +67,7 @@ export const usePostService = () => {
     fetchMoreComments,
     createOrUpdateQuote,
     addNewComment,
-    likePost,
-    unlikePost,
+    reactOnPost,
     deleteQuote,
     viewPost,
   }
