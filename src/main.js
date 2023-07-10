@@ -9,19 +9,19 @@ import router from './router'
 import './config/vee-validate/rules'
 import './config/vee-validate/messages'
 
-import BaseDropdown from '@/components/ui/form/BaseDropdown.vue'
-import BaseButton from '@/components/ui/form/BaseButton.vue'
+import BaseDropdown from '@/components/common/form/BaseDropdown.vue'
+import BaseButton from '@/components/common/form/BaseButton.vue'
 import English from '@/locales/en.json'
 import Georgian from '@/locales/ka.json'
-import AuthCard from '@/components/ui/AuthCard.vue'
-import BaseInput from '@/components/ui/form/BaseInput.vue'
-import MainCard from '@/components/ui/MainCard.vue'
-import BaseTextarea from '@/components/ui/form/BaseTextarea.vue'
-import BaseUpload from '@/components/ui/form/BaseUpload.vue'
+import AuthCard from '@/components/common/AuthCard.vue'
+import BaseInput from '@/components/common/form/BaseInput.vue'
+import MainCard from '@/components/common/MainCard.vue'
+import BaseTextarea from '@/components/common/form/BaseTextarea.vue'
+import BaseUpload from '@/components/common/form/BaseUpload.vue'
 
 const i18n = createI18n({
   legacy: false,
-  locale: localStorage.getItem('locale'),
+  locale: localStorage.getItem('locale') || 'en',
   messages: {
     en: English,
     ka: Georgian,

@@ -2,7 +2,7 @@
   <auth-card class="-mt-12 md:mt-0">
     <template #title> {{ t('create_account') }} </template>
     <template #info> {{ t('start_journey') }}</template>
-    <Form @submit="onSubmit" class="mt-5 space-y-4">
+    <Form @submit="onSubmit" class="mt-5 space-y-5">
       <base-input
         id="name"
         :label="t('name')"
@@ -53,7 +53,7 @@
   </auth-card>
 </template>
 <script setup>
-import AuthCard from '@/components/ui/AuthCard.vue'
+import AuthCard from '@/components/common/AuthCard.vue'
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { Form } from 'vee-validate'
 import { reactive } from 'vue'

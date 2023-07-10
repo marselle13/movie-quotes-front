@@ -9,6 +9,8 @@ import NotFound from '@/pages/NotFound.vue'
 import ResetPassword from '@/pages/password/ResetPassword.vue'
 import ForbiddenPage from '@/pages/ForbiddenPage.vue'
 import ProfilePage from '@/pages/User/ProfilePage.vue'
+import MovieListPage from '@/pages/movie/MovieListPage.vue'
+import MoviePage from '@/pages/movie/MoviePage.vue'
 
 const NewsFeed = () => import('@/pages/NewsFeedPage.vue')
 
@@ -35,10 +37,23 @@ const router = createRouter({
       component: NewsFeed,
       meta: { user: 'auth' },
     },
+    { name: 'movie-list', path: '/movies', component: MovieListPage, meta: { user: 'auth' } },
+    {
+      name: 'movie-description',
+      path: '/movies/:movie',
+      component: MoviePage,
+      meta: { user: 'auth' },
+    },
     { name: 'profile', path: '/profile', component: ProfilePage, meta: { user: 'auth' } },
     { name: 'forbidden', path: '/forbidden', component: ForbiddenPage },
     { name: 'not-found', path: '/:notFound(.*)', component: NotFound },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition || to.meta.user === 'guest') {
+      return savedPosition
+    }
+    return { left: 0, top: 0 }
+  },
 })
 
 export default router

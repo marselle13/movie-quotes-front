@@ -12,3 +12,8 @@ defineRule('alpha_num', (value) => {
   const alphaNum = /^[a-z0-9]*$/
   return alphaNum.test(value)
 })
+
+defineRule('valid_year', (value) => {
+  const date = new Date()
+  return value <= date.getFullYear()
+})

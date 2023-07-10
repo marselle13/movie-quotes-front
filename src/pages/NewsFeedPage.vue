@@ -1,17 +1,7 @@
 <template>
-  <TheHeader @open-navigation="navigationHandler" />
-  <MainContainer
-    width="md:w-[940px] md:mx-auto lg:mx-0 w-full relative"
-    :navigation="navigation"
-    @close-navigation="navigationHandler"
-  >
+  <MainContainer width="md:w-[940px] md:mx-auto lg:mx-0 w-full relative">
     <PostNavigation />
-    <div class="grid justify-items-center content-center w-full mt-20" v-if="isLoading">
-      <div
-        style="border-top-color: transparent"
-        class="w-24 h-24 border-4 border-blue-400 border-solid rounded-full animate-spin"
-      ></div>
-    </div>
+    <LoadingSpinner v-if="isLoading" />
     <div v-else-if="!isLoading">
       <PostSection
         v-for="post in postStore.getPosts"
@@ -36,42 +26,36 @@
   </MainContainer>
 </template>
 <script setup>
-import TheHeader from '@/components/layout/TheHeader.vue'
 import MainContainer from '@/components/layout/MainContainer.vue'
 import PostNavigation from '@/components/post/PostNavigation.vue'
 import PostSection from '@/components/post/PostSection.vue'
 import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 import { usePostStore } from '@/stores/postStore'
 import { useI18n } from 'vue-i18n'
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const postStore = usePostStore()
 const { t, locale } = useI18n()
-const navigation = ref(false)
 const isLoading = ref(false)
 const load = ref(false)
 const error = ref('')
-function navigationHandler(value) {
-  navigation.value = value
-}
 
 async function handleScroll() {
   const { scrollTop, clientHeight, scrollHeight } = document.documentElement
   const bottomOffset = 1000
   if (scrollTop + clientHeight + bottomOffset >= scrollHeight && !error.value) {
-    await postStore.showMorePosts()
+    await postStore.showMorePosts(postStore.getSearch ?? null)
   }
 }
 
 onBeforeMount(async () => {
-  if (postStore.getPosts.length === 0) {
-    try {
-      isLoading.value = true
-      await postStore.showPosts()
-      isLoading.value = false
-    } catch (err) {
-      isLoading.value = false
-      error.value = err.message
-    }
+  try {
+    isLoading.value = true
+    await postStore.showPosts()
+    isLoading.value = false
+  } catch (err) {
+    isLoading.value = false
+    error.value = err.message
   }
 })
 

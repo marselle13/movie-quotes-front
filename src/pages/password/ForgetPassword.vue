@@ -4,7 +4,7 @@
     <template #info>
       {{ t('forget_info') }}
     </template>
-    <Form @submit="onSubmit" class="mt-5 space-y-4">
+    <Form @submit="onSubmit" class="mt-5 space-y-6">
       <base-input
         type="email"
         id="email"
@@ -14,7 +14,7 @@
         :error="error"
         @update-prop="error = ''"
       ></base-input>
-      <base-button class="w-full py-2">{{ t('send_instructions') }}</base-button>
+      <base-button class="w-full py-2 mt-2">{{ t('send_instructions') }}</base-button>
       <div class="flex justify-center">
         <router-link :to="{ name: 'login' }" class="text-[#6C757D] inline-flex items-center gap-3">
           <BackIcon />
@@ -25,7 +25,7 @@
   </auth-card>
 </template>
 <script setup>
-import AuthCard from '@/components/ui/AuthCard.vue'
+import AuthCard from '@/components/common/AuthCard.vue'
 import BackIcon from '@/components/icons/BackIcon.vue'
 import { Form } from 'vee-validate'
 import { useI18n } from 'vue-i18n'

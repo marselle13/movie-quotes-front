@@ -17,19 +17,16 @@ export const useUserStore = defineStore('UserStore', {
   },
   actions: {
     async login(values) {
-      const authService = useAuthService()
-      await authService.loginUser(values)
+      await useAuthService().loginUser(values)
       await this.data()
     },
     async logout() {
-      const authService = useAuthService()
-      await authService.logoutUser()
+      await useAuthService().logoutUser()
       this.resetData()
     },
     async data() {
       try {
-        const authService = useAuthService()
-        const response = await authService.userData()
+        const response = await useAuthService().userData()
         const { id, name, email, avatar, registeredWithGoogle } = response.data
 
         const avatarPath = avatar.includes('default') ? avatar : `storage/${avatar}`

@@ -1,10 +1,5 @@
 <template>
-  <TheHeader @open-navigation="navigationHandler" />
-  <MainContainer
-    width="max-w-[1000px] md:mx-auto lg:mx-0 w-full"
-    :navigation="navigation"
-    @close-navigation="navigationHandler"
-  >
+  <MainContainer width="max-w-[1000px] md:mx-auto lg:mx-0 w-full">
     <div class="pl-10">
       <BackIcon class="block lg:hidden" @click="router.push({ name: 'news-feed' })" />
       <h2 class="text-white text-2xl hidden lg:block">{{ t('my_profile') }}</h2>
@@ -18,7 +13,7 @@
         @confirm="onConfirm(formData.value)"
       />
       <main-card
-        class="mt-8 lg:mt-32 py-20 md:pb-32 px-8 lg:px-12 w-full space-y-4"
+        class="mt-8 lg:mt-32 py-20 md:pb-32 px-8 lg:px-12 w-full space-y-5"
         profile
         id="main-card"
         v-show="!confirmModal"
@@ -44,7 +39,7 @@
               </div>
             </Field>
           </div>
-          <div class="space-y-12 lg:-mt-10 mt-12">
+          <div class="space-y-14 lg:-mt-10 mt-12">
             <div class="flex items-center gap-9 border-b border-[#ced4da80] md:border-none">
               <base-input
                 id="name"
@@ -56,11 +51,7 @@
                 :edit="nameHandler.edit"
                 disabled
               ></base-input>
-              <button
-                class="text-[#CED4DA] mt-4 md:mt-7"
-                type="button"
-                @click="nameHandler.edit = true"
-              >
+              <button class="text-[#CED4DA]" type="button" @click="nameHandler.edit = true">
                 {{ t('edit') }}
               </button>
             </div>
@@ -92,7 +83,7 @@
                 disabled
               ></base-input>
               <button
-                class="text-[#CED4DA] mt-4 md:mt-7"
+                class="text-[#CED4DA]"
                 type="button"
                 v-if="!google"
                 @click="emailHandler.edit = true"
@@ -127,11 +118,7 @@
                 placeholder="••••••••••••"
                 disabled
               ></base-input>
-              <button
-                class="text-[#CED4DA] mt-4 md:mt-7"
-                type="button"
-                @click="passwordHandler.edit = true"
-              >
+              <button class="text-[#CED4DA]" type="button" @click="passwordHandler.edit = true">
                 {{ t('edit') }}
               </button>
             </div>
@@ -187,10 +174,9 @@
 </template>
 <script setup>
 import MainContainer from '@/components/layout/MainContainer.vue'
-import TheHeader from '@/components/layout/TheHeader.vue'
-import BaseInput from '@/components/ui/form/BaseInput.vue'
-import BaseButton from '@/components/ui/form/BaseButton.vue'
-import MainCard from '@/components/ui/MainCard.vue'
+import BaseInput from '@/components/common/form/BaseInput.vue'
+import BaseButton from '@/components/common/form/BaseButton.vue'
+import MainCard from '@/components/common/MainCard.vue'
 import ConfirmationModal from '@/components/modals/profile/ConfirmationModal.vue'
 import PasswordModal from '@/components/modals/profile/PasswordModal.vue'
 
@@ -211,7 +197,6 @@ const { google } = userStore.userData
 const { t } = useI18n()
 const router = useRouter()
 
-const navigation = ref(false)
 const isDesktop = ref(true)
 const confirmModal = ref(false)
 const updated = ref(false)
@@ -245,10 +230,6 @@ const passwordHandler = reactive({
 const checkModalWidth = computed(() => {
   return !((nameHandler.edit || emailHandler.edit || passwordHandler.edit) && !isDesktop.value)
 })
-
-function navigationHandler(value) {
-  navigation.value = value
-}
 
 function validPasswordModal() {
   const alphaNum = /^[a-z0-9]+$/

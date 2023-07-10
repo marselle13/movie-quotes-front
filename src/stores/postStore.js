@@ -1,28 +1,35 @@
 import { defineStore } from 'pinia'
 import { usePostService } from '@/services/postService'
+import { useMovieStore } from '@/stores/movieStore'
 import { useUserStore } from '@/stores/userStore'
 
 export const usePostStore = defineStore('PostStore', {
   state: () => ({
     posts: [],
+    post: [],
+    search: null,
     currentPage: 1,
     isFetching: false,
     hasMoreData: true,
   }),
   getters: {
     getPosts: (state) => state.posts,
+    getPost: (state) => state.post,
+    getSearch: (state) => state.search,
   },
   actions: {
     async showPosts() {
-      const postService = usePostService()
       try {
-        const response = await postService.fetchPosts(this.currentPage)
+        this.currentPage = 1
+        this.hasMoreData = true
+        this.search = null
+        const response = await usePostService().fetchPosts(this.currentPage)
         this.posts = response.data
       } catch (err) {
         throw new Error('Cannot Fetch Data')
       }
     },
-    async showMorePosts() {
+    async showMorePosts(search = null) {
       if (this.isFetching || !this.hasMoreData) {
         return
       }
@@ -30,10 +37,8 @@ export const usePostStore = defineStore('PostStore', {
       this.isFetching = true
 
       try {
-        const postService = usePostService()
-        const response = await postService.fetchPosts((this.currentPage += 1))
+        const response = await usePostService().fetchPosts((this.currentPage += 1), search)
         const newPosts = response.data
-
         this.posts = [...this.posts, ...newPosts]
         this.currentPage += 1
         this.hasMoreData = newPosts.length > 0
@@ -44,19 +49,22 @@ export const usePostStore = defineStore('PostStore', {
       }
     },
     async addQuote(values) {
-      const postService = usePostService()
-      const response = await postService.addNewQuote(values)
+      const response = await usePostService().createOrUpdateQuote(values)
       this.posts = [response.data.newQuote, ...this.posts]
+      useMovieStore().updateQuoteAmount(values.movieId)
+      useMovieStore().addNewMovieQuote(response.data.newQuote)
     },
     async loadMoreComments(postId) {
-      const postService = usePostService()
-      const response = await postService.fetchMoreComments(postId)
-      this.commentSection(postId, response.data)
+      try {
+        const response = await usePostService().fetchMoreComments(postId)
+        this.commentSection(postId, response.data)
+      } catch (err) {
+        throw new Error('cannot load Comments')
+      }
     },
     async newComment(postId, comment, loaded) {
-      const postService = usePostService()
-      const response = await postService.addNewComment(postId, comment)
-      const post = this.posts.find((post) => post.id === postId)
+      const response = await usePostService().addNewComment(postId, comment)
+      const post = this.posts.find((post) => post.id === postId) || this.post
       loaded
         ? post.comments.push(response.data.newComment)
         : post.comments.unshift(response.data.newComment)
@@ -64,27 +72,46 @@ export const usePostStore = defineStore('PostStore', {
       post.length.comments++
     },
     async postReaction(postId) {
-      const postService = usePostService()
-      const userStore = useUserStore()
-      const post = this.posts.find((post) => post.id === postId)
-      const likedPost = post.likes.findIndex((like) => like.user.id === userStore.userData.id)
-      if (likedPost !== -1) {
-        await postService.unlikePost(postId)
-        post.likes.splice(likedPost, 1)
+      const post = this.posts.find((post) => post.id === postId) || this.post
+      const likedPost = post.likes.find((like) => like.user.id === useUserStore().userData.id)
+      if (likedPost) {
+        await usePostService().unlikePost(postId)
+        post.likes = post.likes.filter((like) => like !== likedPost)
         post.length.likes--
       } else {
-        const response = await postService.likePost(postId)
+        const response = await usePostService().likePost(postId)
         const newLike = response.data.like
         post.likes.push(newLike)
         post.length.likes++
       }
     },
+    async showPost(quoteId) {
+      const post = this.posts.find((post) => post.id === quoteId)
+      if (!post) {
+        const response = await usePostService().viewPost(quoteId)
+        this.post = response.data
+        return
+      }
+      this.post = post
+    },
+    async editPost(values, quoteId) {
+      const response = await usePostService().createOrUpdateQuote(values, quoteId)
+      this.post.quote = response.data.updatedQuote.quote
+      this.post.thumbnail = response.data.updatedQuote.thumbnail
+      useMovieStore().updateMovieQuote(quoteId, response.data.updatedQuote)
+    },
+    async searchPosts(search) {
+      this.search = search
+      this.currentPage = 1
+      const response = await usePostService().fetchPosts(this.currentPage, search)
+      this.posts = response.data
+    },
     commentSection(postId, data = null) {
-      const post = this.posts.find((post) => postId === post.id)
+      const post = this.posts.find((post) => postId === post.id) || this.post
       if (data) {
         post.comments = data
       }
-      post.comments.reverse()
+      post.comments?.reverse()
     },
   },
 })

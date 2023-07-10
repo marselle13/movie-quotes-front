@@ -19,7 +19,7 @@
   </section>
 </template>
 <script setup>
-import BaseButton from '@/components/ui/form/BaseButton.vue'
+import BaseButton from '@/components/common/form/BaseButton.vue'
 import { useI18n } from 'vue-i18n'
 
 defineProps({ info: { type: String, required: true } })

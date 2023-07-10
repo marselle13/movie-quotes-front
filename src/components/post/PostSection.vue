@@ -12,33 +12,18 @@
       :likes-length="likesLength"
     />
     <CommentSection
-      v-for="comment in comments"
-      :key="comment.id"
-      :name="comment.user.name"
-      :avatar="comment.user.avatar"
-      :comment="comment.text"
+      :post-id="postId"
+      :comments="comments"
+      :comments-length="commentsLength"
+      @loaded="emit('loaded')"
     />
-    <base-button
-      v-if="!loaded && commentsLength > 2"
-      mode="flat"
-      class="w-full py-2 mt-6"
-      @click="moreComments(postId)"
-      >Load more</base-button
-    >
-    <CommentInput :post-id="postId" :loaded="loaded" />
   </main-card>
 </template>
 <script setup>
-import MainCard from '@/components/ui/MainCard.vue'
+import MainCard from '@/components/common/MainCard.vue'
 import CommentSection from '@/components/post/CommentSection.vue'
 import ThePost from '@/components/post/ThePost.vue'
-import CommentInput from '@/components/post/CommentInput.vue'
 import { useI18n } from 'vue-i18n'
-import { usePostStore } from '@/stores/postStore'
-import { ref } from 'vue'
-
-const postStore = usePostStore()
-const loaded = ref(false)
 
 defineProps({
   postId: { type: Number, required: true },
@@ -53,14 +38,4 @@ defineProps({
 const emit = defineEmits(['loaded'])
 
 const { locale } = useI18n()
-
-async function moreComments(postId) {
-  try {
-    await postStore.loadMoreComments(postId)
-    loaded.value = true
-    emit('loaded')
-  } catch (err) {
-    //Err
-  }
-}
 </script>
