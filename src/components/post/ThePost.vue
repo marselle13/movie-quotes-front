@@ -79,7 +79,7 @@ import LikeIcon from '@/components/icons/LikeIcon.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
 import CameraIcon from '@/components/icons/CameraIcon.vue'
 import { usePostStore } from '@/stores/postStore'
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
@@ -95,6 +95,7 @@ const props = defineProps({
   commentsLength: { type: Number, required: true },
   likesLength: { type: Number, required: true },
   likes: { type: Object, required: true },
+  load: { type: Boolean, required: true },
   edit: { type: Boolean, required: false },
 })
 
@@ -142,4 +143,15 @@ async function reactOnPost(postId) {
     //Error
   }
 }
+
+onMounted(() => {
+  window.Echo.channel(`comments`).listen('CommentSent', (data) => {
+    if (props.postId !== data.comment.quoteId) return
+    postStore.newComment(data.comment.quoteId, data.comment, props.load)
+  })
+})
+
+onBeforeUnmount(() => {
+  window.Echo.leaveChannel(`comments`)
+})
 </script>

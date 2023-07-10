@@ -31,7 +31,7 @@
     @click="moreComments(postId)"
     >Load more</base-button
   >
-  <CommentInput :post-id="postId" :loaded="loaded" />
+  <CommentInput :post-id="postId" />
 </template>
 <script setup>
 import { usePostStore } from '@/stores/postStore'

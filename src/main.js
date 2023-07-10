@@ -18,6 +18,7 @@ import BaseInput from '@/components/common/form/BaseInput.vue'
 import MainCard from '@/components/common/MainCard.vue'
 import BaseTextarea from '@/components/common/form/BaseTextarea.vue'
 import BaseUpload from '@/components/common/form/BaseUpload.vue'
+import instantiatePusher from '@/helpers/instantiatePusher'
 
 const i18n = createI18n({
   legacy: false,
@@ -36,6 +37,7 @@ const app = createApp(App)
 app.use(router)
 app.use(i18n)
 app.use(pinia)
+app.use(instantiatePusher)
 
 app.component('base-dropdown', BaseDropdown)
 app.component('base-button', BaseButton)

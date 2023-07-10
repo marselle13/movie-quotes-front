@@ -61,11 +61,11 @@ export const usePostStore = defineStore('PostStore', {
       }
     },
     async newComment(postId, comment, loaded) {
-      const response = await usePostService().addNewComment(postId, comment)
-      const post = this.posts.find((post) => post.id === postId) || this.post
-      loaded
-        ? post.comments.push(response.data.newComment)
-        : post.comments.unshift(response.data.newComment)
+      const post = Array.isArray(this.posts)
+        ? this.posts.find((post) => postId === post.id)
+        : this.posts
+
+      loaded ? post.comments.push(comment) : post.comments.unshift(comment)
 
       post.length.comments++
     },
