@@ -1,12 +1,10 @@
 import { defineStore } from 'pinia'
 import { usePostService } from '@/services/postService'
 import { useMovieStore } from '@/stores/movieStore'
-import { useUserStore } from '@/stores/userStore'
 
 export const usePostStore = defineStore('PostStore', {
   state: () => ({
     posts: [],
-    post: [],
     search: null,
     currentPage: 1,
     isFetching: false,
@@ -86,18 +84,13 @@ export const usePostStore = defineStore('PostStore', {
       }
     },
     async showPost(quoteId) {
-      const post = this.posts.find((post) => post.id === quoteId)
-      if (!post) {
-        const response = await usePostService().viewPost(quoteId)
-        this.post = response.data
-        return
-      }
-      this.post = post
+      const response = await usePostService().viewPost(quoteId)
+      this.posts = response.data
     },
     async editPost(values, quoteId) {
       const response = await usePostService().createOrUpdateQuote(values, quoteId)
-      this.post.quote = response.data.updatedQuote.quote
-      this.post.thumbnail = response.data.updatedQuote.thumbnail
+      this.posts.quote = response.data.updatedQuote.quote
+      this.posts.thumbnail = response.data.updatedQuote.thumbnail
       useMovieStore().updateMovieQuote(quoteId, response.data.updatedQuote)
     },
     async searchPosts(search) {
@@ -106,12 +99,12 @@ export const usePostStore = defineStore('PostStore', {
       const response = await usePostService().fetchPosts(this.currentPage, search)
       this.posts = response.data
     },
-    commentSection(postId, data = null) {
-      const post = this.posts.find((post) => postId === post.id) || this.post
-      if (data) {
-        post.comments = data
-      }
-      post.comments?.reverse()
+    commentSection(postId, data) {
+      const post = Array.isArray(this.posts)
+        ? this.posts.find((post) => postId === post.id)
+        : this.posts
+      post.comments = data
+      post.comments.reverse()
     },
   },
 })

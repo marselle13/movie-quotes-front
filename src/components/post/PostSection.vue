@@ -10,6 +10,7 @@
       :thumbnail="thumbnail"
       :comments-length="commentsLength"
       :likes-length="likesLength"
+      :likes="likes"
     />
     <CommentSection
       :post-id="postId"
@@ -34,6 +35,7 @@ defineProps({
   comments: { type: Object, required: true },
   commentsLength: { type: Number, required: true },
   likesLength: { type: Number, required: true },
+  likes: { type: Object, required: true },
 })
 const emit = defineEmits(['loaded'])
 

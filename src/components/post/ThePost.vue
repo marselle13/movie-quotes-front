@@ -79,7 +79,7 @@ import LikeIcon from '@/components/icons/LikeIcon.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
 import CameraIcon from '@/components/icons/CameraIcon.vue'
 import { usePostStore } from '@/stores/postStore'
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
@@ -94,6 +94,7 @@ const props = defineProps({
   movieYear: { type: Number, required: false },
   commentsLength: { type: Number, required: true },
   likesLength: { type: Number, required: true },
+  likes: { type: Object, required: true },
   edit: { type: Boolean, required: false },
 })
 
@@ -114,8 +115,7 @@ const quoteGeo = ref(props.quote.ka)
 const imageHandler = ref('')
 
 const likeButtonStyle = computed(() => {
-  const post = postStore.getPosts.find((post) => props.postId === post.id) || postStore.getPost
-  const index = post.likes.findIndex((like) => like.user.id === userStore.userData.id)
+  const index = props.likes.findIndex((like) => like.user?.id === userStore.userData.id)
   return index !== -1 ? 'red' : 'white'
 })
 
@@ -142,8 +142,4 @@ async function reactOnPost(postId) {
     //Error
   }
 }
-
-onBeforeUnmount(() => {
-  postStore.commentSection(props.postId)
-})
 </script>
