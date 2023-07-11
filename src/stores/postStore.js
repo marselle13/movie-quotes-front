@@ -12,7 +12,6 @@ export const usePostStore = defineStore('PostStore', {
   }),
   getters: {
     getPosts: (state) => state.posts,
-    getPost: (state) => state.post,
     getSearch: (state) => state.search,
   },
   actions: {

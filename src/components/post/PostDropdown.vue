@@ -1,24 +1,25 @@
 <template>
   <base-dropdown
-    :disabled="false"
     dropdown-width="absolute -left-[12rem] -top-[13rem] lg:left-0 lg:top-6 w-[14rem] flex flex-col items-start space-y-8 py-8 px-10"
   >
     <template #dropdownButton>
       <QuoteIcon />
     </template>
     <template #dropdown>
-      <li class="flex gap-2 hover:opacity-80" @click="emit('view-quote', quoteId, false)">
-        <ViewPostIcon />
-        <p>{{ t('view_quote') }}</p>
-      </li>
-      <li class="flex gap-2 hover:opacity-80" @click="emit('edit-quote', quoteId, true)">
-        <EditIcon />
-        <p>{{ t('edit') }}</p>
-      </li>
-      <li class="flex gap-2 hover:opacity-80" @click="deleteQuote(quoteId, movieId)">
-        <DeleteIcon />
-        <p>{{ t('delete') }}</p>
-      </li>
+      <ul class="cursor-pointer space-y-5">
+        <li class="flex gap-2 hover:opacity-80" @click="emit('view-quote', quoteId, false)">
+          <ViewPostIcon />
+          <p>{{ t('view_quote') }}</p>
+        </li>
+        <li class="flex gap-2 hover:opacity-80" @click="emit('edit-quote', quoteId, true)">
+          <EditIcon />
+          <p>{{ t('edit') }}</p>
+        </li>
+        <li class="flex gap-2 hover:opacity-80" @click="deleteQuote(quoteId, movieId)">
+          <DeleteIcon />
+          <p>{{ t('delete') }}</p>
+        </li>
+      </ul>
     </template>
   </base-dropdown>
 </template>

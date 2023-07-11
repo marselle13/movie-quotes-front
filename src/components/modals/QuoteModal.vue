@@ -73,7 +73,12 @@
         class="relative"
         v-if="!movie"
       >
-        <base-dropdown background buttonWidth="w-full h-full">
+        <base-dropdown
+          buttonWidth="w-full h-full"
+          button-background
+          dropdown-background
+          dropdown-width="left-0 top-20 max-h-[100px] w-full overflow-y-auto"
+        >
           <template #dropdownButton
             ><div class="flex items-center justify-between text-white text-left">
               <div class="flex justify-center items-end gap-4">
@@ -88,19 +93,21 @@
             </div>
           </template>
           <template #dropdown>
-            <li class="p-4" v-if="error.select">{{ error.select }}</li>
-            <li class="p-4" v-if="movieStore.getMovieList.length === 0 && !error.select">
-              {{ t('no_movies') }}
-            </li>
-            <li
-              v-else
-              class="p-4 hover:bg-gray-900"
-              v-for="movies in movieStore.getMovieList"
-              :key="movies.id"
-              @click="selectMovie(movies.id, movies.name, handleChange)"
-            >
-              <p>{{ movies.name[locale] }} ({{ movies.year }})</p>
-            </li>
+            <ul class="cursor-pointer">
+              <li class="p-4" v-if="error.select">{{ error.select }}</li>
+              <li class="p-4" v-if="movieStore.getMovieList.length === 0 && !error.select">
+                {{ t('no_movies') }}
+              </li>
+              <li
+                v-else
+                class="p-4 hover:bg-gray-900"
+                v-for="movies in movieStore.getMovieList"
+                :key="movies.id"
+                @click="selectMovie(movies.id, movies.name, handleChange)"
+              >
+                <p>{{ movies.name[locale] }} ({{ movies.year }})</p>
+              </li>
+            </ul>
           </template>
         </base-dropdown>
       </Field>

@@ -53,15 +53,17 @@
             </div>
           </template>
           <template #dropdown>
-            <li v-if="error.genre" class="px-4">{{ error.genre }}</li>
-            <li
-              class="px-4 py-1 hover:bg-gray-900"
-              v-for="genre in movieStore.getGenres"
-              :key="genre.id"
-              @click="selectGenre(genre.id, genre.name, handleChange)"
-            >
-              {{ genre.name[locale] }}
-            </li>
+            <ul class="cursor-pointer">
+              <li v-if="error.genre" class="px-4">{{ error.genre }}</li>
+              <li
+                class="px-4 py-1 hover:bg-gray-900"
+                v-for="genre in movieStore.getGenres"
+                :key="genre.id"
+                @click="selectGenre(genre.id, genre.name, handleChange)"
+              >
+                {{ genre.name[locale] }}
+              </li>
+            </ul>
           </template>
         </base-dropdown>
       </Field>
@@ -126,14 +128,10 @@
 </template>
 <script setup>
 import NewContainer from '@/components/layout/NewContainer.vue'
-import BaseInput from '@/components/common/form/BaseInput.vue'
-import { useI18n } from 'vue-i18n'
-import { Form, Field, ErrorMessage } from 'vee-validate'
-import BaseTextarea from '@/components/common/form/BaseTextarea.vue'
-import BaseButton from '@/components/common/form/BaseButton.vue'
-import BaseDropdown from '@/components/common/form/BaseDropdown.vue'
 import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
+import { useI18n } from 'vue-i18n'
+import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useMovieStore } from '@/stores/movieStore'
 import { onBeforeMount, reactive, ref } from 'vue'
 import { useForm } from 'vee-validate'

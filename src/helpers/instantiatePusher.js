@@ -1,6 +1,6 @@
 import Echo from 'laravel-echo'
 import Pusher from 'pusher-js'
-import api from '../../../my-first-vue-app/src/config/axios'
+import api from '@/config/axios'
 
 export default function instantiatePusher() {
   window.Pusher = Pusher
@@ -13,12 +13,12 @@ export default function instantiatePusher() {
     withCredentials: true,
     authorizer: (channel) => {
       return {
-        authorize: (sockedId, callback) => {
+        authorize: (socketId, callback) => {
           api
             .post(
               `${import.meta.env.VITE_BASE_URL}broadcasting/auth`,
               {
-                sockedId: sockedId,
+                socket_id: socketId,
                 channel_name: channel.name,
               },
               { withCredentials: true },
