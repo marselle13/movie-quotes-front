@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useAuthService } from '@/services/authService'
+import { usePostService } from '@/services/postService'
 export const useUserStore = defineStore('UserStore', {
   state: () => ({
     user: {
@@ -9,10 +10,12 @@ export const useUserStore = defineStore('UserStore', {
       email: '',
       google: null,
     },
+    notifications: [],
     isAuth: null,
   }),
   getters: {
     userData: (state) => state.user,
+    getNotifications: (state) => state.notifications,
     authUser: (state) => state.isAuth,
   },
   actions: {
@@ -49,6 +52,13 @@ export const useUserStore = defineStore('UserStore', {
       this.user.avatar = `${import.meta.env.VITE_BASE_URL}${
         avatar.includes('default') ? '' : 'storage/'
       }${avatar}`
+    },
+    async userNotifications() {
+      const response = await usePostService().fetchPostNotifications()
+      this.notifications = response.data
+    },
+    newNotification(notification) {
+      this.notifications = [notification, ...this.notifications]
     },
     resetData() {
       this.user.avatar = ''
