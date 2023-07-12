@@ -13,7 +13,7 @@
     <div
       v-if="dropdown"
       @click="dropdownButton"
-      class="z-10 bg-[#24222F] rounded-[10px] absolute text-sm text-white"
+      class="z-20 bg-[#24222F] rounded-[10px] absolute text-sm text-white"
       :class="[
         dropdownWidth,
         {
