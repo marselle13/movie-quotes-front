@@ -33,9 +33,9 @@
           <template #dropdown>
             <div>
               <div class="flex justify-between items-center gap-4">
-                <h5 class="text-3xl">{{ t('notifications') }}</h5>
+                <h5 class="text-lg lg:text-3xl">{{ t('notifications') }}</h5>
                 <p
-                  class="underline text-white class-text-xl cursor-pointer"
+                  class="underline text-white text-sm lg:text-xl cursor-pointer"
                   @click="seenNotifications()"
                 >
                   {{ t('all_read') }}
@@ -52,7 +52,10 @@
                     class="flex lg:justify-between lg:items-center flex-col lg:flex-row items-start justify-center"
                   >
                     <div class="flex gap-6 items-center">
-                      <div class="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+                      <div
+                        class="flex w-20 h-20 rounded-full overflow-hidden flex-shrink-0"
+                        :class="{ 'border-2 border-[#198754]': notification.type === 'new' }"
+                      >
                         <img
                           :src="`${viteBaseUrl}${
                             notification.user.avatar.includes('default') ? '' : 'storage/'

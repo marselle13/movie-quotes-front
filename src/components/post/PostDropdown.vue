@@ -6,7 +6,7 @@
       <QuoteIcon />
     </template>
     <template #dropdown>
-      <ul class="cursor-pointer space-y-5">
+      <ul class="cursor-pointer space-y-8">
         <li class="flex gap-2 hover:opacity-80" @click="emit('view-quote', quoteId, false)">
           <ViewPostIcon />
           <p>{{ t('view_quote') }}</p>
