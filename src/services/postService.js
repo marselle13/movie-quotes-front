@@ -62,14 +62,9 @@ export const usePostService = () => {
     return await api.get(`api/quotes/${quoteId}`)
   }
 
-  async function fetchPostNotifications() {
-    return await api.get(`api/notifications`)
-  }
-
   return {
     fetchPosts,
     fetchMoreComments,
-    fetchPostNotifications,
     createOrUpdateQuote,
     addNewComment,
     reactOnPost,

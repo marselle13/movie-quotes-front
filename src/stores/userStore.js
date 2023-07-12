@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useAuthService } from '@/services/authService'
-import { usePostService } from '@/services/postService'
+import { useUserService } from '@/services/UserService'
 export const useUserStore = defineStore('UserStore', {
   state: () => ({
     user: {
@@ -54,8 +54,27 @@ export const useUserStore = defineStore('UserStore', {
       }${avatar}`
     },
     async userNotifications() {
-      const response = await usePostService().fetchPostNotifications()
-      this.notifications = response.data
+      try {
+        const response = await useUserService().fetchPostNotifications()
+        this.notifications = response.data
+      } catch (err) {
+        throw new Error('Cannot fetch notifications')
+      }
+    },
+    async updateNotification(notificationId = null) {
+      if (notificationId) {
+        const response = await useUserService().updateNotificationStatus(notificationId)
+        const index = this.notifications.findIndex(
+          (notification) => notification.id === notificationId,
+        )
+        this.notifications[index] = response.data.updatedNotification
+      } else {
+        await useUserService().updateNotificationStatus()
+        this.notifications.forEach((notification) => {
+          if (notification.type !== 'new') return
+          notification.type = 'seen'
+        })
+      }
     },
     newNotification(notification) {
       this.notifications = [notification, ...this.notifications]
