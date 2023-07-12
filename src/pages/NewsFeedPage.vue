@@ -15,6 +15,7 @@
         :comments-length="post.length.comments"
         :likes-length="post.length.likes"
         :likes="post.likes"
+        :load="load"
         @loaded="load = true"
       ></PostSection>
     </div>

@@ -3,7 +3,7 @@
     <div
       v-if="dropdown"
       class="fixed top-0 left-0 w-full h-full z-10"
-      @click="dropdown = false"
+      @click="dropdownButton"
     ></div>
   </teleport>
   <div :class="[{ 'hidden md:block': hidden, 'bg-[#000000] p-6': buttonBackground }, position]">
@@ -12,7 +12,7 @@
     </button>
     <div
       v-if="dropdown"
-      @click="dropdown = false"
+      @click="dropdownButton"
       class="z-10 bg-[#24222F] rounded-[10px] absolute text-sm text-white"
       :class="[
         dropdownWidth,
@@ -23,7 +23,7 @@
     >
       <slot name="dropdown"></slot>
     </div>
-    <div v-if="dropdown" class="fixed top-0 left-0 w-full h-full" @click="dropdown = false"></div>
+    <div v-if="dropdown" class="fixed top-0 left-0 w-full h-full" @click="dropdownButton"></div>
   </div>
 </template>
 
@@ -46,7 +46,7 @@ const emit = defineEmits(['isOpen'])
 function dropdownButton() {
   if (!props.delete) {
     dropdown.value = !dropdown.value
-    emit('isOpen', dropdown)
+    emit('isOpen', dropdown.value)
   }
 }
 </script>

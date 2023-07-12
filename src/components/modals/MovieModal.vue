@@ -53,7 +53,7 @@
             </div>
           </template>
           <template #dropdown>
-            <ul class="cursor-pointer">
+            <ul class="cursor-pointer py-2">
               <li v-if="error.genre" class="px-4">{{ error.genre }}</li>
               <li
                 class="px-4 py-1 hover:bg-gray-900"
