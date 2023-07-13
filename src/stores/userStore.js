@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { useAuthService } from '@/services/authService'
-import { useUserService } from '@/services/UserService'
 import { useNotificationService } from '@/services/NotificationService'
 export const useUserStore = defineStore('UserStore', {
   state: () => ({
