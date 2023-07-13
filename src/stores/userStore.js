@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useAuthService } from '@/services/authService'
 import { useUserService } from '@/services/UserService'
+import { useNotificationService } from '@/services/NotificationService'
 export const useUserStore = defineStore('UserStore', {
   state: () => ({
     user: {
@@ -55,7 +56,7 @@ export const useUserStore = defineStore('UserStore', {
     },
     async userNotifications() {
       try {
-        const response = await useUserService().fetchPostNotifications()
+        const response = await useNotificationService().fetchPostNotifications()
         this.notifications = response.data
       } catch (err) {
         throw new Error('Cannot fetch notifications')
@@ -63,13 +64,13 @@ export const useUserStore = defineStore('UserStore', {
     },
     async updateNotification(notificationId = null) {
       if (notificationId) {
-        const response = await useUserService().updateNotificationStatus(notificationId)
+        const response = await useNotificationService().updateNotificationStatus(notificationId)
         const index = this.notifications.findIndex(
           (notification) => notification.id === notificationId,
         )
         this.notifications[index] = response.data.updatedNotification
       } else {
-        await useUserService().updateNotificationStatus()
+        await useNotificationService().updateNotificationStatus()
         this.notifications.forEach((notification) => {
           if (notification.type !== 'new') return
           notification.type = 'seen'

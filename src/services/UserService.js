@@ -19,17 +19,7 @@ export const useUserService = () => {
     return await api.post('api/update-user', formData)
   }
 
-  async function fetchPostNotifications() {
-    return await api.get(`api/notifications`)
-  }
-
-  async function updateNotificationStatus(notificationId = null) {
-    return await api.patch(`api/notifications/${notificationId ?? ''}`)
-  }
-
   return {
     updateUserData,
-    fetchPostNotifications,
-    updateNotificationStatus,
   }
 }
