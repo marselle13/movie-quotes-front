@@ -5,7 +5,7 @@
       <h2 class="text-white text-2xl hidden lg:block">{{ t('my_profile') }}</h2>
     </div>
     <Form v-slot="{ handleReset }" @submit="onSubmit" id="updateProfile">
-      <SuccessfullyUpdateModal @close="updated = false" v-if="updated" />
+      <SuccessfullyUpdateModal :text="updated" @close="updated = ''" v-if="updated" />
       <ConfirmationModal
         :info="t('confirmation_changes')"
         v-if="confirmModal"
@@ -185,21 +185,20 @@ import { Form, Field } from 'vee-validate'
 import { useUserStore } from '@/stores/userStore'
 import { useUserService } from '@/services/UserService'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import BackIcon from '@/components/icons/BackIcon.vue'
-import { useAuthService } from '@/services/authService'
 import SuccessfullyUpdateModal from '@/components/modals/profile/SuccessfullyUpdateModal.vue'
 
-const authService = useAuthService()
 const userStore = useUserStore()
 const userService = useUserService()
 const { google } = userStore.userData
 const { t } = useI18n()
+const route = useRoute()
 const router = useRouter()
 
 const isDesktop = ref(true)
 const confirmModal = ref(false)
-const updated = ref(false)
+const updated = ref('')
 const formData = reactive({})
 
 const avatarHandler = reactive({
@@ -265,13 +264,8 @@ async function submitChanges(values) {
     const { new_email } = values
     const response = await userService.updateUserData(values)
     await userStore.updateProfile(response.data.user)
-    if (new_email) {
-      await authService.logoutUser()
-      await userStore.data()
-      await router.replace({ name: 'success-message', params: { message: 'verification' } })
-    }
     reset()
-    updated.value = true
+    updated.value = new_email ? t('email_update') : t('change')
   } catch (err) {
     nameHandler.error = err.response?.data.errors.name?.[0]
     emailHandler.error = err.response?.data.errors.email?.[0]
@@ -300,7 +294,20 @@ function checkWidth() {
   isDesktop.value = window.innerWidth >= 768
 }
 
+async function updateUserEmail() {
+  const { hash, uuid } = route.query
+  if (uuid && hash && route.name === 'profile') {
+    try {
+      await userStore.updateEmail(route.query)
+      updated.value = t('change')
+    } catch (err) {
+      await router.replace({ name: 'profile' })
+    }
+  }
+}
+
 onMounted(() => {
+  updateUserEmail()
   checkWidth()
   window.addEventListener('resize', checkWidth)
 })
