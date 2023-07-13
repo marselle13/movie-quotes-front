@@ -44,6 +44,11 @@
                 </div>
               </router-link>
             </li>
+            <li>
+              <base-button mode="flat" class="w-32 py-2" @click="logout">{{
+                t('log_out')
+              }}</base-button>
+            </li>
           </ul>
         </nav>
       </aside>
@@ -57,7 +62,7 @@
 import MoviesIcon from '@/components/icons/MoviesIcon.vue'
 import FeedIcon from '@/components/icons/FeedIcon.vue'
 import { computed, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useI18n } from 'vue-i18n'
 import TheHeader from '@/components/TheHeader.vue'
@@ -67,6 +72,7 @@ defineProps({
 })
 
 const route = useRoute()
+const router = useRouter()
 const userStore = useUserStore()
 const { t } = useI18n()
 
@@ -82,6 +88,15 @@ function checkWidth() {
 const activeClass = computed(() => {
   return route.name === 'profile' && ' border-2 border-[#E31221]'
 })
+
+async function logout() {
+  try {
+    await userStore.logout()
+    await router.replace({ name: 'landing' })
+  } catch (err) {
+    //Error
+  }
+}
 
 onMounted(() => {
   checkWidth()
