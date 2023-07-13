@@ -79,10 +79,11 @@ import LikeIcon from '@/components/icons/LikeIcon.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
 import CameraIcon from '@/components/icons/CameraIcon.vue'
 import { usePostStore } from '@/stores/postStore'
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
+import { usePostService } from '@/services/postService'
 
 const props = defineProps({
   postId: { type: Number, required: true },
@@ -94,6 +95,8 @@ const props = defineProps({
   movieYear: { type: Number, required: false },
   commentsLength: { type: Number, required: true },
   likesLength: { type: Number, required: true },
+  likes: { type: Object, required: true },
+  load: { type: Boolean, required: true },
   edit: { type: Boolean, required: false },
 })
 
@@ -114,8 +117,7 @@ const quoteGeo = ref(props.quote.ka)
 const imageHandler = ref('')
 
 const likeButtonStyle = computed(() => {
-  const post = postStore.getPosts.find((post) => props.postId === post.id) || postStore.getPost
-  const index = post.likes.findIndex((like) => like.user.id === userStore.userData.id)
+  const index = props.likes.findIndex((like) => like.user?.id === userStore.userData.id)
   return index !== -1 ? 'red' : 'white'
 })
 
@@ -137,13 +139,25 @@ async function onSubmit(values) {
 
 async function reactOnPost(postId) {
   try {
-    await postStore.postReaction(postId)
+    await usePostService().reactOnPost(postId)
   } catch (err) {
     //Error
   }
 }
 
+onMounted(() => {
+  window.Echo.channel('comments').listen('CommentSent', (data) => {
+    if (props.postId !== data.comment.quoteId) return
+    postStore.newComment(data.comment.quoteId, data.comment, props.load)
+  })
+  window.Echo.channel('reactions').listen('ReactPost', (data) => {
+    if (props.postId !== data.reaction.quoteId) return
+    postStore.postReaction(data.reaction)
+  })
+})
+
 onBeforeUnmount(() => {
-  postStore.commentSection(props.postId)
+  window.Echo.leaveChannel('comments')
+  window.Echo.leaveChannel('reactions')
 })
 </script>

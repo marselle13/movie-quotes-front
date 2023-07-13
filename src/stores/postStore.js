@@ -1,12 +1,10 @@
 import { defineStore } from 'pinia'
 import { usePostService } from '@/services/postService'
 import { useMovieStore } from '@/stores/movieStore'
-import { useUserStore } from '@/stores/userStore'
 
 export const usePostStore = defineStore('PostStore', {
   state: () => ({
     posts: [],
-    post: [],
     search: null,
     currentPage: 1,
     isFetching: false,
@@ -14,7 +12,6 @@ export const usePostStore = defineStore('PostStore', {
   }),
   getters: {
     getPosts: (state) => state.posts,
-    getPost: (state) => state.post,
     getSearch: (state) => state.search,
   },
   actions: {
@@ -50,7 +47,9 @@ export const usePostStore = defineStore('PostStore', {
     },
     async addQuote(values) {
       const response = await usePostService().createOrUpdateQuote(values)
-      this.posts = [response.data.newQuote, ...this.posts]
+      if (Array.isArray(this.posts)) {
+        this.posts = [response.data.newQuote, ...this.posts]
+      }
       useMovieStore().updateQuoteAmount(values.movieId)
       useMovieStore().addNewMovieQuote(response.data.newQuote)
     },
@@ -63,41 +62,35 @@ export const usePostStore = defineStore('PostStore', {
       }
     },
     async newComment(postId, comment, loaded) {
-      const response = await usePostService().addNewComment(postId, comment)
-      const post = this.posts.find((post) => post.id === postId) || this.post
-      loaded
-        ? post.comments.push(response.data.newComment)
-        : post.comments.unshift(response.data.newComment)
+      const post = Array.isArray(this.posts)
+        ? this.posts.find((post) => postId === post.id)
+        : this.posts
+
+      loaded ? post.comments.push(comment) : post.comments.unshift(comment)
 
       post.length.comments++
     },
-    async postReaction(postId) {
-      const post = this.posts.find((post) => post.id === postId) || this.post
-      const likedPost = post.likes.find((like) => like.user.id === useUserStore().userData.id)
+    postReaction(reactData) {
+      const post = Array.isArray(this.posts)
+        ? this.posts.find((post) => post.id === reactData.quoteId)
+        : this.posts
+      const likedPost = post.likes.find((like) => like.id === reactData.id)
       if (likedPost) {
-        await usePostService().unlikePost(postId)
         post.likes = post.likes.filter((like) => like !== likedPost)
         post.length.likes--
       } else {
-        const response = await usePostService().likePost(postId)
-        const newLike = response.data.like
-        post.likes.push(newLike)
+        post.likes.push(reactData)
         post.length.likes++
       }
     },
     async showPost(quoteId) {
-      const post = this.posts.find((post) => post.id === quoteId)
-      if (!post) {
-        const response = await usePostService().viewPost(quoteId)
-        this.post = response.data
-        return
-      }
-      this.post = post
+      const response = await usePostService().viewPost(quoteId)
+      this.posts = response.data
     },
     async editPost(values, quoteId) {
       const response = await usePostService().createOrUpdateQuote(values, quoteId)
-      this.post.quote = response.data.updatedQuote.quote
-      this.post.thumbnail = response.data.updatedQuote.thumbnail
+      this.posts.quote = response.data.updatedQuote.quote
+      this.posts.thumbnail = response.data.updatedQuote.thumbnail
       useMovieStore().updateMovieQuote(quoteId, response.data.updatedQuote)
     },
     async searchPosts(search) {
@@ -106,12 +99,12 @@ export const usePostStore = defineStore('PostStore', {
       const response = await usePostService().fetchPosts(this.currentPage, search)
       this.posts = response.data
     },
-    commentSection(postId, data = null) {
-      const post = this.posts.find((post) => postId === post.id) || this.post
-      if (data) {
-        post.comments = data
-      }
-      post.comments?.reverse()
+    commentSection(postId, data) {
+      const post = Array.isArray(this.posts)
+        ? this.posts.find((post) => postId === post.id)
+        : this.posts
+      post.comments = data
+      post.comments.reverse()
     },
   },
 })

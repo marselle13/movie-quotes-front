@@ -18,24 +18,23 @@
 </template>
 <script setup>
 import { useUserStore } from '@/stores/userStore'
-import { usePostStore } from '@/stores/postStore'
 import { useI18n } from 'vue-i18n'
 import { Form } from 'vee-validate'
+import { usePostService } from '@/services/postService'
 
 const props = defineProps({
   postId: { type: Number, required: true },
-  loaded: { type: Boolean, required: true },
 })
 
 const userStore = useUserStore()
-const postStore = usePostStore()
+const postService = usePostService()
 const { t } = useI18n()
 
 async function onSubmit(values, { resetForm }) {
   const { comment } = values
   if (comment) {
     try {
-      await postStore.newComment(props.postId, comment, props.loaded)
+      await postService.addNewComment(props.postId, comment)
       resetForm()
     } catch (err) {
       //Err

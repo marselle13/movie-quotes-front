@@ -14,6 +14,8 @@
         :comments="load ? post.comments : post.comments.slice(0, 2)"
         :comments-length="post.length.comments"
         :likes-length="post.length.likes"
+        :likes="post.likes"
+        :load="load"
         @loaded="load = true"
       ></PostSection>
     </div>
