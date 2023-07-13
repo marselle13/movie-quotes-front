@@ -43,6 +43,9 @@ export const useUserStore = defineStore('UserStore', {
         }
         this.isAuth = true
       } catch (err) {
+        if (err.response.status === 400) {
+          await useAuthService().logoutUser()
+        }
         this.isAuth = false
       }
     },

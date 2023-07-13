@@ -10,10 +10,10 @@ export const useAuthService = () => {
     })
   }
   async function loginUser(values) {
-    const { username_email, password, code } = values
+    const { username_email, password, code, remember } = values
     await api.get('sanctum/csrf-cookie')
     if (username_email) {
-      return await api.post('api/login', { username_email, password })
+      return await api.post('api/login', { username_email, password, remember })
     } else if (code) {
       return await api.get('api/auth/google/callback', { params: { code } })
     }
