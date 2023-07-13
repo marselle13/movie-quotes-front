@@ -40,11 +40,13 @@
 <script setup>
 import WriteQuoteIcon from '@/components/icons/WriteQuoteIcon.vue'
 import QuoteModal from '@/components/modals/QuoteModal.vue'
-import { onMounted, ref, watch } from 'vue'
+import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import BaseSearch from '@/components/common/form/BaseSearch.vue'
 import { usePostStore } from '@/stores/postStore'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const postStore = usePostStore()
 const { t } = useI18n()
 const isDesktop = ref(false)
@@ -82,6 +84,12 @@ watch(searchValue, async (newValue) => {
         //Err
       }
     }, 500)
+  }
+})
+
+onBeforeMount(() => {
+  if (localStorage.getItem('modal') === 'quote') {
+    addQuote.value = true
   }
 })
 

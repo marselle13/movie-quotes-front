@@ -1,6 +1,6 @@
 <template>
   <new-container
-    :quoteId="postStore.getPosts.id"
+    :quoteId="post.id"
     :title="edit ? t('edit_quote') : t('view_quote')"
     @close="emit('close')"
     @edit="emit('edit')"
@@ -9,19 +9,19 @@
     <section class="mt-6 space-y-6">
       <ThePost
         :edit="edit"
-        :post-id="postStore.getPosts.id"
-        :quote="postStore.getPosts.quote"
-        :likes-length="postStore.getPosts.length.likes"
-        :comments-length="postStore.getPosts.length.comments"
-        :thumbnail="postStore.getPosts.thumbnail"
-        :likes="postStore.getPosts.likes"
+        :post-id="post.id"
+        :quote="post.quote"
+        :likes-length="post.length.likes"
+        :comments-length="post.length.comments"
+        :thumbnail="post.thumbnail"
+        :likes="post.likes"
         :load="load"
         @close="emit('close')"
       />
       <CommentSection
-        :post-id="postStore.getPosts.id"
-        :comments="load ? postStore.getPosts.comments : postStore.getPosts.comments.slice(0, 2)"
-        :comments-length="postStore.getPosts.length.comments"
+        :post-id="post.id"
+        :comments="load ? post.comments : post.comments.slice(0, 2)"
+        :comments-length="post.length.comments"
         @loaded="load = true"
         v-if="!edit"
       />
@@ -30,18 +30,28 @@
 </template>
 <script setup>
 import NewContainer from '@/components/layout/NewContainer.vue'
-import { usePostStore } from '@/stores/postStore'
 import ThePost from '@/components/post/ThePost.vue'
 import CommentSection from '@/components/post/CommentSection.vue'
-import { ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-defineProps({ edit: { type: Boolean, required: true } })
+const props = defineProps({
+  edit: { type: Boolean, required: true },
+  post: { type: Object, required: true },
+})
 
 const emit = defineEmits(['close', 'edit'])
 
-const postStore = usePostStore()
 const { t } = useI18n()
 
 const load = ref(false)
+
+onMounted(() => {
+  localStorage.setItem('modal', `post${props.post.id}`)
+})
+
+onBeforeUnmount(() => {
+  localStorage.removeItem('modal')
+  localStorage.removeItem('edit')
+})
 </script>

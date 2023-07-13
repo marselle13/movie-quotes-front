@@ -120,7 +120,7 @@ import NewContainer from '@/components/layout/NewContainer.vue'
 import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
 import MoviesIcon from '@/components/icons/MoviesIcon.vue'
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import { onBeforeMount, reactive, ref } from 'vue'
+import { onBeforeMount, onBeforeUnmount, reactive, ref } from 'vue'
 import { useMovieStore } from '@/stores/movieStore'
 import { useI18n } from 'vue-i18n'
 import { usePostStore } from '@/stores/postStore'
@@ -166,6 +166,11 @@ async function dropDownHandler() {
 }
 
 onBeforeMount(() => {
+  localStorage.setItem('modal', 'quote')
   dropDownHandler()
+})
+
+onBeforeUnmount(() => {
+  localStorage.removeItem('modal')
 })
 </script>

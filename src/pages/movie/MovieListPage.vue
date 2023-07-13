@@ -70,9 +70,10 @@ import LoadingSpinner from '@/components/LoadingSpinner.vue'
 import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useMovieStore } from '@/stores/movieStore'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import BaseSearch from '@/components/common/form/BaseSearch.vue'
 
+const route = useRoute()
 const router = useRouter()
 const movieStore = useMovieStore()
 const { t, locale } = useI18n()
@@ -111,6 +112,12 @@ onBeforeMount(async () => {
 function checkWidth() {
   isDesktop.value = window.innerWidth >= 768
 }
+
+onBeforeMount(() => {
+  if (localStorage.getItem('modal') === 'movie') {
+    addMovie.value = true
+  }
+})
 
 onMounted(() => {
   checkWidth()

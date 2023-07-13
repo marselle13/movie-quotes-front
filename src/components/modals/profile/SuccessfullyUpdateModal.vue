@@ -5,7 +5,7 @@
       @click="emit('close')"
     ></div>
     <div
-      class="rounded bg-[#D1E7DD] border border-[#BADBCC] p-4 flex items-center justify-between absolute z-20 w-11/12 lg:w-[24rem] top-32"
+      class="rounded bg-[#D1E7DD] border border-[#BADBCC] p-4 flex items-center justify-between absolute z-20 w-11/12 lg:max-w-[30rem] top-32 lg:w-full"
     >
       <div class="flex gap-2">
         <SuccessUpdateIcon />
