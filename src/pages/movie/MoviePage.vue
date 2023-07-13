@@ -157,7 +157,7 @@ import PostModal from '@/components/modals/PostModal.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useMovieStore } from '@/stores/movieStore'
-import { onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { usePostStore } from '@/stores/postStore'
 
 const router = useRouter()
@@ -196,7 +196,17 @@ function checkWidth() {
 }
 
 onMounted(() => {
+  window.Echo.channel('comments').listen('CommentSent', (data) => {
+    movieStore.updateAmount(data.comment, 'comments')
+  })
+  window.Echo.channel('reactions').listen('ReactPost', (data) => {
+    movieStore.updateAmount(data.reaction, 'likes')
+  })
   checkWidth()
   window.addEventListener('resize', checkWidth)
+})
+onBeforeUnmount(() => {
+  window.Echo.leaveChannel('comments')
+  window.Echo.leaveChannel('reactions')
 })
 </script>

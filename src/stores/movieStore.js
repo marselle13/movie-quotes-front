@@ -80,6 +80,21 @@ export const useMovieStore = defineStore('movieStore', {
         movie.quotesLength++
       }
     },
+    updateAmount(data, type) {
+      const quote = this.currentMovie.quotes.find((quote) => quote.id === data.quoteId)
+      if (type === 'comments') {
+        quote.length[type]++
+      } else {
+        const likedPost = quote.likes.find((like) => like.user.id === data.user.id)
+        if (likedPost) {
+          quote.likes = quote.likes.filter((like) => like !== likedPost)
+          quote.length[type]--
+        } else {
+          quote.likes.push(data)
+          quote.length[type]++
+        }
+      }
+    },
     updateMovieQuote(quoteId, updatedQuote) {
       const index = this.currentMovie.quotes.findIndex((quote) => quote.id === quoteId)
       this.currentMovie.quotes[index] = updatedQuote

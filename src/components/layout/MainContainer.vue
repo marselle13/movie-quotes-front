@@ -44,7 +44,7 @@
                 </div>
               </router-link>
             </li>
-            <li>
+            <li class="md:hidden">
               <base-button mode="flat" class="w-32 py-2" @click="logout">{{
                 t('log_out')
               }}</base-button>
