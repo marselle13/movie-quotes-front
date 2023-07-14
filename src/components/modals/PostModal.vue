@@ -22,7 +22,7 @@
         :post-id="post.id"
         :comments="load ? post.comments : post.comments.slice(0, 2)"
         :comments-length="post.length.comments"
-        @loaded="load = true"
+        @loaded="emit('load', true)"
         v-if="!edit"
       />
     </section>
@@ -32,19 +32,18 @@
 import NewContainer from '@/components/layout/NewContainer.vue'
 import ThePost from '@/components/post/ThePost.vue'
 import CommentSection from '@/components/post/CommentSection.vue'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   edit: { type: Boolean, required: true },
   post: { type: Object, required: true },
+  load: { type: Boolean, required: true },
 })
 
-const emit = defineEmits(['close', 'edit'])
+const emit = defineEmits(['close', 'edit', 'load'])
 
 const { t } = useI18n()
-
-const load = ref(false)
 
 onMounted(() => {
   localStorage.setItem('modal', `post${props.post.id}`)
@@ -53,5 +52,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   localStorage.removeItem('modal')
   localStorage.removeItem('edit')
+  emit('load', false)
 })
 </script>

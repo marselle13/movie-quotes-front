@@ -25,9 +25,11 @@
         <PostModal
           :edit="edit"
           :post="postStore.getPosts"
+          :load="load"
           v-else-if="viewQuote"
           @close="viewQuote = false"
           @edit="edit = true"
+          @load="loadComments"
         />
       </transition>
     </teleport>
@@ -157,7 +159,7 @@ import PostModal from '@/components/modals/PostModal.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useMovieStore } from '@/stores/movieStore'
-import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import { usePostStore } from '@/stores/postStore'
 
 const router = useRouter()
@@ -170,6 +172,7 @@ const addQuote = ref(false)
 const editMovie = ref(false)
 const viewQuote = ref(false)
 const isDesktop = ref(false)
+const load = ref(false)
 const edit = ref(false)
 
 async function deleteMovie(movieId) {
@@ -190,6 +193,10 @@ async function postHandler(quoteId, editQuote) {
   } catch (err) {
     //Err
   }
+}
+
+function loadComments(isLoaded) {
+  load.value = isLoaded
 }
 
 function checkWidth() {
@@ -213,16 +220,19 @@ onBeforeMount(async () => {
 
 onMounted(() => {
   window.Echo.channel('comments').listen('CommentSent', (data) => {
+    if (postStore.getPosts.id === data.comment.quoteId) {
+      postStore.newComment(data.comment.quoteId, data.comment, load.value)
+    }
     movieStore.updateAmount(data.comment, 'comments')
   })
   window.Echo.channel('reactions').listen('ReactPost', (data) => {
+    if (postStore.getPosts.id === data.reaction.quoteId) {
+      postStore.postReaction(data.reaction)
+    }
     movieStore.updateAmount(data.reaction, 'likes')
   })
+
   checkWidth()
   window.addEventListener('resize', checkWidth)
-})
-onBeforeUnmount(() => {
-  window.Echo.leaveChannel('comments')
-  window.Echo.leaveChannel('reactions')
 })
 </script>
