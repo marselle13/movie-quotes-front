@@ -49,7 +49,7 @@ const router = createRouter({
     { name: 'not-found', path: '/:notFound(.*)', component: NotFound },
   ],
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition || to.meta.user === 'guest') {
+    if (savedPosition || (to.meta.user === 'guest' && from.meta.user !== 'auth')) {
       return savedPosition
     }
     return { left: 0, top: 0 }

@@ -23,8 +23,8 @@
     :fixed="fixed"
     @click="scrollToImage(0)"
   >
-    <template #quote>You have to leave something behind to go forward</template>
-    <template #movie> Interstellar, 2014 </template>
+    <template #quote>{{ t('interstellar_quote') }}</template>
+    <template #movie> {{ t('interstellar') }}, 2014 </template>
   </quotes-container>
   <quotes-container
     :fixed="fixed"
@@ -32,11 +32,8 @@
     backdrop="backdrop-half"
     @click="scrollToImage(1)"
   >
-    <template #quote>
-      I think we’re just gonna have to be secretly in love with each other and leave it
-      that</template
-    >
-    <template #movie>The Royal Tenenbaums,2001 </template>
+    <template #quote> {{ t('tenenbaums_quote') }}</template>
+    <template #movie>{{ t('tenenbaums') }},2001 </template>
   </quotes-container>
   <quotes-container
     :fixed="fixed"
@@ -44,8 +41,8 @@
     @click="scrollToImage(2)"
     position="bg-right"
   >
-    <template #quote>Death Is Just Another Path, One That We All Must Take.</template>
-    <template #movie>The Lord of the Rings,2001 </template>
+    <template #quote>{{ t('lotr_quote') }}</template>
+    <template #movie>{{ t('lotr') }},2001 </template>
   </quotes-container>
   <TheFooter />
 </template>
