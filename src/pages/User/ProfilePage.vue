@@ -300,6 +300,7 @@ async function updateUserEmail() {
     try {
       await userStore.updateEmail(route.query)
       updated.value = t('change')
+      await router.replace({ name: 'profile' })
     } catch (err) {
       await router.replace({ name: 'profile' })
     }
