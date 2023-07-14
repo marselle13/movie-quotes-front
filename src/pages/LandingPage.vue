@@ -1,50 +1,52 @@
 <template>
-  <TheHeader :background="false" />
   <router-view></router-view>
-  <section
-    class="w-[300px] mx-auto md:w-full md:mx-0 md:grid text-center md:content-center md:justify-items-center pt-32 pb-24 md:py-64"
-  >
-    <h1
-      class="text-2xl md:text-6xl md:leading-[90px] text-[#DDCCAA] font-bold mb-6"
-      :class="locale === 'en' ? 'max-w-[800px]' : 'max-w-[1100px]'"
+  <section :class="[hiddenLanding]">
+    <TheHeader :background="false" />
+    <section
+      class="w-[300px] mx-auto md:w-full md:mx-0 md:grid text-center md:content-center md:justify-items-center pt-32 pb-24 md:py-64"
     >
-      {{ t('title') }}
-    </h1>
-    <base-button
-      :link="true"
-      :to="{ name: 'register' }"
-      class="w-28 md:w-32 p-2"
-      :animation="true"
-      >{{ t('get_started') }}</base-button
+      <h1
+        class="text-2xl md:text-6xl md:leading-[90px] text-[#DDCCAA] font-bold mb-6"
+        :class="locale === 'en' ? 'max-w-[800px]' : 'max-w-[1100px]'"
+      >
+        {{ t('title') }}
+      </h1>
+      <base-button
+        :link="true"
+        :to="{ name: 'register' }"
+        class="w-28 md:w-32 p-2"
+        :animation="true"
+        >{{ t('get_started') }}</base-button
+      >
+    </section>
+    <quotes-container
+      class="bg-[url('@/assets/interstellar.png')]"
+      :fixed="fixed"
+      @click="scrollToImage(0)"
     >
+      <template #quote>{{ t('interstellar_quote') }}</template>
+      <template #movie> {{ t('interstellar') }}, 2014 </template>
+    </quotes-container>
+    <quotes-container
+      :fixed="fixed"
+      class="bg-[url('@/assets/tanenbaum.png')]"
+      backdrop="backdrop-half"
+      @click="scrollToImage(1)"
+    >
+      <template #quote> {{ t('tenenbaums_quote') }}</template>
+      <template #movie>{{ t('tenenbaums') }},2001 </template>
+    </quotes-container>
+    <quotes-container
+      :fixed="fixed"
+      class="bg-[url('@/assets/lotr.png')]"
+      @click="scrollToImage(2)"
+      position="bg-right"
+    >
+      <template #quote>{{ t('lotr_quote') }}</template>
+      <template #movie>{{ t('lotr') }},2001 </template>
+    </quotes-container>
+    <TheFooter />
   </section>
-  <quotes-container
-    class="bg-[url('@/assets/interstellar.png')]"
-    :fixed="fixed"
-    @click="scrollToImage(0)"
-  >
-    <template #quote>{{ t('interstellar_quote') }}</template>
-    <template #movie> {{ t('interstellar') }}, 2014 </template>
-  </quotes-container>
-  <quotes-container
-    :fixed="fixed"
-    class="bg-[url('@/assets/tanenbaum.png')]"
-    backdrop="backdrop-half"
-    @click="scrollToImage(1)"
-  >
-    <template #quote> {{ t('tenenbaums_quote') }}</template>
-    <template #movie>{{ t('tenenbaums') }},2001 </template>
-  </quotes-container>
-  <quotes-container
-    :fixed="fixed"
-    class="bg-[url('@/assets/lotr.png')]"
-    @click="scrollToImage(2)"
-    position="bg-right"
-  >
-    <template #quote>{{ t('lotr_quote') }}</template>
-    <template #movie>{{ t('lotr') }},2001 </template>
-  </quotes-container>
-  <TheFooter />
 </template>
 <script setup>
 import TheHeader from '@/components/TheHeader.vue'
@@ -52,7 +54,7 @@ import QuotesContainer from '@/components/layout/QuotesContainer.vue'
 import TheFooter from '@/components/TheFooter.vue'
 
 import { useI18n } from 'vue-i18n'
-import { onBeforeMount, onMounted, ref } from 'vue'
+import { computed, onBeforeMount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useEmailService } from '@/services/emailService'
 import { useUserStore } from '@/stores/userStore'
@@ -66,6 +68,10 @@ const userStore = useUserStore()
 const fixed = ref(false)
 const isDesktop = ref(false)
 const isClicked = ref(false)
+
+const hiddenLanding = computed(() => {
+  return route.name !== 'landing' && route.meta.user === 'guest' ? 'hidden md:block' : 'block'
+})
 
 function scrollToImage(index) {
   if (!isDesktop.value) return
