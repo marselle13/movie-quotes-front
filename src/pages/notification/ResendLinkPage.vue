@@ -24,7 +24,7 @@ const emailService = useEmailService()
 async function resendLinkButton() {
   try {
     await emailService.resendLink(route.params.uuid)
-    await router.push({ name: 'success-message', params: { message: 'registration' } })
+    await router.push({ name: 'success-message', params: { message: 'verification' } })
   } catch (err) {
     //error
   }
