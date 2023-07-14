@@ -1,5 +1,5 @@
 <template>
-  <auth-card class="-mt-12 md:mt-0">
+  <auth-card class="relative lg:top-20 top-4">
     <template #title> {{ t('create_account') }} </template>
     <template #info> {{ t('start_journey') }}</template>
     <Form @submit="onSubmit" class="mt-5 space-y-5">

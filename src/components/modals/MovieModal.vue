@@ -133,7 +133,7 @@ import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { useI18n } from 'vue-i18n'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useMovieStore } from '@/stores/movieStore'
-import { onBeforeMount, reactive, ref } from 'vue'
+import { onBeforeMount, onBeforeUnmount, reactive, ref } from 'vue'
 import { useForm } from 'vee-validate'
 
 const props = defineProps({
@@ -211,6 +211,10 @@ async function dropDownHandler() {
 }
 
 onBeforeMount(() => {
+  localStorage.setItem('modal', 'movie')
   dropDownHandler()
+})
+onBeforeUnmount(() => {
+  localStorage.removeItem('modal')
 })
 </script>

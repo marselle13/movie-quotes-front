@@ -67,11 +67,11 @@ import MovieAddIcon from '@/components/icons/MovieAddIcon.vue'
 import QuoteIcon from '@/components/icons/QuoteIcon.vue'
 import MovieModal from '@/components/modals/MovieModal.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import BaseSearch from '@/components/common/form/BaseSearch.vue'
 import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useMovieStore } from '@/stores/movieStore'
 import { useRouter } from 'vue-router'
-import BaseSearch from '@/components/common/form/BaseSearch.vue'
 
 const router = useRouter()
 const movieStore = useMovieStore()
@@ -111,6 +111,12 @@ onBeforeMount(async () => {
 function checkWidth() {
   isDesktop.value = window.innerWidth >= 768
 }
+
+onBeforeMount(() => {
+  if (localStorage.getItem('modal') === 'movie') {
+    addMovie.value = true
+  }
+})
 
 onMounted(() => {
   checkWidth()

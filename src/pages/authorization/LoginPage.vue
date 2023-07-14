@@ -1,5 +1,5 @@
 <template>
-  <auth-card>
+  <auth-card class="relative top-20">
     <template #title>{{ t('log_in_account') }}</template>
     <template #info> {{ t('log_in_info') }}</template>
     <Form @submit="onSubmit" class="mt-5 space-y-5">
@@ -67,6 +67,7 @@ import { useUserStore } from '@/stores/userStore'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthService } from '@/services/authService'
+import AuthCard from '@/components/common/AuthCard.vue'
 
 const { t } = useI18n()
 const userStore = useUserStore()

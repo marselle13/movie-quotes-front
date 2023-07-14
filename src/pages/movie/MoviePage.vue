@@ -24,10 +24,12 @@
         />
         <PostModal
           :edit="edit"
-          :quote="postStore.getPost"
+          :post="postStore.getPosts"
+          :load="load"
           v-else-if="viewQuote"
           @close="viewQuote = false"
           @edit="edit = true"
+          @load="loadComments"
         />
       </transition>
     </teleport>
@@ -115,8 +117,8 @@
               v-if="isDesktop"
               :quote-id="quote.id"
               :movie-id="movieStore.getCurrentMovie.id"
-              @view-quote="PostHandler"
-              @edit-quote="PostHandler"
+              @view-quote="postHandler"
+              @edit-quote="postHandler"
             />
           </div>
           <div class="flex pt-6 gap-6 justify-between">
@@ -134,8 +136,8 @@
               v-if="!isDesktop"
               :quote-id="quote.id"
               :movie-id="movieStore.getCurrentMovie.id"
-              @view-quote="PostHandler"
-              @edit-quote="PostHandler"
+              @view-quote="postHandler"
+              @edit-quote="postHandler"
             />
           </div>
         </main-card>
@@ -157,7 +159,7 @@ import PostModal from '@/components/modals/PostModal.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useMovieStore } from '@/stores/movieStore'
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import { usePostStore } from '@/stores/postStore'
 
 const router = useRouter()
@@ -170,6 +172,7 @@ const addQuote = ref(false)
 const editMovie = ref(false)
 const viewQuote = ref(false)
 const isDesktop = ref(false)
+const load = ref(false)
 const edit = ref(false)
 
 async function deleteMovie(movieId) {
@@ -181,21 +184,54 @@ async function deleteMovie(movieId) {
   }
 }
 
-async function PostHandler(quoteId, editQuote) {
+async function postHandler(quoteId, editQuote) {
   try {
     await postStore.showPost(quoteId)
     viewQuote.value = true
     edit.value = editQuote
+    localStorage.setItem('edit', edit.value)
   } catch (err) {
     //Err
   }
 }
 
+function loadComments(isLoaded) {
+  load.value = isLoaded
+}
+
 function checkWidth() {
   isDesktop.value = window.innerWidth >= 1028
 }
+onBeforeMount(async () => {
+  const post = localStorage.getItem('modal')
+
+  switch (post) {
+    case 'quote':
+      addQuote.value = true
+      break
+    case 'movie':
+      editMovie.value = true
+      break
+  }
+  if (post?.includes('post')) {
+    await postHandler(post.slice(4), localStorage.getItem('edit') === 'true')
+  }
+})
 
 onMounted(() => {
+  window.Echo.channel('comments').listen('CommentSent', (data) => {
+    if (postStore.getPosts.id === data.comment.quoteId) {
+      postStore.newComment(data.comment.quoteId, data.comment, load.value)
+    }
+    movieStore.updateAmount(data.comment, 'comments')
+  })
+  window.Echo.channel('reactions').listen('ReactPost', (data) => {
+    if (postStore.getPosts.id === data.reaction.quoteId) {
+      postStore.postReaction(data.reaction)
+    }
+    movieStore.updateAmount(data.reaction, 'likes')
+  })
+
   checkWidth()
   window.addEventListener('resize', checkWidth)
 })

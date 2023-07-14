@@ -5,11 +5,11 @@
       @click="emit('close')"
     ></div>
     <div
-      class="rounded bg-[#D1E7DD] border border-[#BADBCC] p-4 flex items-center justify-between absolute z-20 w-11/12 lg:w-[24rem] top-32"
+      class="rounded bg-[#D1E7DD] border border-[#BADBCC] p-4 flex items-center justify-between absolute z-20 w-11/12 lg:max-w-[30rem] top-32 lg:w-full"
     >
       <div class="flex gap-2">
         <SuccessUpdateIcon />
-        <h4 class="text-[#0F5132]">Changes updated successfully</h4>
+        <h4 class="text-[#0F5132]">{{ text }}</h4>
       </div>
       <button @click="emit('close')">
         <CloseIcon />
@@ -20,6 +20,8 @@
 <script setup>
 import SuccessUpdateIcon from '@/components/icons/SuccessUpdateIcon.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
+
+defineProps({ text: { type: String, required: true } })
 
 const emit = defineEmits(['close'])
 </script>
