@@ -44,7 +44,29 @@
                 </div>
               </router-link>
             </li>
-            <li class="md:hidden">
+            <li class="md:hidden flex items-center gap-8">
+              <base-dropdown button-width="w-[4rem]" dropdown-width="w-[6.5rem] top-10">
+                <template #dropdownButton>
+                  <div class="flex gap-2.5 items-center">
+                    <p class="text-white">{{ locale === 'en' ? 'Eng' : 'Geo' }}</p>
+                    <LanguageDropdown />
+                  </div>
+                </template>
+                <template #dropdown>
+                  <ul class="cursor-pointer py-2">
+                    <li>
+                      <p class="px-4 py-2 hover:opacity-80" @click="changeLanguage('en')">
+                        {{ t('english') }}
+                      </p>
+                    </li>
+                    <li>
+                      <p class="px-4 py-2 hover:opacity-80" @click="changeLanguage('ka')">
+                        {{ t('georgian') }}
+                      </p>
+                    </li>
+                  </ul>
+                </template>
+              </base-dropdown>
               <base-button mode="flat" class="w-32 py-2" @click="logout">{{
                 t('log_out')
               }}</base-button>
@@ -66,6 +88,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useI18n } from 'vue-i18n'
 import TheHeader from '@/components/TheHeader.vue'
+import LanguageDropdown from '@/components/icons/DropdownIcon.vue'
+import { setLocale } from '@vee-validate/i18n'
 
 defineProps({
   width: { type: String, required: false },
@@ -74,7 +98,7 @@ defineProps({
 const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const navigation = ref(false)
 const isDesktop = ref(false)
@@ -96,6 +120,13 @@ async function logout() {
   } catch (err) {
     //Error
   }
+}
+
+function changeLanguage(value) {
+  localStorage.setItem('locale', value)
+  locale.value = value
+  document.documentElement.lang = value
+  setLocale(value)
 }
 
 onMounted(() => {
