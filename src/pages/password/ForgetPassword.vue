@@ -1,5 +1,5 @@
 <template>
-  <auth-card class="relative top-20">
+  <auth-card class="relative top-12 md:top-20">
     <template #title>{{ t('forget_password') }}</template>
     <template #info>
       {{ t('forget_info') }}

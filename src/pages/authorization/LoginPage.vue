@@ -1,5 +1,5 @@
 <template>
-  <auth-card class="relative top-20">
+  <auth-card class="relative top-12 md:top-20">
     <template #title>{{ t('log_in_account') }}</template>
     <template #info> {{ t('log_in_info') }}</template>
     <Form @submit="onSubmit" class="mt-5 space-y-5">
