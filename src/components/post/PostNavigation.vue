@@ -44,9 +44,7 @@ import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import BaseSearch from '@/components/common/form/BaseSearch.vue'
 import { usePostStore } from '@/stores/postStore'
-import { useRoute } from 'vue-router'
 
-const route = useRoute()
 const postStore = usePostStore()
 const { t } = useI18n()
 const isDesktop = ref(false)

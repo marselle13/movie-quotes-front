@@ -133,16 +133,14 @@ import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { useI18n } from 'vue-i18n'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useMovieStore } from '@/stores/movieStore'
-import { onBeforeMount, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { onBeforeMount, onBeforeUnmount, reactive, ref } from 'vue'
 import { useForm } from 'vee-validate'
-import { useRouter } from 'vue-router'
 
 const props = defineProps({
   title: { type: String, required: true },
   movie: { type: Object, required: false },
 })
 
-const router = useRouter()
 const emit = defineEmits(['close'])
 const movieStore = useMovieStore()
 const { t, locale } = useI18n()

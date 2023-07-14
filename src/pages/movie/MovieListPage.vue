@@ -67,13 +67,12 @@ import MovieAddIcon from '@/components/icons/MovieAddIcon.vue'
 import QuoteIcon from '@/components/icons/QuoteIcon.vue'
 import MovieModal from '@/components/modals/MovieModal.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import BaseSearch from '@/components/common/form/BaseSearch.vue'
 import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useMovieStore } from '@/stores/movieStore'
-import { useRoute, useRouter } from 'vue-router'
-import BaseSearch from '@/components/common/form/BaseSearch.vue'
+import { useRouter } from 'vue-router'
 
-const route = useRoute()
 const router = useRouter()
 const movieStore = useMovieStore()
 const { t, locale } = useI18n()
