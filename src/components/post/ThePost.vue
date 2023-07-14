@@ -34,7 +34,13 @@
         />
       </div>
       <Field name="image" v-slot="{ handleChange }" :rules="imageHandler ? 'required|image' : ''">
-        <div class="relative">
+        <div
+          class="relative"
+          @dragenter.prevent
+          @dragleave.prevent
+          @dragover.prevent
+          @drop.prevent="uploadNewImage($event, handleChange)"
+        >
           <div
             class="relative my-6 flex justify-center items-center w-full h-[18rem] md:h-[32rem] rounded-2xl overflow-hidden"
           >
@@ -122,7 +128,7 @@ const likeButtonStyle = computed(() => {
 })
 
 function uploadNewImage(event, handleChange) {
-  const image = event.target.files[0]
+  const image = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0]
   if (image.size > 2000000 || !image.type.includes('image')) return
   handleChange(image)
   imageHandler.value = URL.createObjectURL(image)
