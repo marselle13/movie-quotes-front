@@ -23,6 +23,7 @@
           :disabled="!edit"
           mode="flat"
           lang="Eng"
+          :error="error.en"
         />
         <base-textarea
           id="quoteGeo"
@@ -31,6 +32,7 @@
           :disabled="!edit"
           mode="flat"
           lang="ქარ"
+          :error="error.ka"
         />
       </div>
       <Field name="image" v-slot="{ handleChange }" :rules="imageHandler ? 'required|image' : ''">
@@ -85,7 +87,7 @@ import LikeIcon from '@/components/icons/LikeIcon.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
 import CameraIcon from '@/components/icons/CameraIcon.vue'
 import { usePostStore } from '@/stores/postStore'
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
@@ -121,6 +123,7 @@ const avatar = `${import.meta.env.VITE_BASE_URL}${
 const quoteEng = ref(props.quote.en)
 const quoteGeo = ref(props.quote.ka)
 const imageHandler = ref('')
+const error = reactive({ en: '', ka: '' })
 
 const likeButtonStyle = computed(() => {
   const index = props.likes.findIndex((like) => like.user?.id === userStore.userData.id)
@@ -139,6 +142,8 @@ async function onSubmit(values) {
     await postStore.editPost(values, props.postId)
     emit('close')
   } catch (err) {
+    error.en = err.response?.data?.errors?.['quote.en']?.[0]
+    error.ka = err.response?.data?.errors?.['quote.ka']?.[0]
     //Err
   }
 }
