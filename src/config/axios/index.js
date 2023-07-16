@@ -6,7 +6,7 @@ const api = axios.create({
   baseURL: `${import.meta.env.VITE_BASE_URL}`,
 })
 api.interceptors.request.use((config) => {
-  config.headers['Accept-Language'] = localStorage.getItem('locale') || 'en'
+  config.headers['Accept-Language'] = localStorage.getItem('locale') ?? 'en'
   return config
 })
 

@@ -22,7 +22,7 @@ import instantiatePusher from '@/helpers/instantiatePusher'
 
 const i18n = createI18n({
   legacy: false,
-  locale: localStorage.getItem('locale') || 'en',
+  locale: localStorage.getItem('locale') ?? 'en',
   messages: {
     en: English,
     ka: Georgian,
