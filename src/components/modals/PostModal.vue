@@ -32,7 +32,7 @@
 import NewContainer from '@/components/layout/NewContainer.vue'
 import ThePost from '@/components/post/ThePost.vue'
 import CommentSection from '@/components/post/CommentSection.vue'
-import { onBeforeUnmount, onMounted } from 'vue'
+import { onBeforeUnmount, onMounted, onUpdated } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
@@ -47,6 +47,10 @@ const { t } = useI18n()
 
 onMounted(() => {
   localStorage.setItem('modal', `post${props.post.id}`)
+})
+
+onUpdated(() => {
+  localStorage.setItem('edit', props.edit)
 })
 
 onBeforeUnmount(() => {

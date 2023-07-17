@@ -58,6 +58,7 @@ import { computed, onBeforeMount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useEmailService } from '@/services/emailService'
 import { useUserStore } from '@/stores/userStore'
+import { setLocale } from '@vee-validate/i18n'
 
 const { t, locale } = useI18n()
 const route = useRoute()
@@ -130,6 +131,7 @@ async function verifyUser() {
 }
 
 onBeforeMount(() => {
+  setLocale(localStorage.getItem('locale') ?? 'en')
   registerWithGoogle()
   verifyUser()
   checkWidth()

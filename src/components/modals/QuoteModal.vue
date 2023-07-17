@@ -86,7 +86,7 @@
                 <h4>{{ selectedMovie[locale] || t('choose_movie') }}</h4>
                 <error-message
                   name="movieId"
-                  class="absolute text-xs text-[#DC3545] -left-6 -bottom-12"
+                  class="absolute -left-6 -bottom-12 text-[9px] text-[#DC3545] md:text-[10px]"
                 ></error-message>
               </div>
               <LanguageDropdownIcon />

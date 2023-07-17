@@ -1,5 +1,5 @@
 <template>
-  <auth-card :wrapper="true" notification class="relative top-20">
+  <auth-card :wrapper="true" notification class="relative top-20 mx-auto">
     <template #icon> <SuccessCheck v-if="success.icon" /> <SendCheck v-else /> </template>
     <template #title> {{ success.title }}</template>
     <div class="flex flex-col justify-center items-center text-white text-center mt-8 space-y-10">

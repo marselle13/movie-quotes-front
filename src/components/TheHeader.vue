@@ -81,7 +81,7 @@
                     <div
                       class="flex flex-row-reverse lg:flex-col w-full lg:w-auto justify-end ml-5 gap-12 lg:ml-0 lg:gap-0"
                     >
-                      <h5 class="lg:text-lg text-[#D9D9D9]">{{ notification.created }}</h5>
+                      <h5 class="lg:text-lg text-[#D9D9D9]">{{ notification.created[locale] }}</h5>
                       <div class="relative lg:self-end w-8 lg:w-auto h-6">
                         <h5 class="lg:text-lg text-[#198754]" v-if="notification.type === 'new'">
                           {{ t('new') }}
@@ -214,7 +214,7 @@ async function seenNotifications(notificationId = null) {
 }
 
 onBeforeMount(async () => {
-  if (route.meta.user === 'auth') {
+  if (route.meta.user === 'auth' && userStore.getNotifications.length === 0) {
     try {
       await userStore.userNotifications()
     } catch (err) {

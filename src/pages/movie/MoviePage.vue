@@ -17,7 +17,7 @@
           :movie="movieStore.getCurrentMovie"
         />
         <MovieModal
-          title="Edit movie"
+          :title="t('edit_movie')"
           v-else-if="editMovie"
           @close="editMovie = false"
           :movie="movieStore.getCurrentMovie"
@@ -102,11 +102,11 @@
         >
           <div class="flex flex-col md:flex-row justify-between pb-6 border-b border-[#EFEFEF33]">
             <div class="flex flex-col md:flex-row items-start md:items-center gap-8">
-              <div class="rounded-sm md:w-[14rem] h-[8.75rem] w-full">
+              <div class="rounded-sm md:w-[14rem] h-[8.75rem] w-full flex-shrink-0">
                 <img
                   :src="`${viteBaseUrl}storage/${quote.thumbnail}`"
                   alt="thumbnail"
-                  class="h-full object-cover w-full object-top md:object-center"
+                  class="h-full object-cover w-full object-center"
                 />
               </div>
               <p class="max-w-[400px] text-[#CED4DA] italic text-2xl break-words">

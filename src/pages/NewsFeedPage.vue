@@ -63,8 +63,24 @@ onBeforeMount(async () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+
+  window.Echo.channel('comments').listen('CommentSent', (data) => {
+    postStore.getPosts.forEach((post) => {
+      if (post.id !== data.comment.quoteId) return
+      postStore.newComment(data.comment.quoteId, data.comment, load.value)
+    })
+  })
+  window.Echo.channel('reactions').listen('ReactPost', (data) => {
+    postStore.getPosts.forEach((post) => {
+      if (post.id !== data.reaction.quoteId) return
+      postStore.postReaction(data.reaction)
+    })
+  })
 })
+
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.Echo.leaveChannel('comments')
+  window.Echo.leaveChannel('reactions')
 })
 </script>

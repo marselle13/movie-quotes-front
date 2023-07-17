@@ -1,5 +1,5 @@
 <template>
-  <auth-card :wrapper="true" :notification="true" class="relative top-20">
+  <auth-card :wrapper="true" :notification="true" class="relative top-12 md:top-20">
     <template #icon><ExpiredIcon /></template>
     <template #title> {{ t('link_expired') }}</template>
     <div class="flex flex-col justify-center items-center text-white text-center mt-8 space-y-10">
@@ -24,7 +24,7 @@ const emailService = useEmailService()
 async function resendLinkButton() {
   try {
     await emailService.resendLink(route.params.uuid)
-    await router.push({ name: 'success-message', params: { message: 'registration' } })
+    await router.push({ name: 'success-message', params: { message: 'verification' } })
   } catch (err) {
     //error
   }

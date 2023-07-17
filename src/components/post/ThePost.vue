@@ -23,6 +23,7 @@
           :disabled="!edit"
           mode="flat"
           lang="Eng"
+          :error="error.en"
         />
         <base-textarea
           id="quoteGeo"
@@ -31,10 +32,17 @@
           :disabled="!edit"
           mode="flat"
           lang="ქარ"
+          :error="error.ka"
         />
       </div>
       <Field name="image" v-slot="{ handleChange }" :rules="imageHandler ? 'required|image' : ''">
-        <div class="relative">
+        <div
+          class="relative"
+          @dragenter.prevent
+          @dragleave.prevent
+          @dragover.prevent
+          @drop.prevent="uploadNewImage($event, handleChange)"
+        >
           <div
             class="relative my-6 flex justify-center items-center w-full h-[18rem] md:h-[32rem] rounded-2xl overflow-hidden"
           >
@@ -79,7 +87,7 @@ import LikeIcon from '@/components/icons/LikeIcon.vue'
 import CommentIcon from '@/components/icons/CommenetIcon.vue'
 import CameraIcon from '@/components/icons/CameraIcon.vue'
 import { usePostStore } from '@/stores/postStore'
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { useI18n } from 'vue-i18n'
@@ -115,6 +123,7 @@ const avatar = `${import.meta.env.VITE_BASE_URL}${
 const quoteEng = ref(props.quote.en)
 const quoteGeo = ref(props.quote.ka)
 const imageHandler = ref('')
+const error = reactive({ en: '', ka: '' })
 
 const likeButtonStyle = computed(() => {
   const index = props.likes.findIndex((like) => like.user?.id === userStore.userData.id)
@@ -122,7 +131,7 @@ const likeButtonStyle = computed(() => {
 })
 
 function uploadNewImage(event, handleChange) {
-  const image = event.target.files[0]
+  const image = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0]
   if (image.size > 2000000 || !image.type.includes('image')) return
   handleChange(image)
   imageHandler.value = URL.createObjectURL(image)
@@ -133,6 +142,8 @@ async function onSubmit(values) {
     await postStore.editPost(values, props.postId)
     emit('close')
   } catch (err) {
+    error.en = err.response?.data?.errors?.['quote.en']?.[0]
+    error.ka = err.response?.data?.errors?.['quote.ka']?.[0]
     //Err
   }
 }

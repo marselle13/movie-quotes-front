@@ -122,7 +122,9 @@
         id="image"
         :rules="title === t('new_movie') ? 'required|image' : ''"
       />
-      <base-button class="w-full py-2">Add Movie</base-button>
+      <base-button class="w-full py-2">{{
+        title === t('new_movie') ? t('new_movie') : t('edit_movie')
+      }}</base-button>
     </Form>
   </new-container>
 </template>

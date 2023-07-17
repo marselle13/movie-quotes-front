@@ -26,10 +26,8 @@ import MainCard from '@/components/common/MainCard.vue'
 import CommentSection from '@/components/post/CommentSection.vue'
 import ThePost from '@/components/post/ThePost.vue'
 import { useI18n } from 'vue-i18n'
-import { onBeforeUnmount, onMounted } from 'vue'
-import { usePostStore } from '@/stores/postStore'
 
-const props = defineProps({
+defineProps({
   postId: { type: Number, required: true },
   quote: { type: String, required: true },
   thumbnail: { type: String, required: true },
@@ -44,21 +42,4 @@ const props = defineProps({
 const emit = defineEmits(['loaded'])
 
 const { locale } = useI18n()
-const postStore = usePostStore()
-
-onMounted(() => {
-  window.Echo.channel('comments').listen('CommentSent', (data) => {
-    if (props.postId !== data.comment.quoteId) return
-    postStore.newComment(data.comment.quoteId, data.comment, props.load)
-  })
-  window.Echo.channel('reactions').listen('ReactPost', (data) => {
-    if (props.postId !== data.reaction.quoteId) return
-    postStore.postReaction(data.reaction)
-  })
-})
-
-onBeforeUnmount(() => {
-  window.Echo.leaveChannel('comments')
-  window.Echo.leaveChannel('reactions')
-})
 </script>
