@@ -43,7 +43,9 @@ export const useMovieStore = defineStore('movieStore', {
       }
     },
     searchMovies(search, locale) {
-      this.searchedMovies = this.userMovies.filter((movie) => movie.name[locale].includes(search))
+      this.searchedMovies = this.userMovies.filter((movie) =>
+        movie.name[locale].toLowerCase().includes(search),
+      )
     },
     async addNewMovie(values) {
       const response = await useMovieService().createOrUpdateMovie(values)

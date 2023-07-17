@@ -86,7 +86,7 @@ const searchValue = ref('')
 const error = ref('')
 
 watch(searchValue, (newValue) => {
-  movieStore.searchMovies(newValue, locale.value)
+  movieStore.searchMovies(newValue.toLowerCase(), locale.value)
 })
 
 function searchHandler(isOpen) {
