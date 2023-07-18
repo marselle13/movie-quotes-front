@@ -18,7 +18,7 @@
         id="main-card"
         v-show="!confirmModal"
       >
-        <div class="w-full max-w-[530px] mx-auto" v-show="checkModalWidth">
+        <div class="w-full max-w-[30rem] mx-auto" v-show="checkModalWidth">
           <div class="lg:relative lg:-top-32 space-y-2 flex flex-col items-center">
             <Field name="new_avatar" v-slot="{ field, handleChange }" rules="image">
               <div class="flex justify-center bg-[#D9D9D9] w-44 h-44 rounded-full overflow-hidden">
@@ -44,7 +44,7 @@
               <base-input
                 id="name"
                 :label="t('name')"
-                class="w-full"
+                class="w-full xl:flex-shrink-0"
                 :placeholder="userStore.userData.name"
                 v-model="nameHandler.value"
                 :value="nameHandler.value"
@@ -75,7 +75,7 @@
               <base-input
                 id="required|email"
                 :label="t('email')"
-                class="w-full"
+                class="w-full xl:flex-shrink-0"
                 :placeholder="userStore.userData.email"
                 v-model="emailHandler.value"
                 :value="emailHandler.value"
@@ -114,7 +114,7 @@
               <base-input
                 id="password"
                 :label="t('password')"
-                class="w-full"
+                class="w-full xl:flex-shrink-0"
                 placeholder="••••••••••••"
                 disabled
               ></base-input>
