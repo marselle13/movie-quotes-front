@@ -78,7 +78,12 @@
         </div>
         <div class="flex gap-3">
           <p class="text-white w-[0.7rem]">{{ likesLength }}</p>
-          <LikeIcon :like-style="likeButtonStyle" :post-id="postId" @click="reactOnPost(postId)" />
+          <LikeIcon
+            :like-style="likeButtonStyle"
+            :post-id="postId"
+            @click="reactOnPost(postId)"
+            class="cursor-pointer"
+          />
         </div>
       </div>
       <base-button v-else-if="edit" class="w-full py-2">{{ t('edit_quote') }}</base-button>
