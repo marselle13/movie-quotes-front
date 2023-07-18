@@ -23,6 +23,7 @@
             <NotificationIcon />
             <div
               class="w-6 h-6 absolute bg-red-500 top-0 rounded-full right-[20px] text-white text-center"
+              v-if="notificationAmount > 0"
             >
               <p>
                 {{ notificationAmount }}
