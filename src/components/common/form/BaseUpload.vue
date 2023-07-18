@@ -48,10 +48,8 @@
           </div>
         </div>
       </div>
-      <ErrorMessage
-        :name="id"
-        class="absolute -bottom-4 text-[#DC3545] text-[9px] md:text-[10px]"
-      ></ErrorMessage>
+      <ErrorMessage :name="id" class="absolute -bottom-4 text-[#DC3545] text-[9px] md:text-[10px]">
+      </ErrorMessage>
     </div>
   </Field>
 </template>
@@ -72,12 +70,17 @@ defineProps({
 const { t } = useI18n()
 const imageHandler = ref('')
 const activeDrop = ref(false)
+const error = ref('')
 
 const emit = defineEmits(['show-image'])
 function uploadImage(event, handleChange) {
   activeDrop.value = false
   const image = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0]
-  if (image.size > 2000000 || !image.type.includes('image')) return
+  if (!image.type.includes('image')) {
+    error.value = t('image_size')
+    return
+  }
+  error.value = ''
   handleChange(image)
   imageHandler.value = URL.createObjectURL(image)
   emit('show-image')

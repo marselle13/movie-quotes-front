@@ -110,5 +110,6 @@
   "tenenbaums": "The Royal Tenenbaums",
   "lotr_quote": "Death Is Just Another Path, One That We All Must Take.",
   "lotr": "The Lord of the Rings",
-  "load_more": "Load more"
+  "load_more": "Load more",
+  "image_size" : "The image size exceeds the maximum allowed limit"
 }

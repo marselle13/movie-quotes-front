@@ -66,6 +66,9 @@
             name="image"
             class="absolute -bottom-4 text-[9px] text-[#DC3545] md:text-[10px]"
           ></ErrorMessage>
+          <p class="absolute -bottom-4 text-[9px] text-[#DC3545] md:text-[10px]" v-if="error.image">
+            {{ error.image }}
+          </p>
         </div>
       </Field>
       <div class="flex gap-6" v-if="!edit">
@@ -123,7 +126,7 @@ const avatar = `${import.meta.env.VITE_BASE_URL}${
 const quoteEng = ref(props.quote.en)
 const quoteGeo = ref(props.quote.ka)
 const imageHandler = ref('')
-const error = reactive({ en: '', ka: '' })
+const error = reactive({ en: '', ka: '', image: '' })
 
 const likeButtonStyle = computed(() => {
   const index = props.likes.findIndex((like) => like.user?.id === userStore.userData.id)
@@ -132,7 +135,11 @@ const likeButtonStyle = computed(() => {
 
 function uploadNewImage(event, handleChange) {
   const image = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0]
-  if (image.size > 2000000 || !image.type.includes('image')) return
+  if (image.size > 2000000 || !image.type.includes('image')) {
+    error.image = t('image_size')
+    return
+  }
+  error.iamge = ''
   handleChange(image)
   imageHandler.value = URL.createObjectURL(image)
 }
