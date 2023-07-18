@@ -12,8 +12,8 @@
             ? 'wrapper pt-20 pb-24 px-2 w-10/12 before:absolute before:w-full before:h-full before:top-0  before:left-0 before:opacity-30 before:backdrop-blur-xl before:rotate-180 rounded-lg before:-z-10'
             : 'w-full',
           {
-            'md:w-[600px]': notification,
-            'md:w-[650px]': !notification,
+            'md:w-[37.5rem]': notification,
+            'md:w-[40rem]': !notification,
           },
         ]"
       >

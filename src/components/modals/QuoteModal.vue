@@ -77,7 +77,7 @@
           buttonWidth="w-full h-full"
           button-background
           dropdown-background
-          dropdown-width="left-0 top-20 max-h-[100px] w-full overflow-y-auto"
+          dropdown-width="left-0 top-20 max-h-[6rem] w-full overflow-y-auto"
         >
           <template #dropdownButton
             ><div class="flex items-center justify-between text-white text-left">
