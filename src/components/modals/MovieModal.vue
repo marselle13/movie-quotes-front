@@ -7,7 +7,7 @@
         :placeholder="title === t('new_movie') ? 'Movie name' : ''"
         mode="flat"
         lang="Eng"
-        rules="required"
+        rules="required|eng_chars"
         :edit="title !== t('new_movie')"
         :error="error.nameEng"
         @update-prop="error.nameEng = ''"
@@ -20,7 +20,7 @@
         :placeholder="title === t('new_movie') ? 'ფილმის სახელი' : ''"
         mode="flat"
         lang="ქარ"
-        rules="required"
+        rules="required|geo_chars"
         :edit="title !== t('new_movie')"
         :error="error.nameGeo"
         @update-prop="error.nameGeo = ''"
@@ -84,7 +84,7 @@
         :edit="title !== t('new_movie')"
         mode="flat"
         lang="Eng"
-        rules="required"
+        rules="required|eng_chars"
         autocomplete="off"
         v-model="directorEng.value"
       />
@@ -95,7 +95,7 @@
         :edit="title !== t('new_movie')"
         mode="flat"
         lang="ქარ"
-        rules="required"
+        rules="required|geo_chars"
         autocomplete="off"
         v-model="directorGeo.value"
       />
@@ -105,7 +105,7 @@
         :placeholder="title === t('new_movie') ? 'Movie Description' : ''"
         :edit="title !== t('new_movie')"
         lang="Eng"
-        rules="required"
+        rules="required|eng_chars"
         v-model="descriptionEng.value"
       />
       <base-textarea
@@ -114,7 +114,7 @@
         :placeholder="title === t('new_movie') ? 'ფილმის აღწერა' : ''"
         :edit="title !== t('new_movie')"
         lang="ქარ"
-        rules="required"
+        rules="required|geo_chars"
         v-model="descriptionGeo.value"
       />
       <base-upload

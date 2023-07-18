@@ -19,7 +19,7 @@
         <base-textarea
           id="quoteEng"
           v-model="quoteEng"
-          rules="required"
+          rules="required|eng_chars"
           :disabled="!edit"
           mode="flat"
           lang="Eng"
@@ -28,7 +28,7 @@
         <base-textarea
           id="quoteGeo"
           v-model="quoteGeo"
-          rules="required"
+          rules="required|geo_chars"
           :disabled="!edit"
           mode="flat"
           lang="ქარ"

@@ -4,7 +4,7 @@
       <label
         :for="id"
         v-if="edit && label"
-        class="inline-flex self-start whitespace-nowrap text-[#6C757D]"
+        class="inline-flex self-start whitespace-nowrap text-[#6C757D] pl-4"
         >{{ label }}:</label
       >
       <textarea

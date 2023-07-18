@@ -37,7 +37,7 @@
       </div>
       <div class="flex flex-col gap-6 md:block md:space-y-6">
         <base-textarea
-          rules="required"
+          rules="required|eng_chars"
           id="quoteEng"
           language="Eng"
           placeholder="Start create new quote"
@@ -47,7 +47,7 @@
           :class="{ 'order-1': movie }"
         />
         <base-textarea
-          rules="required"
+          rules="required|geo_chars"
           id="quoteGeo"
           language="ქარ"
           placeholder="ახალი ციტატა"
