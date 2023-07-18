@@ -7,11 +7,8 @@
           t('more_characters')
         }}</span>
       </li>
-      <li
-        class="text-sm"
-        :class="correctLength && correctCharacters ? 'text-green-500' : 'text-[#9C9A9A]'"
-      >
-        <span :class="correctLength && correctCharacters ? 'text-white' : 'text-[#9C9A9A]'">
+      <li class="text-sm" :class="correctCharacters ? 'text-green-500' : 'text-[#9C9A9A]'">
+        <span :class="correctCharacters ? 'text-white' : 'text-[#9C9A9A]'">
           {{ t('lowercase_characters') }}</span
         >
       </li>
