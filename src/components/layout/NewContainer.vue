@@ -5,7 +5,7 @@
       @click="emit('close')"
     ></div>
     <main-card
-      class="w-full fixed top-0 lg:top-20 max-w-[940px] h-screen lg:max-h-[768px] overflow-y-auto scrollbar-hide"
+      class="w-full fixed top-0 lg:top-20 max-w-[59rem] h-screen lg:max-h-[52rem] lg:h-auto overflow-y-auto scrollbar-hide"
     >
       <div
         class="flex items-center justify-between border-b border-[#EFEFEF] border-opacity-30 p-8"
