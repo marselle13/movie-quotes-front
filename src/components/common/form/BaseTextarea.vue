@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col md:flex-row relative border border-[#6C757D] pl-4 pt-1 gap-2">
+  <div class="flex flex-col md:flex-row relative border border-[#6C757D] pt-1 gap-2">
     <Field :name="id" v-model="textareaValue" :rules="rules" v-slot="{ field }">
       <label
         :for="id"
@@ -14,7 +14,8 @@
         v-model="textareaValue"
         :style="{ minHeight: disabled ? '40px' : '80px' }"
         :disabled="disabled"
-        class="italic text-white w-full bg-transparent rounded outline-none pr-16 lg:pr-24 placeholder-[#6C757D] disabled:resize-none"
+        :class="[lang ? 'pl-4 pr-16 lg:pr-24' : 'px-4']"
+        class="italic text-white w-full bg-transparent rounded outline-none placeholder-[#6C757D] disabled:resize-none"
       ></textarea>
       <h6 v-if="lang" class="capitalize absolute right-3 top-2 text-[#6C757D]">{{ lang }}</h6>
       <ErrorMessage

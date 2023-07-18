@@ -29,7 +29,7 @@
     mode="flat"
     class="w-full py-2 mt-6"
     @click="moreComments(postId)"
-    >Load more</base-button
+    >{{ t('load_more') }}</base-button
   >
   <CommentInput :post-id="postId" />
 </template>
@@ -37,6 +37,7 @@
 import { usePostStore } from '@/stores/postStore'
 import { ref } from 'vue'
 import CommentInput from '@/components/post/CommentInput.vue'
+import { useI18n } from 'vue-i18n'
 
 defineProps({
   postId: { type: Number, required: true },
@@ -50,6 +51,7 @@ const viteBaseUrl = import.meta.env.VITE_BASE_URL
 
 const loaded = ref(false)
 
+const { t } = useI18n()
 const postStore = usePostStore()
 
 async function moreComments(postId) {

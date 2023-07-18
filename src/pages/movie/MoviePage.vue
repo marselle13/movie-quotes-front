@@ -159,7 +159,7 @@ import PostModal from '@/components/modals/PostModal.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useMovieStore } from '@/stores/movieStore'
-import { onBeforeMount, onMounted, ref } from 'vue'
+import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 import { usePostStore } from '@/stores/postStore'
 
 const router = useRouter()
@@ -234,5 +234,10 @@ onMounted(() => {
 
   checkWidth()
   window.addEventListener('resize', checkWidth)
+})
+
+onBeforeUnmount(() => {
+  window.Echo.leaveChannel('comments')
+  window.Echo.leaveChannel('reactions')
 })
 </script>
