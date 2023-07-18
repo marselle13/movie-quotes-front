@@ -14,9 +14,9 @@
   </teleport>
   <section class="inline-flex md:flex gap-4 flex-shrink-0 mx-4 lg:mx-0 relative">
     <button
-      class="transition-all duration-500 ease-out rounded-lg bg-transparent md:bg-[#24222F] p-3 text-start text-white flex gap-4 whitespace-nowrap"
+      class="transition-all duration-500 ease-out rounded-lg bg-transparent md:bg-[#24222F] p-3 text-start text-white flex gap-4 whitespace-nowrap z-20"
       :class="{ 'w-full': !search, 'w-[15rem]': search }"
-      @click="addQuote = true"
+      @click="newQuoteModal"
     >
       <WriteQuoteIcon class="w-23" /> {{ t('new_quote') }}
     </button>
@@ -58,6 +58,11 @@ function searchHandler(isOpen) {
 
 function checkWidth() {
   isDesktop.value = window.innerWidth >= 768
+}
+
+function newQuoteModal() {
+  addQuote.value = true
+  search.value = false
 }
 
 let searchTimeout
