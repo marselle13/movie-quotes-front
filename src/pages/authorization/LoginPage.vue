@@ -63,7 +63,7 @@
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { useI18n } from 'vue-i18n'
 import { Form, Field } from 'vee-validate'
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthService } from '@/services/authService'

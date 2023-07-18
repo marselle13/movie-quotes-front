@@ -43,7 +43,7 @@ import QuoteModal from '@/components/modals/QuoteModal.vue'
 import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import BaseSearch from '@/components/common/form/BaseSearch.vue'
-import { usePostStore } from '@/stores/postStore'
+import { usePostStore } from '@/stores/post'
 
 const postStore = usePostStore()
 const { t } = useI18n()

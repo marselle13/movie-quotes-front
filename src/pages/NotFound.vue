@@ -13,7 +13,7 @@
 </template>
 <script setup>
 import NotFoundIcon from '@/components/icons/NotFoundIcon.vue'
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()

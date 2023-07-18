@@ -155,7 +155,7 @@ import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { setLocale } from '@vee-validate/i18n'
 import { useRoute, useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 
 const props = defineProps({
   background: { type: Boolean, required: false, default: true },

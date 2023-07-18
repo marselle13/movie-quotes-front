@@ -134,7 +134,7 @@ import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { useI18n } from 'vue-i18n'
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import { useMovieStore } from '@/stores/movieStore'
+import { useMovieStore } from '@/stores/movie'
 import { onBeforeMount, onBeforeUnmount, reactive, ref } from 'vue'
 import { useForm } from 'vee-validate'
 

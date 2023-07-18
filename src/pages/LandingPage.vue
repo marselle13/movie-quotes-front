@@ -57,7 +57,7 @@ import { useI18n } from 'vue-i18n'
 import { computed, onBeforeMount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useEmailService } from '@/services/emailService'
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 import { setLocale } from '@vee-validate/i18n'
 
 const { t, locale } = useI18n()

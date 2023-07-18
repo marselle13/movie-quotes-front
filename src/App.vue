@@ -3,8 +3,8 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/userStore'
-import { useMovieStore } from '@/stores/movieStore'
+import { useUserStore } from '@/stores/user'
+import { useMovieStore } from '@/stores/movie'
 
 const router = useRouter()
 const userStore = useUserStore()

@@ -1,6 +1,6 @@
 import api from '@/config/axios'
-import { useUserStore } from '@/stores/userStore'
-import { usePostStore } from '@/stores/postStore'
+import { useUserStore } from '@/stores/user'
+import { usePostStore } from '@/stores/post'
 
 export const usePostService = () => {
   async function fetchPosts(page, search = null) {

@@ -182,7 +182,7 @@ import PasswordModal from '@/components/modals/profile/PasswordModal.vue'
 
 import { computed, onMounted, reactive, ref } from 'vue'
 import { Form, Field } from 'vee-validate'
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 import { useUserService } from '@/services/UserService'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'

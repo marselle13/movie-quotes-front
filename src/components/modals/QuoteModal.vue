@@ -121,9 +121,9 @@ import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
 import MoviesIcon from '@/components/icons/MoviesIcon.vue'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { onBeforeMount, onBeforeUnmount, reactive, ref } from 'vue'
-import { useMovieStore } from '@/stores/movieStore'
+import { useMovieStore } from '@/stores/movie'
 import { useI18n } from 'vue-i18n'
-import { usePostStore } from '@/stores/postStore'
+import { usePostStore } from '@/stores/post'
 
 defineProps({ title: { type: String, required: true }, movie: { type: Object, required: false } })
 

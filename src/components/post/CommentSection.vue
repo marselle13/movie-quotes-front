@@ -34,7 +34,7 @@
   <CommentInput :post-id="postId" />
 </template>
 <script setup>
-import { usePostStore } from '@/stores/postStore'
+import { usePostStore } from '@/stores/post'
 import { ref } from 'vue'
 import CommentInput from '@/components/post/CommentInput.vue'
 import { useI18n } from 'vue-i18n'

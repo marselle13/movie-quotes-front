@@ -158,9 +158,9 @@ import PostDropdown from '@/components/post/PostDropdown.vue'
 import PostModal from '@/components/modals/PostModal.vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useMovieStore } from '@/stores/movieStore'
+import { useMovieStore } from '@/stores/movie'
 import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
-import { usePostStore } from '@/stores/postStore'
+import { usePostStore } from '@/stores/post'
 
 const router = useRouter()
 const { t, locale } = useI18n()

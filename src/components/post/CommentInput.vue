@@ -17,7 +17,7 @@
   </section>
 </template>
 <script setup>
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 import { useI18n } from 'vue-i18n'
 import { Form } from 'vee-validate'
 import { usePostService } from '@/services/postService'

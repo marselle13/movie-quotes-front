@@ -40,10 +40,10 @@
 </template>
 <script setup>
 import CloseIcon from '@/components/icons/CloseIcon.vue'
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 import EditIcon from '@/components/icons/EditIcon.vue'
 import DeleteIcon from '@/components/icons/DeleteIcon.vue'
-import { useMovieStore } from '@/stores/movieStore'
+import { useMovieStore } from '@/stores/movie'
 
 defineProps({
   quoteId: { type: Number, required: false },
