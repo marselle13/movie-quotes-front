@@ -109,7 +109,7 @@
                   class="h-full object-cover w-full object-center"
                 />
               </div>
-              <p class="max-w-[400px] text-light-silver italic text-2xl break-words">
+              <p class="max-w-[25rem] text-light-silver italic text-2xl break-words">
                 "{{ quote.quote[locale] }}"
               </p>
             </div>

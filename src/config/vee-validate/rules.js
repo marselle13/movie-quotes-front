@@ -1,5 +1,5 @@
 import { defineRule } from 'vee-validate'
-import { required, min, max, email, confirmed, image, alpha_dash } from '@vee-validate/rules'
+import { required, min, max, email, confirmed, image } from '@vee-validate/rules'
 
 defineRule('required', required)
 defineRule('min', min)

@@ -1,5 +1,5 @@
 <template>
-  <MainContainer width="md:w-[940px] md:mx-auto lg:mx-0 w-full relative">
+  <MainContainer width="md:w-[59rem] md:mx-auto lg:mx-0 w-full relative">
     <PostNavigation />
     <LoadingSpinner v-if="isLoading" />
     <div v-else-if="!isLoading">
