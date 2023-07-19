@@ -13,12 +13,12 @@
     <div
       v-if="dropdown"
       @click="dropdownButton"
-      class="z-20 bg-black rounded-[10px] absolute text-sm text-white"
+      class="z-20 absolute text-sm text-white"
       :class="[
         dropdownWidth,
-        {
-          'z-10 bg-black scrollbar-hide rounded-2xl': dropdownBackground,
-        },
+        dropdownBackground
+          ? 'bg-black scrollbar-hide rounded-2xl'
+          : 'bg-midnight-gray rounded-[10px]',
       ]"
     >
       <slot name="dropdown"></slot>

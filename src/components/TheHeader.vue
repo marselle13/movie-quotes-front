@@ -15,7 +15,7 @@
         <base-dropdown
           button-width="w-[3.75rem]"
           dropdown-width="fixed mb-20 w-full top-20 left-0 lg:w-[58rem]  lg:-right-[15rem] lg:top-16 px-8 py-10  lg:left-auto max-h-[36rem]  lg:max-h-[50rem] overflow-y-auto"
-          dropdown-background
+          :dropdown-background="true"
           position="static lg:relative"
           @isOpen="dropdownHandler"
         >
