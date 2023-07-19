@@ -71,7 +71,7 @@
                 ></base-input>
               </teleport>
             </div>
-            <div class="flex gap-9 border-b border-light-silver md:border-none">
+            <div class="flex gap-9 border-b border-[#ced4da80] md:border-none">
               <base-input
                 id="required|email"
                 :label="t('email')"
