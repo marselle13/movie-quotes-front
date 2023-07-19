@@ -118,7 +118,7 @@ async function logout() {
     await userStore.logout()
     await router.replace({ name: 'landing' })
   } catch (err) {
-    //Error
+    console.error(err)
   }
 }
 
