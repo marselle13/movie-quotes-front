@@ -1,11 +1,11 @@
 <template>
   <div class="flex justify-center relative z-40">
     <div
-      class="fixed top-0 left-0 w-full h-full bg-gradient-to-r from-0% from-[#181623] via-[#191725] via-50% to-[#0D0B14] to-[95%] opacity-70 z-1 backdrop-blur-sm"
+      class="fixed top-0 left-0 w-full h-full bg-gradient-to-r from-0% from-linear-indigo via-linear-gray via-50% to-linear-black to-[95%] opacity-70 z-1 backdrop-blur-sm"
       @click="emit('close')"
     ></div>
     <main-card
-      class="w-full fixed top-0 lg:top-20 max-w-[940px] h-screen lg:max-h-[768px] overflow-y-auto scrollbar-hide"
+      class="w-full fixed top-0 lg:top-20 max-w-[59rem] h-screen lg:max-h-[52rem] lg:h-auto overflow-y-auto scrollbar-hide"
     >
       <div
         class="flex items-center justify-between border-b border-[#EFEFEF] border-opacity-30 p-8"
@@ -14,7 +14,7 @@
           <button @click="emit('edit')" v-if="!edit">
             <EditIcon />
           </button>
-          <div class="h-4 border border-[#6C757D] mx-4" v-if="!edit"></div>
+          <div class="h-4 border border-steel-gray mx-4" v-if="!edit"></div>
           <button @click="remove(quoteId)">
             <DeleteIcon />
           </button>
@@ -40,10 +40,10 @@
 </template>
 <script setup>
 import CloseIcon from '@/components/icons/CloseIcon.vue'
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 import EditIcon from '@/components/icons/EditIcon.vue'
 import DeleteIcon from '@/components/icons/DeleteIcon.vue'
-import { useMovieStore } from '@/stores/movieStore'
+import { useMovieStore } from '@/stores/movie'
 
 defineProps({
   quoteId: { type: Number, required: false },
@@ -61,7 +61,7 @@ async function remove(quoteId) {
     await useMovieStore().removeQuoteFromMovie(quoteId, movieStore.getCurrentMovie.id)
     emit('close')
   } catch (err) {
-    //Err
+    console.error(err)
   }
 }
 </script>

@@ -4,14 +4,14 @@
     :class="[fixed ? 'lg:bg-fixed bg-scroll' : 'bg-scroll', position]"
   >
     <div
-      class="z-10 md:pl-32 pl-6 absolute top-0 xl:w-[1100px] md:w-[700px] w-[320px] grid grid-cols-12 content-center h-full gap-4"
+      class="z-10 md:pl-32 pl-6 absolute top-0 xl:w-[69rem] md:w-[44rem] w-[20rem] grid grid-cols-12 content-center h-full gap-4"
     >
       <div class="border-t-2 border-white my-4 md:my-10"></div>
       <div class="col-span-11">
-        <h2 class="flex text-white text-xl lg:text-5xl lg:leading-[75px] font-bold">
+        <h2 class="flex text-white text-xl lg:text-5xl lg:leading-[4.5rem] font-bold">
           “<slot name="quote"></slot>”
         </h2>
-        <p class="text-[#D9D9D9] text-base lg:text-3xl font-bold"><slot name="movie"></slot></p>
+        <p class="text-light-gray text-base lg:text-3xl font-bold"><slot name="movie"></slot></p>
       </div>
     </div>
   </div>

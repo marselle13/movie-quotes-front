@@ -6,10 +6,10 @@
       @dragleave.prevent="activeDrop = false"
       @dragover.prevent="activeDrop = true"
       @drop.prevent="uploadImage($event, handleChange)"
-      :class="[activeDrop ? 'border-green-500' : 'border-[#6C757D]']"
+      :class="[activeDrop ? 'border-green-500' : 'border-steel-gray']"
     >
       <div
-        class="flex justify-center bg-[#D9D9D9] max-w-80 h-40 ml-4 w-full"
+        class="flex justify-center bg-light-gray max-w-80 h-40 ml-4 w-full"
         v-if="(imageHandler || uploadedImage) && !resetImage"
       >
         <img :src="imageHandler || uploadedImage" alt="image" class="object-cover" />
@@ -21,7 +21,7 @@
         >
           <p
             v-if="imageHandler || uploadedImage"
-            class="uppercase text-[#DDCCAA] text-xs md:text-base"
+            class="uppercase text-light-gold text-xs md:text-base"
           >
             {{ t('replace_photo') }}
           </p>
@@ -48,9 +48,9 @@
           </div>
         </div>
       </div>
-      <ErrorMessage :name="id" class="absolute -bottom-4 text-[#DC3545] text-[9px] md:text-[10px]">
+      <ErrorMessage :name="id" class="absolute -bottom-4 text-error-red text-[9px] md:text-[10px]">
       </ErrorMessage>
-      <p class="absolute -bottom-4 text-[#DC3545] text-[9px] md:text-[10px]">{{ error }}</p>
+      <p class="absolute -bottom-4 text-error-red text-[9px] md:text-[10px]">{{ error }}</p>
     </div>
   </Field>
 </template>

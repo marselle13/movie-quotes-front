@@ -42,7 +42,7 @@
             <google-icon /> {{ t('sign_up_google') }}
           </div>
         </base-button>
-        <p class="text-[#6C757D]">
+        <p class="text-steel-gray">
           {{ t('have_account')
           }}<router-link class="ml-1 text-[#0D6EFD] underline" :to="{ name: 'login' }">{{
             t('log_in')

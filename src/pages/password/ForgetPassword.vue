@@ -16,7 +16,7 @@
       ></base-input>
       <base-button class="w-full py-2 mt-2">{{ t('send_instructions') }}</base-button>
       <div class="flex justify-center">
-        <router-link :to="{ name: 'login' }" class="text-[#6C757D] inline-flex items-center gap-3">
+        <router-link :to="{ name: 'login' }" class="text-steel-gray inline-flex items-center gap-3">
           <BackIcon />
           {{ t('back_login') }}</router-link
         >

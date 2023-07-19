@@ -1,7 +1,7 @@
 <template>
   <section class="flex mt-6 gap-3 md:gap-6 items-center justify-start">
     <div
-      class="w-10 h-10 md:w-12 md:h-12 flex justify-center flex-shrink-0 bg-[#D9D9D9] rounded-full overflow-hidden"
+      class="w-10 h-10 md:w-12 md:h-12 flex justify-center flex-shrink-0 bg-light-gray rounded-full overflow-hidden"
     >
       <img :src="userStore.userData.avatar" alt="profile" class="object-cover" />
     </div>
@@ -17,7 +17,7 @@
   </section>
 </template>
 <script setup>
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 import { useI18n } from 'vue-i18n'
 import { Form } from 'vee-validate'
 import { usePostService } from '@/services/postService'
@@ -37,7 +37,7 @@ async function onSubmit(values, { resetForm }) {
       await postService.addNewComment(props.postId, comment)
       resetForm()
     } catch (err) {
-      //Err
+      console.error(err)
     }
   }
 }

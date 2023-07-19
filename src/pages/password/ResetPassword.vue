@@ -24,7 +24,7 @@
       ></base-input>
       <base-button class="w-full py-2">{{ t('reset_password') }}</base-button>
       <div class="flex justify-center pt-6">
-        <router-link :to="{ name: 'login' }" class="text-[#6C757D] inline-flex items-center gap-3"
+        <router-link :to="{ name: 'login' }" class="text-steel-gray inline-flex items-center gap-3"
           ><BackIcon />{{ t('back_login') }}</router-link
         >
       </div>

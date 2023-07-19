@@ -12,15 +12,15 @@
             ? 'wrapper pt-20 pb-24 px-2 w-10/12 before:absolute before:w-full before:h-full before:top-0  before:left-0 before:opacity-30 before:backdrop-blur-xl before:rotate-180 rounded-lg before:-z-10'
             : 'w-full',
           {
-            'md:w-[600px]': notification,
-            'md:w-[650px]': !notification,
+            'md:w-[37.5rem]': notification,
+            'md:w-[40rem]': !notification,
           },
         ]"
       >
         <div class="text-center space-y-4 flex flex-col items-center">
           <slot name="icon"></slot>
           <h3 class="text-2xl md:text-3xl text-white text-center"><slot name="title"></slot></h3>
-          <p class="text-[#6C757D]"><slot name="info"></slot></p>
+          <p class="text-steel-gray"><slot name="info"></slot></p>
         </div>
         <slot></slot>
       </div>

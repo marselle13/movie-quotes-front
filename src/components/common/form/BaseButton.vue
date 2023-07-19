@@ -41,7 +41,7 @@ const buttonStyle = computed(() => {
     case 'transparent':
       return 'bg-transparent'
     default:
-      return 'bg-[#E31221] hover:bg-[#CC0E10] focus:bg-[#B80D0F] disabled:bg-[#EC4C57]'
+      return 'bg-rose-red hover:bg-[#CC0E10] focus:bg-[#B80D0F] disabled:bg-[#EC4C57]'
   }
 })
 </script>

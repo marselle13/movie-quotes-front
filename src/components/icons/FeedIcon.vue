@@ -23,6 +23,6 @@ import { computed } from 'vue'
 
 const props = defineProps({ name: { type: String, required: true } })
 const activeClass = computed(() => {
-  return props.name === 'news-feed' ? 'fill-[#E31221]' : 'fill-white'
+  return props.name === 'news-feed' ? 'fill-rose-red' : 'fill-white'
 })
 </script>

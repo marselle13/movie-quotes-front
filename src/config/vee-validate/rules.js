@@ -17,3 +17,13 @@ defineRule('valid_year', (value) => {
   const date = new Date()
   return value <= date.getFullYear()
 })
+
+defineRule('eng_chars', (value) => {
+  const englishRegex = /^[\w\p{P}\s]+$/u
+  return englishRegex.test(value)
+})
+
+defineRule('geo_chars', (value) => {
+  const georgianRegex = /^[\u10D0-\u10F1\d,.?!;:'"(){}<>«»\s\\-]+$/
+  return georgianRegex.test(value)
+})

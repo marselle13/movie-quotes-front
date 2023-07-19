@@ -1,11 +1,11 @@
 <template>
   <div class="flex justify-center">
     <div
-      class="fixed top-0 left-0 h-full w-full z-10 bg-gradient-to-r from-[#181623] from-0% via-[#191725] via-50% to-[#0d0b14] to-95% opacity-70 backdrop-blur-[2px]"
+      class="fixed top-0 left-0 h-full w-full z-10 bg-gradient-to-r from-linear-indigo from-0% via-linear-gray via-50% to-linear-black to-95% opacity-70 backdrop-blur-[2px]"
       @click="emit('close')"
     ></div>
     <div
-      class="rounded bg-[#D1E7DD] border border-[#BADBCC] p-4 flex items-center justify-between absolute z-20 w-11/12 lg:max-w-[30rem] top-32 lg:w-full"
+      class="rounded bg-[#D1E7DD] border border- p-4 flex items-center justify-between absolute z-20 w-11/12 lg:max-w-[30rem] top-32 lg:w-full"
     >
       <div class="flex gap-2">
         <SuccessUpdateIcon />

@@ -26,7 +26,7 @@ async function resendLinkButton() {
     await emailService.resendLink(route.params.uuid)
     await router.push({ name: 'success-message', params: { message: 'verification' } })
   } catch (err) {
-    //error
+    console.error(err)
   }
 }
 </script>

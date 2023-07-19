@@ -1,5 +1,5 @@
 <template>
-  <MainContainer width="md:w-[940px] md:mx-auto lg:mx-0 w-full relative">
+  <MainContainer width="md:w-[59rem] md:mx-auto lg:mx-0 w-full relative">
     <PostNavigation />
     <LoadingSpinner v-if="isLoading" />
     <div v-else-if="!isLoading">
@@ -32,7 +32,7 @@ import MainContainer from '@/components/layout/MainContainer.vue'
 import PostNavigation from '@/components/post/PostNavigation.vue'
 import PostSection from '@/components/post/PostSection.vue'
 import { onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
-import { usePostStore } from '@/stores/postStore'
+import { usePostStore } from '@/stores/post'
 import { useI18n } from 'vue-i18n'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 

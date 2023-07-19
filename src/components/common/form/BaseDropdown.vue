@@ -6,19 +6,19 @@
       @click="dropdownButton"
     ></div>
   </teleport>
-  <div :class="[{ 'hidden md:block': hidden, 'bg-[#000000] p-6': buttonBackground }, position]">
+  <div :class="[{ 'hidden md:block': hidden, 'bg-black p-6': buttonBackground }, position]">
     <button class="relative" type="button" @click="dropdownButton" :class="buttonWidth">
       <slot name="dropdownButton"></slot>
     </button>
     <div
       v-if="dropdown"
       @click="dropdownButton"
-      class="z-20 bg-[#24222F] rounded-[10px] absolute text-sm text-white"
+      class="z-20 absolute text-sm text-white"
       :class="[
         dropdownWidth,
-        {
-          'z-10 bg-black scrollbar-hide rounded-2xl': dropdownBackground,
-        },
+        dropdownBackground
+          ? 'bg-black scrollbar-hide rounded-2xl'
+          : 'bg-midnight-gray rounded-[10px]',
       ]"
     >
       <slot name="dropdown"></slot>

@@ -2,16 +2,13 @@
   <div class="block rounded border border-[#ced4da33] p-6 mb-9">
     <p class="text-white">{{ t('password_contain') }}</p>
     <ul class="text-white list-disc px-4">
-      <li class="text-sm" :class="!correctLength ? 'text-[#9C9A9A]' : 'text-green-500'">
-        <span :class="!correctLength ? 'text-[#9C9A9A]' : 'text-white'">{{
+      <li class="text-sm" :class="!correctLength ? 'text-light-slate' : 'text-green-500'">
+        <span :class="!correctLength ? 'text-light-slate' : 'text-white'">{{
           t('more_characters')
         }}</span>
       </li>
-      <li
-        class="text-sm"
-        :class="correctLength && correctCharacters ? 'text-green-500' : 'text-[#9C9A9A]'"
-      >
-        <span :class="correctLength && correctCharacters ? 'text-white' : 'text-[#9C9A9A]'">
+      <li class="text-sm" :class="correctCharacters ? 'text-green-500' : 'text-light-slate'">
+        <span :class="correctCharacters ? 'text-white' : 'text-light-slate'">
           {{ t('lowercase_characters') }}</span
         >
       </li>

@@ -14,9 +14,9 @@
   </teleport>
   <section class="inline-flex md:flex gap-4 flex-shrink-0 mx-4 lg:mx-0 relative">
     <button
-      class="transition-all duration-500 ease-out rounded-lg bg-transparent md:bg-[#24222F] p-3 text-start text-white flex gap-4 whitespace-nowrap"
-      :class="{ 'w-full': !search, 'w-[240px]': search }"
-      @click="addQuote = true"
+      class="transition-all duration-500 ease-out rounded-lg bg-transparent md:bg-midnight-gray p-3 text-start text-white flex gap-4 whitespace-nowrap z-20"
+      :class="{ 'w-full': !search, 'w-[15rem]': search }"
+      @click="newQuoteModal"
     >
       <WriteQuoteIcon class="w-23" /> {{ t('new_quote') }}
     </button>
@@ -43,7 +43,7 @@ import QuoteModal from '@/components/modals/QuoteModal.vue'
 import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import BaseSearch from '@/components/common/form/BaseSearch.vue'
-import { usePostStore } from '@/stores/postStore'
+import { usePostStore } from '@/stores/post'
 
 const postStore = usePostStore()
 const { t } = useI18n()
@@ -60,6 +60,11 @@ function checkWidth() {
   isDesktop.value = window.innerWidth >= 768
 }
 
+function newQuoteModal() {
+  addQuote.value = true
+  search.value = false
+}
+
 let searchTimeout
 let showTimeout
 
@@ -71,7 +76,7 @@ watch(searchValue, async (newValue) => {
       try {
         await postStore.searchPosts(newValue.toLowerCase().trim())
       } catch (err) {
-        //Err
+        console.error(err)
       }
     }, 500)
   } else {
@@ -79,7 +84,7 @@ watch(searchValue, async (newValue) => {
       try {
         await postStore.showPosts()
       } catch (err) {
-        //Err
+        console.error(err)
       }
     }, 500)
   }

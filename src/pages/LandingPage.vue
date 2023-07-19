@@ -6,8 +6,8 @@
       class="w-[300px] mx-auto md:w-full md:mx-0 md:grid text-center md:content-center md:justify-items-center pt-32 pb-24 md:py-64"
     >
       <h1
-        class="text-2xl md:text-6xl md:leading-[90px] text-[#DDCCAA] font-bold mb-6"
-        :class="locale === 'en' ? 'max-w-[800px]' : 'max-w-[1100px]'"
+        class="text-2xl md:text-6xl md:leading-[5.5rem] text-light-gold font-bold mb-6"
+        :class="locale === 'en' ? 'max-w-[50rem]' : 'max-w-[69rem]'"
       >
         {{ t('title') }}
       </h1>
@@ -57,7 +57,7 @@ import { useI18n } from 'vue-i18n'
 import { computed, onBeforeMount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useEmailService } from '@/services/emailService'
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 import { setLocale } from '@vee-validate/i18n'
 
 const { t, locale } = useI18n()

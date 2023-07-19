@@ -9,11 +9,11 @@
     <transition name="slide">
       <aside
         v-show="navigation || isDesktop"
-        class="z-50 lg:z-auto lg:sticky lg:top-24 inline-flex flex-col p-11 lg:p-0 flex-shrink-0 max-w-[400px] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent top-0 backdrop-blur-2xl lg:backdrop-blur-0"
+        class="z-50 lg:z-auto lg:sticky lg:top-24 inline-flex flex-col p-11 lg:p-0 flex-shrink-0 max-w-[25rem] w-11/12 h-screen fixed left-0 bg-[#11101A] lg:bg-transparent top-0 backdrop-blur-2xl lg:backdrop-blur-0"
       >
         <div class="inline-flex items-center gap-6 relative">
           <div
-            class="flex justify-center bg-[#D9D9D9] w-16 h-16 rounded-full overflow-hidden"
+            class="flex justify-center bg-light-gray w-16 h-16 rounded-full overflow-hidden"
             :class="activeClass"
           >
             <img :src="userStore.userData.avatar" alt="profile" class="object-cover" />
@@ -21,7 +21,7 @@
 
           <div>
             <h4 class="text-white">{{ userStore.userData.name }}</h4>
-            <router-link :to="{ name: 'profile' }" class="text-xs text-[#CED4DA]">{{
+            <router-link :to="{ name: 'profile' }" class="text-xs text-light-silver">{{
               t('edit_profile')
             }}</router-link>
           </div>
@@ -85,7 +85,7 @@ import MoviesIcon from '@/components/icons/MoviesIcon.vue'
 import FeedIcon from '@/components/icons/FeedIcon.vue'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 import { useI18n } from 'vue-i18n'
 import TheHeader from '@/components/TheHeader.vue'
 import LanguageDropdown from '@/components/icons/DropdownIcon.vue'
@@ -110,7 +110,7 @@ function checkWidth() {
   isDesktop.value = window.innerWidth >= 1024
 }
 const activeClass = computed(() => {
-  return route.name === 'profile' && ' border-2 border-[#E31221]'
+  return route.name === 'profile' && ' border-2 border-rose-red'
 })
 
 async function logout() {

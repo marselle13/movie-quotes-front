@@ -4,7 +4,7 @@
     :class="[headerBackground, route.meta.user !== 'guest' ? 'sticky top-0' : '']"
   >
     <div class="flex items-center">
-      <p class="text-[#DDCCAA] uppercase" :class="[headerIcon]">
+      <p class="text-light-gold uppercase" :class="[headerIcon]">
         {{ t('movie_quotes') }}
       </p>
       <BurgerIcon v-if="background" class="lg:hidden" @click="emit('open-navigation', true)" />
@@ -15,7 +15,7 @@
         <base-dropdown
           button-width="w-[3.75rem]"
           dropdown-width="fixed mb-20 w-full top-20 left-0 lg:w-[58rem]  lg:-right-[15rem] lg:top-16 px-8 py-10  lg:left-auto max-h-[36rem]  lg:max-h-[50rem] overflow-y-auto"
-          dropdown-background
+          :dropdown-background="true"
           position="static lg:relative"
           @isOpen="dropdownHandler"
         >
@@ -65,7 +65,7 @@
                         />
                       </div>
                       <div>
-                        <h5 class="lg:text-lg text-[#CED4DA]">{{ notification.user.name }}</h5>
+                        <h5 class="lg:text-lg text-light-silver">{{ notification.user.name }}</h5>
                         <p
                           v-if="notification.message === 'commented'"
                           class="flex items-center gap-3"
@@ -73,7 +73,7 @@
                           <span> <QuoteIcon class="w-6 h-6" /> </span>
                           {{ t('comment') }}
                         </p>
-                        <p class="flex items-center gap-3 text-[#CED4DA]" v-else>
+                        <p class="flex items-center gap-3 text-light-silver" v-else>
                           <span> <HeartIcon class="w-6 h-6" /> </span>
                           {{ t('like') }}
                         </p>
@@ -82,7 +82,7 @@
                     <div
                       class="flex flex-row-reverse lg:flex-col w-full lg:w-auto justify-end ml-5 gap-12 lg:ml-0 lg:gap-0"
                     >
-                      <h5 class="lg:text-lg text-[#D9D9D9]">{{ notification.created[locale] }}</h5>
+                      <h5 class="lg:text-lg text-light-gray">{{ notification.created[locale] }}</h5>
                       <div class="relative lg:self-end w-8 lg:w-auto h-6">
                         <h5 class="lg:text-lg text-[#198754]" v-if="notification.type === 'new'">
                           {{ t('new') }}
@@ -155,7 +155,7 @@ import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { setLocale } from '@vee-validate/i18n'
 import { useRoute, useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 
 const props = defineProps({
   background: { type: Boolean, required: false, default: true },
@@ -202,7 +202,7 @@ async function logout() {
     await userStore.logout()
     await router.replace({ name: 'landing' })
   } catch (err) {
-    //Error
+    console.error(err)
   }
 }
 
@@ -210,7 +210,7 @@ async function seenNotifications(notificationId = null) {
   try {
     await userStore.updateNotification(notificationId)
   } catch (err) {
-    //Err
+    console.error(err)
   }
 }
 

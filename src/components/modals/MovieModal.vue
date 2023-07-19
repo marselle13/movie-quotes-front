@@ -7,7 +7,7 @@
         :placeholder="title === t('new_movie') ? 'Movie name' : ''"
         mode="flat"
         lang="Eng"
-        rules="required"
+        rules="required|eng_chars"
         :edit="title !== t('new_movie')"
         :error="error.nameEng"
         @update-prop="error.nameEng = ''"
@@ -20,7 +20,7 @@
         :placeholder="title === t('new_movie') ? 'ფილმის სახელი' : ''"
         mode="flat"
         lang="ქარ"
-        rules="required"
+        rules="required|geo_chars"
         :edit="title !== t('new_movie')"
         :error="error.nameGeo"
         @update-prop="error.nameGeo = ''"
@@ -30,16 +30,16 @@
       <Field name="genres" v-slot="{ handleChange }" rules="required" v-model="genresId.value">
         <base-dropdown
           :delete="deleted"
-          button-width="w-full border border-[#6C757D]  py-2 px-4 rounded text-left"
+          button-width="w-full border border-steel-gray py-2 px-4 rounded text-left"
         >
           <template #dropdownButton>
             <div class="flex justify-between items-center">
-              <h5 v-if="genres.length === 0" class="text-[#6C757D]">{{ t('genres') }}</h5>
+              <h5 v-if="genres.length === 0" class="text-steel-gray">{{ t('genres') }}</h5>
               <ul v-else class="inline-flex gap-2 overflow-x-auto scrollbar-hide">
                 <li
                   :key="genre.id"
                   v-for="genre in genres"
-                  class="flex items-center bg-[#6C757D] rounded-sm px-1 whitespace-nowrap relative"
+                  class="flex items-center bg-steel-gray rounded-sm px-1 whitespace-nowrap relative"
                 >
                   <h4 class="text-white">{{ genre.name?.[locale] }}</h4>
                   <CloseIcon class="w-5 h-5" @click="deleteGenre(genre.id, handleChange)" />
@@ -48,7 +48,7 @@
               <LanguageDropdownIcon />
               <error-message
                 name="genres"
-                class="absolute text-[#DC3545] -bottom-4 left-0 text-[9px] md:text-[10px]"
+                class="absolute text-error-red -bottom-4 left-0 text-[9px] md:text-[10px]"
               ></error-message>
             </div>
           </template>
@@ -84,7 +84,7 @@
         :edit="title !== t('new_movie')"
         mode="flat"
         lang="Eng"
-        rules="required"
+        rules="required|eng_chars"
         autocomplete="off"
         v-model="directorEng.value"
       />
@@ -95,7 +95,7 @@
         :edit="title !== t('new_movie')"
         mode="flat"
         lang="ქარ"
-        rules="required"
+        rules="required|geo_chars"
         autocomplete="off"
         v-model="directorGeo.value"
       />
@@ -105,7 +105,7 @@
         :placeholder="title === t('new_movie') ? 'Movie Description' : ''"
         :edit="title !== t('new_movie')"
         lang="Eng"
-        rules="required"
+        rules="required|eng_chars"
         v-model="descriptionEng.value"
       />
       <base-textarea
@@ -114,7 +114,7 @@
         :placeholder="title === t('new_movie') ? 'ფილმის აღწერა' : ''"
         :edit="title !== t('new_movie')"
         lang="ქარ"
-        rules="required"
+        rules="required|geo_chars"
         v-model="descriptionGeo.value"
       />
       <base-upload
@@ -134,7 +134,7 @@ import LanguageDropdownIcon from '@/components/icons/DropdownIcon.vue'
 import CloseIcon from '@/components/icons/CloseIcon.vue'
 import { useI18n } from 'vue-i18n'
 import { Form, Field, ErrorMessage } from 'vee-validate'
-import { useMovieStore } from '@/stores/movieStore'
+import { useMovieStore } from '@/stores/movie'
 import { onBeforeMount, onBeforeUnmount, reactive, ref } from 'vue'
 import { useForm } from 'vee-validate'
 

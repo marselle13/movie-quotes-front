@@ -28,7 +28,7 @@ import EditIcon from '@/components/icons/EditIcon.vue'
 import QuoteIcon from '@/components/icons/quoteIcon.vue'
 import DeleteIcon from '@/components/icons/DeleteIcon.vue'
 import ViewPostIcon from '@/components/icons/ViewPostIcon.vue'
-import { useMovieStore } from '@/stores/movieStore'
+import { useMovieStore } from '@/stores/movie'
 import { useI18n } from 'vue-i18n'
 
 const emit = defineEmits(['view-quote', 'edit-quote'])
@@ -44,7 +44,7 @@ async function deleteQuote(quoteId, movieId) {
   try {
     await useMovieStore().removeQuoteFromMovie(quoteId, movieId)
   } catch (err) {
-    //Err
+    console.error(err)
   }
 }
 </script>

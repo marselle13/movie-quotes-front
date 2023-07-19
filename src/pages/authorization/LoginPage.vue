@@ -26,7 +26,7 @@
             name="remember"
             type="checkbox"
             id="remember"
-            class="accent-[#E31221]"
+            class="accent-rose-red"
             :value="true"
           />
           <label for="remember" class="text-white text-sm md:text-base">{{
@@ -49,7 +49,7 @@
             <GoogleIcon /> {{ t('sign_in_google') }}
           </div>
         </base-button>
-        <p class="text-[#6C757D]">
+        <p class="text-steel-gray">
           {{ t('no_account')
           }}<router-link class="ml-1 text-[#0D6EFD] underline" :to="{ name: 'register' }">{{
             t('sign_up')
@@ -63,7 +63,7 @@
 import GoogleIcon from '@/components/icons/GoogleIcon.vue'
 import { useI18n } from 'vue-i18n'
 import { Form, Field } from 'vee-validate'
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthService } from '@/services/authService'
