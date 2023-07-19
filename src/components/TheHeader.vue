@@ -219,7 +219,7 @@ onBeforeMount(async () => {
     try {
       await userStore.userNotifications()
     } catch (err) {
-      //Err
+      console.error(err)
     }
   }
 })

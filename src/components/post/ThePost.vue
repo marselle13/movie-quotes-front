@@ -156,7 +156,6 @@ async function onSubmit(values) {
   } catch (err) {
     error.en = err.response?.data?.errors?.['quote.en']?.[0]
     error.ka = err.response?.data?.errors?.['quote.ka']?.[0]
-    //Err
   }
 }
 
@@ -164,7 +163,7 @@ async function reactOnPost(postId) {
   try {
     await usePostService().reactOnPost(postId)
   } catch (err) {
-    //Error
+    console.error(err)
   }
 }
 </script>
