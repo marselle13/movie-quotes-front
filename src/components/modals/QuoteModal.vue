@@ -15,13 +15,13 @@
             />
           </div>
           <div class="md:space-y-5 space-y-2">
-            <h5 class="md:text-2xl text-[#DDCCAA] font-medium text-xs">
+            <h5 class="md:text-2xl text-light-gold font-medium text-xs">
               {{ movie.name[locale] }}
             </h5>
             <div class="flex flex-col-reverse md:flex-col gap-2 md:gap-5">
               <ul class="inline-flex flex-wrap gap-2">
                 <li
-                  class="bg-[#6C757D] text-white rounded py-1 px-3 flex-wrap text-xs md:text-lg"
+                  class="bg-steel-gray text-white rounded py-1 px-3 flex-wrap text-xs md:text-lg"
                   v-for="genre in movie.genres"
                   :key="genre.id"
                 >
@@ -29,7 +29,7 @@
                 </li>
               </ul>
               <h6 class="md:text-lg text-white text-xs">
-                <span class="text-[#CED4DA]">Director:</span> {{ movie.director[locale] }}
+                <span class="text-light-silver">Director:</span> {{ movie.director[locale] }}
               </h6>
             </div>
           </div>
@@ -86,7 +86,7 @@
                 <h4>{{ selectedMovie[locale] || t('choose_movie') }}</h4>
                 <error-message
                   name="movieId"
-                  class="absolute -left-6 -bottom-12 text-[9px] text-[#DC3545] md:text-[10px]"
+                  class="absolute -left-6 -bottom-12 text-[9px] text-error-red md:text-[10px]"
                 ></error-message>
               </div>
               <LanguageDropdownIcon />

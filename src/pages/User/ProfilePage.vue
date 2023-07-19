@@ -1,5 +1,5 @@
 <template>
-  <MainContainer width="max-w-[1000px] md:mx-auto lg:mx-0 w-full">
+  <MainContainer width="max-w-[62.5rem] md:mx-auto lg:mx-0 w-full">
     <div class="pl-10">
       <BackIcon class="block lg:hidden" @click="router.push({ name: 'news-feed' })" />
       <h2 class="text-white text-2xl hidden lg:block">{{ t('my_profile') }}</h2>
@@ -21,7 +21,7 @@
         <div class="w-full max-w-[30rem] mx-auto" v-show="checkModalWidth">
           <div class="lg:relative lg:-top-32 space-y-2 flex flex-col items-center">
             <Field name="new_avatar" v-slot="{ field, handleChange }" rules="image">
-              <div class="flex justify-center bg-[#D9D9D9] w-44 h-44 rounded-full overflow-hidden">
+              <div class="flex justify-center bg-light-gray w-44 h-44 rounded-full overflow-hidden">
                 <img
                   :src="avatarHandler.value || `${userStore.userData.avatar}`"
                   alt="avatar"
@@ -51,7 +51,7 @@
                 :edit="nameHandler.edit"
                 disabled
               ></base-input>
-              <button class="text-[#CED4DA]" type="button" @click="nameHandler.edit = true">
+              <button class="text-light-silver" type="button" @click="nameHandler.edit = true">
                 {{ t('edit') }}
               </button>
             </div>
@@ -71,7 +71,7 @@
                 ></base-input>
               </teleport>
             </div>
-            <div class="flex gap-9 border-b border-[#ced4da80] md:border-none">
+            <div class="flex gap-9 border-b border-light-silver md:border-none">
               <base-input
                 id="required|email"
                 :label="t('email')"
@@ -83,7 +83,7 @@
                 disabled
               ></base-input>
               <button
-                class="text-[#CED4DA]"
+                class="text-light-silver"
                 type="button"
                 v-if="!google"
                 @click="emailHandler.edit = true"
@@ -118,7 +118,7 @@
                 placeholder="••••••••••••"
                 disabled
               ></base-input>
-              <button class="text-[#CED4DA]" type="button" @click="passwordHandler.edit = true">
+              <button class="text-light-silver" type="button" @click="passwordHandler.edit = true">
                 {{ t('edit') }}
               </button>
             </div>

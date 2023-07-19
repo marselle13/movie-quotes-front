@@ -51,13 +51,13 @@
         </div>
         <div class="lg:max-w-[34rem] space-y-6 w-full">
           <div class="inline-flex flex-col md:flex-row w-full gap-6 justify-between items-start">
-            <h2 class="w-full text-[#DDCCAA] text-2xl font-medium break-all">
+            <h2 class="w-full text-light-gold text-2xl font-medium break-all">
               {{ movieStore.getCurrentMovie.name[locale] }}
               <span>({{ movieStore.getCurrentMovie.year }})</span>
             </h2>
-            <div class="flex items-center bg-[#24222F] rounded-xl py-2 px-7">
+            <div class="flex items-center bg-midnight-gray rounded-xl py-2 px-7">
               <button @click="editMovie = true"><EditIcon /></button>
-              <div class="h-4 border border-[#6C757D] mx-6"></div>
+              <div class="h-4 border border-steel-gray mx-6"></div>
               <button @click="deleteMovie(movieStore.getCurrentMovie.id)">
                 <DeleteIcon />
               </button>
@@ -67,16 +67,16 @@
             <li
               v-for="genre in movieStore.getCurrentMovie.genres"
               :key="genre.id"
-              class="text-center bg-[#6C757D] px-2 py-1 rounded"
+              class="text-center bg-steel-gray px-2 py-1 rounded"
             >
               <h4 class="text-white font-bold text-lg">{{ genre.name[locale] }}</h4>
             </li>
           </ul>
           <h4 class="text-lg text-white font-medium">
-            <span class="text-[#CED4DA] font-bold">{{ t('director') }}</span
+            <span class="text-light-silver font-bold">{{ t('director') }}</span
             >{{ movieStore.getCurrentMovie.director[locale] }}
           </h4>
-          <p class="text-lg text-[#CED4DA] break-words lg:pb-10">
+          <p class="text-lg text-light-silver break-words lg:pb-10">
             {{ movieStore.getCurrentMovie.description[locale] }}
           </p>
         </div>
@@ -88,7 +88,7 @@
           <h5 class="text-white text-2xl">
             {{ t('quote_total', { amount: movieStore.getCurrentMovie.quotes.length }) }}
           </h5>
-          <div class="lg:h-7 border border-[#6C757D] lg:mx-4 my-10 lg:my-0"></div>
+          <div class="lg:h-7 border border-steel-gray lg:mx-4 my-10 lg:my-0"></div>
           <base-button
             @click="addQuote = true"
             class="w-40 lg:w-auto flex items-center px-4 py-2 gap-2 md:whitespace-nowrap whitespace-normal"
@@ -109,7 +109,7 @@
                   class="h-full object-cover w-full object-center"
                 />
               </div>
-              <p class="max-w-[400px] text-[#CED4DA] italic text-2xl break-words">
+              <p class="max-w-[400px] text-light-silver italic text-2xl break-words">
                 "{{ quote.quote[locale] }}"
               </p>
             </div>

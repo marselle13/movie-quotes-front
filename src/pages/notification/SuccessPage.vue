@@ -5,7 +5,7 @@
     <div class="flex flex-col justify-center items-center text-white text-center mt-8 space-y-10">
       <p>{{ success.info }}</p>
       <a
-        class="bg-[#E31221] hover:bg-[#CC0E10] focus:bg-[#B80D0F] disabled:bg-[#EC4C57] w-full py-2 text-white rounded font-medium text-sm md:text-base text-center"
+        class="bg-rose-red hover:bg-[#CC0E10] focus:bg-[#B80D0F] disabled:bg-[#EC4C57] w-full py-2 text-white rounded font-medium text-sm md:text-base text-center"
         :href="success.redirect"
         v-if="success.anchor"
       >

@@ -6,7 +6,7 @@
   >
     <div class="flex-shrink-0 row-span-2 flex items-center gap-4">
       <div
-        class="flex justify-center bg-[#D9D9D9] w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full"
+        class="flex justify-center bg-light-gray w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full"
       >
         <img
           :src="`${viteBaseUrl}${comment.user.avatar.includes('default') ? '' : 'storage/'}${

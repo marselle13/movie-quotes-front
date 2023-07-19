@@ -26,7 +26,7 @@
             name="remember"
             type="checkbox"
             id="remember"
-            class="accent-[#E31221]"
+            class="accent-rose-red"
             :value="true"
           />
           <label for="remember" class="text-white text-sm md:text-base">{{
@@ -49,7 +49,7 @@
             <GoogleIcon /> {{ t('sign_in_google') }}
           </div>
         </base-button>
-        <p class="text-[#6C757D]">
+        <p class="text-steel-gray">
           {{ t('no_account')
           }}<router-link class="ml-1 text-[#0D6EFD] underline" :to="{ name: 'register' }">{{
             t('sign_up')

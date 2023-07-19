@@ -40,7 +40,7 @@
     <input
       :placeholder="placeholder"
       :class="{ 'cursor-pointer': !isOpen }"
-      class="w-full placeholder-[#CED4DA] bg-transparent outline-none text-white px-8"
+      class="w-full placeholder-light-silver bg-transparent outline-none text-white px-8"
       v-model="searchValue"
       @input="inputHandler"
     />

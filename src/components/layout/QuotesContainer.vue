@@ -11,7 +11,7 @@
         <h2 class="flex text-white text-xl lg:text-5xl lg:leading-[4.5rem] font-bold">
           “<slot name="quote"></slot>”
         </h2>
-        <p class="text-[#D9D9D9] text-base lg:text-3xl font-bold"><slot name="movie"></slot></p>
+        <p class="text-light-gray text-base lg:text-3xl font-bold"><slot name="movie"></slot></p>
       </div>
     </div>
   </div>

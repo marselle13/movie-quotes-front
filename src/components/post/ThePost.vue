@@ -2,7 +2,7 @@
   <section :class="{ 'pb-7 lg:pb-7 border-b border-[#efefef4d]': movieName }">
     <div class="flex items-center gap-4 text-white">
       <div
-        class="flex justify-center bg-[#D9D9D9] w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden"
+        class="flex justify-center bg-light-gray w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden"
         v-if="name && avatar"
       >
         <img :src="avatar" alt="profile" class="object-cover" />
@@ -12,7 +12,7 @@
     <Form @submit="onSubmit">
       <div class="flex gap-2 mt-4" v-if="movieName && movieYear">
         <h3 class="text-white">
-          “{{ quote }}” <span class="text-[#DDCCAA]">{{ movieName }}</span> {{ movieYear }}
+          “{{ quote }}” <span class="text-light-gold">{{ movieName }}</span> {{ movieYear }}
         </h3>
       </div>
       <div v-else class="space-y-6">
@@ -56,7 +56,7 @@
               />
               <label
                 for="upload"
-                class="cursor-pointer bg-gradient-to-r from-[#181623] from-5% via-[#191725] via-50% to-[#0D0B14] to-[95%] text-white bg-red-500 flex flex-col items-center w-full px-4 pb-4 pt-6 rounded-2xl bg-linear-gradient opacity-80"
+                class="cursor-pointer bg-gradient-to-r from-linear-indigo from-5% via-linear-gray via-50% to-linear-black to-[95%] text-white bg-red-500 flex flex-col items-center w-full px-4 pb-4 pt-6 rounded-2xl bg-linear-gradient opacity-80"
               >
                 <CameraIcon />{{ t('change_photo') }}</label
               >
@@ -64,9 +64,9 @@
           </div>
           <ErrorMessage
             name="image"
-            class="absolute -bottom-4 text-[9px] text-[#DC3545] md:text-[10px]"
+            class="absolute -bottom-4 text-[9px] text-error-red md:text-[10px]"
           ></ErrorMessage>
-          <p class="absolute -bottom-4 text-[9px] text-[#DC3545] md:text-[10px]" v-if="error.image">
+          <p class="absolute -bottom-4 text-[9px] text-error-red md:text-[10px]" v-if="error.image">
             {{ error.image }}
           </p>
         </div>

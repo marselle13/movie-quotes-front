@@ -30,16 +30,16 @@
       <Field name="genres" v-slot="{ handleChange }" rules="required" v-model="genresId.value">
         <base-dropdown
           :delete="deleted"
-          button-width="w-full border border-[#6C757D]  py-2 px-4 rounded text-left"
+          button-width="w-full border border-steel-gray py-2 px-4 rounded text-left"
         >
           <template #dropdownButton>
             <div class="flex justify-between items-center">
-              <h5 v-if="genres.length === 0" class="text-[#6C757D]">{{ t('genres') }}</h5>
+              <h5 v-if="genres.length === 0" class="text-steel-gray">{{ t('genres') }}</h5>
               <ul v-else class="inline-flex gap-2 overflow-x-auto scrollbar-hide">
                 <li
                   :key="genre.id"
                   v-for="genre in genres"
-                  class="flex items-center bg-[#6C757D] rounded-sm px-1 whitespace-nowrap relative"
+                  class="flex items-center bg-steel-gray rounded-sm px-1 whitespace-nowrap relative"
                 >
                   <h4 class="text-white">{{ genre.name?.[locale] }}</h4>
                   <CloseIcon class="w-5 h-5" @click="deleteGenre(genre.id, handleChange)" />
@@ -48,7 +48,7 @@
               <LanguageDropdownIcon />
               <error-message
                 name="genres"
-                class="absolute text-[#DC3545] -bottom-4 left-0 text-[9px] md:text-[10px]"
+                class="absolute text-error-red -bottom-4 left-0 text-[9px] md:text-[10px]"
               ></error-message>
             </div>
           </template>

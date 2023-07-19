@@ -13,7 +13,7 @@
       >
         <div class="inline-flex items-center gap-6 relative">
           <div
-            class="flex justify-center bg-[#D9D9D9] w-16 h-16 rounded-full overflow-hidden"
+            class="flex justify-center bg-light-gray w-16 h-16 rounded-full overflow-hidden"
             :class="activeClass"
           >
             <img :src="userStore.userData.avatar" alt="profile" class="object-cover" />
@@ -21,7 +21,7 @@
 
           <div>
             <h4 class="text-white">{{ userStore.userData.name }}</h4>
-            <router-link :to="{ name: 'profile' }" class="text-xs text-[#CED4DA]">{{
+            <router-link :to="{ name: 'profile' }" class="text-xs text-light-silver">{{
               t('edit_profile')
             }}</router-link>
           </div>
@@ -110,7 +110,7 @@ function checkWidth() {
   isDesktop.value = window.innerWidth >= 1024
 }
 const activeClass = computed(() => {
-  return route.name === 'profile' && ' border-2 border-[#E31221]'
+  return route.name === 'profile' && ' border-2 border-rose-red'
 })
 
 async function logout() {

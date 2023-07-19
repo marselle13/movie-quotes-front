@@ -23,7 +23,7 @@ import { computed } from 'vue'
 const props = defineProps({ name: { type: String, required: false } })
 const activeClass = computed(() => {
   return props.name === 'movie-list' || props.name === 'movie-description'
-    ? 'fill-[#E31221]'
+    ? 'fill-rose-red'
     : 'fill-white'
 })
 </script>

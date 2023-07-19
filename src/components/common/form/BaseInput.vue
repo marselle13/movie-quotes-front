@@ -5,7 +5,7 @@
       :for="id"
       class="text-white capitalize"
       :class="{ 'sr-only': disabled }"
-      >{{ label }}<span class="text-[#E31221]" v-if="label && !disabled">*</span></label
+      >{{ label }}<span class="text-rose-red" v-if="label && !disabled">*</span></label
     >
     <div
       class="relative"
@@ -15,7 +15,7 @@
         <label
           :for="id"
           v-if="edit && label && mode === 'flat'"
-          class="whitespace-nowrap text-[#6C757D]"
+          class="whitespace-nowrap text-steel-gray"
           >{{ label }}:</label
         >
         <input
@@ -28,7 +28,7 @@
           :value="value || inputValue"
           :class="[
             {
-              'border-[#DC3545]':
+              'border-error-red':
                 (mode !== 'flat' && error) ||
                 (meta.validated && !meta.valid && props.rules && mode !== 'flat'),
               'border-[#198754]':
@@ -41,7 +41,7 @@
           :autocomplete="autocomplete"
         />
         <div class="absolute right-3 top-0 h-full flex items-center">
-          <h4 v-if="mode === 'flat' && lang" class="text-[#6C757D]">{{ lang }}</h4>
+          <h4 v-if="mode === 'flat' && lang" class="text-steel-gray">{{ lang }}</h4>
           <valid-icon
             v-if="
               !error &&
@@ -63,11 +63,11 @@
         <div class="absolute w-full" v-if="rules">
           <ErrorMessage
             :name="id"
-            class="absolute text-[9px] top-1 text-[#DC3545] md:text-[10px]"
+            class="absolute text-[9px] top-1 text-error-red md:text-[10px]"
             :class="{ '-left-4 top-6': mode === 'flat' }"
           ></ErrorMessage>
           <p
-            class="absolute text-[11px] top-1 text-[#DC3545]"
+            class="absolute text-[11px] top-1 text-error-red"
             v-if="error && meta.valid && typeof error === 'string'"
             :class="{ '-left-4 top-6': mode === 'flat' }"
           >
@@ -111,16 +111,16 @@ const emit = defineEmits(['update-prop', 'update:modelValue'])
 const inputStyle = computed(() => {
   switch (props.mode) {
     case 'flat':
-      return 'py-2 pr-14 bg-transparent  text-white before:w-full outline-none rounded placeholder:text-[#6C757D] disabled:italic disabled:placeholder-white'
+      return 'py-2 pr-14 bg-transparent  text-white before:w-full outline-none rounded placeholder:text-steel-gray disabled:italic disabled:placeholder-white'
     case 'dark':
-      return 'py-3 px-4 md:px-7 placeholder-[#CED4DA] bg-[#24222F] bg-opacity-60 outline-none text-white rounded-lg'
+      return 'py-3 px-4 md:px-7 placeholder-light-silver bg-midnight-gray bg-opacity-60 outline-none text-white rounded-lg'
     default:
-      return 'pl-3 pr-10 py-2 text-[#212529]  placeholder-[#6C757D] rounded  bg-[#CED4DA] border-2 outline-none focus:shadow-[0px_0px_0px_4px] focus:shadow-[#0d6efd3b] disabled:bg-transparent md:disabled:bg-[#E9ECEF] disabled:border-none disabled:placeholder-white disabled:px-0 md:disabled:px-3 disabled:py-0 disabled:py-2 md:disabled:py-2'
+      return 'pl-3 pr-10 py-2 text-dark-gray  placeholder-steel-gray rounded  bg-light-silver border-2 outline-none focus:shadow-[0px_0px_0px_4px] focus:shadow-[#0d6efd3b] disabled:bg-transparent md:disabled:bg-[#E9ECEF] disabled:border-none disabled:placeholder-white disabled:px-0 md:disabled:px-3 disabled:py-0 disabled:py-2 md:disabled:py-2'
   }
 })
 
 const placeholderStyle = computed(() => {
-  return props.edit ? ' md:disabled:placeholder-[#6C757D]' : ' md:disabled:placeholder-[#212529]'
+  return props.edit ? ' md:disabled:placeholder-steel-gray' : ' md:disabled:placeholder-dark-gray'
 })
 
 function showPassword() {
