@@ -202,7 +202,7 @@ async function logout() {
     await userStore.logout()
     await router.replace({ name: 'landing' })
   } catch (err) {
-    //Error
+    console.error(err)
   }
 }
 
@@ -210,7 +210,7 @@ async function seenNotifications(notificationId = null) {
   try {
     await userStore.updateNotification(notificationId)
   } catch (err) {
-    //Err
+    console.error(err)
   }
 }
 

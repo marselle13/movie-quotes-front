@@ -37,7 +37,7 @@ async function onSubmit(values, { resetForm }) {
       await postService.addNewComment(props.postId, comment)
       resetForm()
     } catch (err) {
-      //Err
+      console.error(err)
     }
   }
 }

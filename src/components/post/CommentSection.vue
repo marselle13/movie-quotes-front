@@ -60,7 +60,7 @@ async function moreComments(postId) {
     loaded.value = true
     emit('loaded')
   } catch (err) {
-    //Err
+    console.error(err)
   }
 }
 </script>

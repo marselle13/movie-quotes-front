@@ -61,7 +61,7 @@ async function remove(quoteId) {
     await useMovieStore().removeQuoteFromMovie(quoteId, movieStore.getCurrentMovie.id)
     emit('close')
   } catch (err) {
-    //Err
+    console.error(err)
   }
 }
 </script>

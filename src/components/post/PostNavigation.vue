@@ -76,7 +76,7 @@ watch(searchValue, async (newValue) => {
       try {
         await postStore.searchPosts(newValue.toLowerCase().trim())
       } catch (err) {
-        //Err
+        console.error(err)
       }
     }, 500)
   } else {
@@ -84,7 +84,7 @@ watch(searchValue, async (newValue) => {
       try {
         await postStore.showPosts()
       } catch (err) {
-        //Err
+        console.error(err)
       }
     }, 500)
   }

@@ -180,7 +180,7 @@ async function deleteMovie(movieId) {
     await movieStore.removeMovie(movieId)
     await router.replace({ name: 'movie-list' })
   } catch (err) {
-    //Err
+    console.error(err)
   }
 }
 
@@ -191,7 +191,7 @@ async function postHandler(quoteId, editQuote) {
     edit.value = editQuote
     localStorage.setItem('edit', edit.value)
   } catch (err) {
-    //Err
+    console.error(err)
   }
 }
 
